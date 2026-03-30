@@ -8,7 +8,7 @@ import { defineConfig } from 'astro/config';
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://example.com',
-	output: 'static',
+	output: 'server',
 	adapter: node({ mode: 'standalone' }),
 	integrations: [mdx(), sitemap()],
 });

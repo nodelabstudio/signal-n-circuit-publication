@@ -1,0 +1,81 @@
+---
+import PublicationLayout from '../../../layouts/PublicationLayout.astro';
+import { getPublicationPosts, getPublicationTags } from '../../../lib/publication';
+
+export async function getStaticPaths() {
+  const tags = await getPublicationTags();
+  return tags.map((tag) => ({
+    params: { tag },
+  }));
+}
+
+const { tag } = Astro.params;
+const posts = await getPublicationPosts();
+const filteredPosts = posts.filter((post) => post.tags.includes(tag ?? ''));
+
+if (!tag) {
+  return Astro.redirect('/articles');
+}
+---
+
+<PublicationLayout title={`Tag: ${tag}`} description={`Publication archive for tag ${tag}.`}>
+  <section class='page-head'>
+    <p class='kicker'>Tag archive</p>
+    <h1>{tag}</h1>
+    <p>Stories grouped by this tag across the publication.</p>
+  </section>
+
+  <section class='list'>
+    {
+      filteredPosts.map((post) => (
+        <article class='row card'>
+          <div>
+            <p class='kicker'>{post.category.replace(/-/g, ' ')}</p>
+            <h2><a href={`/articles/${post.slug}/`}>{post.title}</a></h2>
+            <p>{post.excerpt}</p>
+          </div>
+          <div class='meta-block'>
+            <span>{post.type}</span>
+            <span>{post.author}</span>
+            <span>{post.date}</span>
+          </div>
+        </article>
+      ))
+    }
+  </section>
+</PublicationLayout>
+
+<style>
+  .page-head {
+    display: grid;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+    max-width: 70ch;
+  }
+
+  .list {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .row {
+    padding: 1.2rem;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .row a {
+    color: rgb(var(--ink));
+    text-decoration: none;
+  }
+
+  .meta-block {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    color: rgb(var(--muted));
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+  }
+</style>

@@ -1,0 +1,211 @@
+---
+import PublicationLayout from '../../../layouts/PublicationLayout.astro';
+import { NAV_CATEGORIES } from '../../../consts';
+import { getPublicationPosts } from '../../../lib/publication';
+
+export async function getStaticPaths() {
+  return NAV_CATEGORIES.map((category) => ({
+    params: { category },
+  }));
+}
+
+const { category } = Astro.params;
+const posts = await getPublicationPosts();
+const filteredPosts = posts.filter((post) => post.category === category);
+
+if (!category) {
+  return Astro.redirect('/articles');
+}
+---
+
+<PublicationLayout
+  title={`Category: ${category.replace(/-/g, ' ')}`}
+  description={`Publication archive for ${category.replace(/-/g, ' ')}.`}
+>
+  <section class='page-head'>
+    <p class='kicker'>Category archive</p>
+    <h1>{category.replace(/-/g, ' ')}</h1>
+    <p>Focused coverage for this lane of the publication.</p>
+  </section>
+
+  <section class='archive-tools card'>
+    <div>
+      <p class='kicker'>Lane status</p>
+      <strong>{filteredPosts.length > 0 ? 'Active coverage' : 'Planned coverage'}</strong>
+    </div>
+    <div>
+      <p class='kicker'>Story count</p>
+      <strong>{filteredPosts.length}</strong>
+    </div>
+    <div>
+      <p class='kicker'>Editorial use</p>
+      <strong>{filteredPosts.length > 0 ? 'Archive + discovery' : 'Roadmap signal'}</strong>
+    </div>
+  </section>
+
+  {
+    filteredPosts.length > 0 ? (
+      <section class='list'>
+        {
+          filteredPosts.map((post) => (
+            <article class='row card'>
+              <div class='row-media' aria-hidden='true'></div>
+              <div class='row-copy'>
+                <p class='kicker'>{post.type}</p>
+                <h2><a href={`/articles/${post.slug}/`}>{post.title}</a></h2>
+                <p>{post.excerpt}</p>
+                <div class='meta-block'>
+                  <span>{post.author}</span>
+                  <span>{post.date}</span>
+                </div>
+              </div>
+            </article>
+          ))
+        }
+      </section>
+    ) : (
+      <section class='empty card'>
+        <div class='empty-media' aria-hidden='true'></div>
+        <div class='empty-copy'>
+          <p class='kicker'>Planned lane</p>
+          <h2>No stories published here yet</h2>
+          <p>
+            This category is part of the publication roadmap. The structure is live in the prototype so the site
+            can reflect the full editorial surface before every lane is populated.
+          </p>
+          <p>
+            For now, browse the <a href='/articles/'>current article archive</a> or return to the <a href='/'>front page</a>.
+          </p>
+        </div>
+      </section>
+    )
+  }
+</PublicationLayout>
+
+<style>
+  .page-head {
+    display: grid;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+    max-width: 70ch;
+  }
+
+  .archive-tools {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    padding: 1rem 1.15rem;
+    margin-bottom: 1rem;
+  }
+
+  .archive-tools div {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .archive-tools strong {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.35rem;
+    line-height: 1.1;
+  }
+
+  .list {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .row {
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: minmax(220px, 0.68fr) minmax(0, 1.4fr);
+  }
+
+  .row-media {
+    min-height: 220px;
+    background:
+      linear-gradient(135deg, rgba(var(--surface-strong), 0.95), rgba(var(--border), 0.88)),
+      radial-gradient(circle at top right, rgba(255,255,255,0.28), transparent 42%);
+    border-right: 1px solid rgba(var(--border), 0.82);
+    position: relative;
+  }
+
+  .row-media::before {
+    content: '';
+    position: absolute;
+    inset: 1.15rem;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(var(--bg), 0.95), rgba(255,255,255,0.7));
+    border: 1px solid rgba(var(--border), 0.72);
+  }
+
+  .row-media::after {
+    content: '';
+    position: absolute;
+    left: 2rem;
+    right: 2rem;
+    bottom: 1.8rem;
+    height: 0.7rem;
+    border-radius: 999px;
+    background: rgba(var(--accent), 0.18);
+    box-shadow: 0 -1.15rem 0 rgba(var(--accent), 0.12), 0 -2.3rem 0 rgba(var(--ink), 0.08);
+  }
+
+  .row-copy {
+    padding: 1.3rem;
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .row a {
+    color: rgb(var(--ink));
+    text-decoration: none;
+  }
+
+  .meta-block {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    color: rgb(var(--muted));
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+  }
+
+  .empty {
+    overflow: hidden;
+  }
+
+  .empty-media {
+    min-height: 180px;
+    background:
+      linear-gradient(135deg, rgba(var(--ink), 0.82), rgba(var(--accent), 0.72)),
+      radial-gradient(circle at top right, rgba(255,255,255,0.2), transparent 40%),
+      repeating-linear-gradient(
+        135deg,
+        rgba(255,255,255,0.05) 0,
+        rgba(255,255,255,0.05) 16px,
+        transparent 16px,
+        transparent 32px
+      );
+    border-bottom: 1px solid rgba(var(--border), 0.85);
+  }
+
+  .empty-copy {
+    padding: 1.5rem 1.5rem 1.6rem;
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  @media (max-width: 900px) {
+    .archive-tools,
+    .row {
+      grid-template-columns: 1fr;
+    }
+
+    .row-media {
+      min-height: 180px;
+      border-right: none;
+      border-bottom: 1px solid rgba(var(--border), 0.82);
+    }
+  }
+</style>

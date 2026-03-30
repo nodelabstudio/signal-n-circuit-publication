@@ -1,0 +1,54 @@
+<footer class='site-footer'>
+  <div class='footer-brand'>
+    <p class='title'>Signal & Circuit</p>
+    <p>Publication prototype covering LLM builders, AI agents, and managed service operators.</p>
+  </div>
+  <div>
+    <p class='label'>Prototype status</p>
+    <p>Local only. No public deployment or publishing until Angel approves the next phase.</p>
+  </div>
+  <div>
+    <p class='label'>Newsletter</p>
+    <p>Subscribe placeholder only for now. Distribution stays manual until the publication pipeline is approved.</p>
+  </div>
+  <div>
+    <p class='label'>Editorial lens</p>
+    <p>We care about what survives real operations: approvals, support load, maintenance, and deployment friction.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    max-width: 1200px;
+    margin: 4.5rem auto 0;
+    padding: 2.25rem 1.25rem 4rem;
+    border-top: 1px solid rgba(var(--border), 0.9);
+    display: grid;
+    grid-template-columns: 1.2fr repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+    color: rgb(var(--muted));
+  }
+
+  .footer-brand {
+    padding-right: 1rem;
+  }
+
+  .title,
+  .label {
+    margin: 0 0 0.4rem;
+    color: rgb(var(--ink));
+    font-weight: 700;
+  }
+
+  .site-footer p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 900px) {
+    .site-footer {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

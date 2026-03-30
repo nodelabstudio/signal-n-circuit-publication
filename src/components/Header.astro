@@ -1,0 +1,146 @@
+---
+import { NAV_CATEGORIES, SITE_TITLE } from '../consts';
+import HeaderLink from './HeaderLink.astro';
+---
+
+<header class='site-header'>
+  <div class='topbar'>
+    <div class='masthead'>
+      <p class='eyebrow'>Mission Control Publication Prototype</p>
+      <div class='brand-row'>
+        <a class='brand' href='/'>{SITE_TITLE}</a>
+        <span class='edition-badge'>Issue 0 • Local Edition</span>
+      </div>
+    </div>
+    <nav class='primary-nav'>
+      <HeaderLink href='/'>Home</HeaderLink>
+      <HeaderLink href='/articles'>Articles</HeaderLink>
+      <HeaderLink href='/about'>About</HeaderLink>
+    </nav>
+  </div>
+  <nav class='category-nav' aria-label='Publication categories'>
+    {
+      NAV_CATEGORIES.map((category) => (
+        <a href={`/category/${category}/`}>{category.replace(/-/g, ' ')}</a>
+      ))
+    }
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(var(--bg), 0.94);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(var(--border), 0.9);
+  }
+
+  .topbar {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 1.25rem 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 1rem;
+  }
+
+  .masthead {
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .brand-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  .edition-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    border: 1px solid rgba(var(--border), 0.8);
+    background: rgba(var(--surface-strong), 0.72);
+    color: rgb(var(--muted));
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .eyebrow {
+    margin: 0 0 0.3rem;
+    color: rgb(var(--muted));
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+
+  .brand {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 2rem;
+    color: rgb(var(--ink));
+    text-decoration: none;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+  }
+
+  .primary-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .primary-nav a {
+    color: rgb(var(--ink));
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+
+  .category-nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.25rem 0.9rem;
+    display: flex;
+    gap: 0.9rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .category-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .category-nav a {
+    text-decoration: none;
+    color: rgb(var(--muted));
+    text-transform: capitalize;
+    white-space: nowrap;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+  }
+
+  .brand:hover,
+  .primary-nav a:hover,
+  .category-nav a:hover {
+    color: rgb(var(--accent));
+  }
+
+  @media (max-width: 720px) {
+    .topbar {
+      flex-direction: column;
+      align-items: start;
+    }
+
+    .primary-nav {
+      justify-content: flex-start;
+    }
+  }
+</style>

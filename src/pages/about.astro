@@ -1,0 +1,109 @@
+---
+import PublicationLayout from '../layouts/PublicationLayout.astro';
+import { SITE_TAGLINE } from '../consts';
+---
+
+<PublicationLayout
+  title='About'
+  description='About the publication, editorial stance, and AI-assisted production approach.'
+>
+  <section class='about-hero'>
+    <p class='kicker'>About the publication</p>
+    <h1>Practical reporting on LLM products, AI agents, and the service economy around them.</h1>
+    <p class='lead'>{SITE_TAGLINE}</p>
+  </section>
+
+  <section class='about-grid'>
+    <article class='card panel'>
+      <h2>What this publication covers</h2>
+      <p>
+        Signal & Circuit tracks the people and systems turning large language models into useful work.
+        That includes builder tooling, agent workflows, release shifts, managed AI services, and the ugly
+        operational realities that appear after the demo ends.
+      </p>
+      <p>
+        The audience is two groups at once: developers shipping real products with LLMs, and operators or
+        entrepreneurs using AI systems to solve narrow business problems in the field.
+      </p>
+    </article>
+
+    <article class='card panel'>
+      <h2>Editorial stance</h2>
+      <p>
+        This is a practitioner-first publication. No empty hype, no press-release rewriting, and no fake
+        certainty where the evidence is thin. If a workflow is messy, expensive, brittle, or only works in
+        a sandbox, that matters.
+      </p>
+      <p>
+        We care about what survives contact with real operations: support load, maintenance burden,
+        deployment friction, pricing shifts, and whether a system still helps after the novelty wears off.
+      </p>
+    </article>
+
+    <article class='card panel'>
+      <h2>How this prototype is produced</h2>
+      <p>
+        This site is part of a local Mission Control publication workflow. Planning, drafting, review, and
+        site assembly can involve AI assistance, but nothing is treated as publishable just because a model
+        produced it.
+      </p>
+      <p>
+        Content is expected to move through a review pipeline before it is considered ready. This prototype
+        exists to prove that the editorial system and the site experience can work together cleanly.
+      </p>
+    </article>
+
+    <article class='card panel disclosure'>
+      <h2>Disclosure</h2>
+      <p>
+        Articles on this publication may be produced with AI assistance and then reviewed for accuracy,
+        structure, and usefulness before publication.
+      </p>
+      <p>
+        This current site is a local-only prototype. Nothing here is public or live until Angel explicitly
+        approves the later deployment phases.
+      </p>
+    </article>
+  </section>
+</PublicationLayout>
+
+<style>
+  .about-hero {
+    display: grid;
+    gap: 0.9rem;
+    max-width: 72ch;
+    margin-bottom: 1.75rem;
+  }
+
+  .lead {
+    font-size: 1.08rem;
+    color: rgb(var(--muted));
+    max-width: 60ch;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .panel {
+    padding: 1.25rem;
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .panel p {
+    font-size: 1rem;
+  }
+
+  .disclosure {
+    background: rgba(var(--surface-strong), 0.7);
+  }
+
+  @media (max-width: 900px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

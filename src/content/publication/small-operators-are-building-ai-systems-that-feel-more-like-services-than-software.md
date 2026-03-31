@@ -31,4 +31,4 @@ A piece of software gets judged like a tool someone can buy once, configure once
 
 That is why these builders matter. They are not just product builders. They are service designers with enough technical depth to make the system hold together. Not the one-click illusion, but the layer of care, customization, and accountability that turns AI from an experiment into part of the job.
 
-This article was produced with AI assistance and reviewed for accuracy.
+Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.

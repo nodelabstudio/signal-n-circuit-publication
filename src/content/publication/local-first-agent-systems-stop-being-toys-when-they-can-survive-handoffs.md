@@ -33,4 +33,4 @@ That makes the real audience for this question pretty clear. If you are evaluati
 
 That is where the toy feeling starts to disappear. Not when the agent sounds more autonomous. When the work can survive interruption and still make sense to the next person or the next model who touches it.
 
-This article was produced with AI assistance and reviewed for accuracy.
+Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.

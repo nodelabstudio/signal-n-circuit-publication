@@ -37,4 +37,4 @@ That is probably where the next useful tooling layer gets built. Not another wra
 
 That is a much harder product to design. It is also a lot closer to the work people are actually trying to ship.
 
-This article was produced with AI assistance and reviewed for accuracy.
+Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.

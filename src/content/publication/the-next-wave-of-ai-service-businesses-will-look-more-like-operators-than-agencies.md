@@ -35,4 +35,4 @@ There is still plenty of room for agencies in the AI market. Plenty of businesse
 
 That is a much better business than selling another deck about what AI might do someday.
 
-This article was produced with AI assistance and reviewed for accuracy.
+Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.

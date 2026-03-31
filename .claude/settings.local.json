@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(grep -rl subscribe /home/administrator/site/src --include=*.astro --include=*.ts --include=*.tsx --include=*.js)"
     ]
   }
 }

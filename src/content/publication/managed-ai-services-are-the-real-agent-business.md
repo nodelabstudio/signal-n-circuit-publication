@@ -33,4 +33,4 @@ The builders who understand this early are not just shipping interfaces. They ar
 
 That is harder than selling a clean demo. It is also much closer to something a customer will keep paying for six months later.
 
-This article was produced with AI assistance and reviewed for accuracy.
+Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.

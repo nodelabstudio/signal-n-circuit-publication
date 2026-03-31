@@ -35,4 +35,4 @@ If you want to find the next real niche opportunity, do not start with “what c
 
 That is usually where the job is still unfinished.
 
-This article was produced with AI assistance and reviewed for accuracy.
+Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.

@@ -26,4 +26,4 @@ If you are building on top of these systems every week, that second layer matter
 
 That is the job of this lane. Not to recap keynotes. To read the lines after the applause and spot what actually changed for working builders.
 
-This article was produced with AI assistance and reviewed for accuracy.
+Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.

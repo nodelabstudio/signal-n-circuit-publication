@@ -7,7 +7,7 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://signal-n-circuit-production.up.railway.app',
+	site: 'https://signalcircuit.cloud',
 	output: 'server',
 	adapter: node({ mode: 'standalone' }),
 	integrations: [mdx(), sitemap()],

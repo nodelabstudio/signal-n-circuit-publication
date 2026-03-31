@@ -14,8 +14,9 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   const apiKey = process.env.BUTTONDOWN_API_KEY;
+  console.log('[subscribe] BUTTONDOWN_API_KEY present:', !!apiKey, '| value:', apiKey ? apiKey.slice(0, 8) + '...' : 'MISSING');
   if (!apiKey) {
-    return new Response(JSON.stringify({ error: 'Newsletter service is not configured.' }), {
+    return new Response(JSON.stringify({ error: 'Newsletter service is not configured.', env: Object.keys(process.env).filter(k => k.includes('BUTTON')) }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     });

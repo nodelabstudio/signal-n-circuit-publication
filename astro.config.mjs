@@ -11,9 +11,7 @@ export default defineConfig({
 	output: 'server',
 	adapter: node({ mode: 'standalone' }),
 	integrations: [mdx(), sitemap()],
-	server: {
-		csrf: {
-			checkOrigin: false,
-		},
+	security: {
+		checkOrigin: false,
 	},
 });

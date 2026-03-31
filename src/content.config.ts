@@ -4,7 +4,7 @@ import { z } from 'astro/zod';
 
 const publication = defineCollection({
   loader: glob({
-    base: '/home/administrator/.openclaw/workspace/content/publication/posts',
+    base: './src/content/publication',
     pattern: '**/*.md',
   }),
   schema: z.object({

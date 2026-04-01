@@ -8,7 +8,7 @@ tags:
   - 'operators'
 excerpt: 'For working builders, the useful AI tooling layer is moving away from raw chat surfaces and toward control panels that expose routing, approvals, logs, retries, and workflow state.'
 author: 'Publication Staff'
-image: ''
+image: '/images/articles/art6-dev-dashboard.jpg'
 sources:
   - 'https://github.com/openclaw/openclaw'
   - 'https://hnrss.org/show'

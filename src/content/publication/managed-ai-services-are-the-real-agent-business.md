@@ -8,7 +8,7 @@ tags:
   - 'services'
 excerpt: 'The durable opportunity in AI agents is not the demo. It is the installation, monitoring, and maintenance layer that keeps the system useful after the sale.'
 author: 'Publication Staff'
-image: ''
+image: '/images/articles/art1-robotic-relay.jpg'
 sources:
   - 'https://github.com/openclaw/openclaw'
   - 'https://hnrss.org/show'

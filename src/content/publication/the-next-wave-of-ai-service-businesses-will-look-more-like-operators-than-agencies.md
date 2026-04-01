@@ -8,7 +8,7 @@ tags:
   - 'service-model'
 excerpt: 'The firms with an edge in AI services are starting to look less like creative agencies and more like operators who own setup, monitoring, exception handling, and workflow continuity.'
 author: 'Publication Staff'
-image: ''
+image: '/images/articles/art5-service-tech.jpg'
 sources:
   - 'https://github.com/openclaw/openclaw'
   - 'https://hnrss.org/show'

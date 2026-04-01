@@ -8,7 +8,7 @@ tags:
   - 'operations'
 excerpt: 'The strongest vertical AI opportunities usually begin with a business owner describing a workflow they are tired of carrying by hand, not with a model demo looking for a use case.'
 author: 'Publication Staff'
-image: ''
+image: '/images/articles/art3-control-panel.jpg'
 sources:
   - 'https://hnrss.org/show'
   - 'https://github.com/openclaw/openclaw'

@@ -8,7 +8,7 @@ tags:
   - 'spotlight'
 excerpt: 'The most interesting AI builders are not just shipping tools. They are wrapping automation with setup, monitoring, customization, and accountability that make the system feel like an ongoing service.'
 author: 'Publication Staff'
-image: ''
+image: '/images/articles/art2-operations-center.jpg'
 sources:
   - 'https://hnrss.org/show'
   - 'https://github.com/openclaw/openclaw'

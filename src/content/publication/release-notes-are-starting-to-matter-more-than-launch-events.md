@@ -8,7 +8,7 @@ tags:
   - 'models'
 excerpt: 'Release Watch: the useful AI news usually shows up after the launch event, in the changelog lines that alter pricing, limits, reliability, or workflow friction for builders.'
 author: 'Publication Staff'
-image: ''
+image: '/images/articles/art4-changelog.jpg'
 sources:
   - 'https://platform.openai.com/docs/changelog'
   - 'https://docs.anthropic.com/en/release-notes/overview'

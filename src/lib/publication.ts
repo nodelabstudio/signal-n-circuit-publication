@@ -12,6 +12,7 @@ export type PublicationPost = {
   excerpt: string;
   author: string;
   type: string;
+  image: string;
   sources: Array<string>;
   body?: string;
 };
@@ -28,6 +29,7 @@ const placeholderPosts: Array<PublicationPost> = [
     author: 'Publication Staff',
     type: 'analysis',
     sources: ['https://github.com/openclaw/openclaw'],
+    image: '',
     body:
       'The recurring business opportunity around AI agents is not a one-time demo. It is the service layer that keeps a useful workflow alive after setup.\n\nThat means installation, prompt maintenance, routing, monitoring, and enough operational discipline that the customer experiences reliability instead of novelty.\n\nSmall operators do not buy benchmark charts. They buy confidence that a system will keep doing the ugly repetitive work they already hate.',
   },
@@ -42,6 +44,7 @@ const placeholderPosts: Array<PublicationPost> = [
     author: 'Publication Staff',
     type: 'niche-teardown',
     sources: ['https://news.ycombinator.com/'],
+    image: '',
     body:
       'The useful question is not what a model can do in theory. It is what a business owner is already frustrated enough to describe in public.\n\nOnce the complaint is concrete, the workflow becomes more legible. That is where an automation product starts earning the right to exist.',
   },
@@ -56,6 +59,7 @@ const placeholderPosts: Array<PublicationPost> = [
     author: 'Publication Staff',
     type: 'tutorials-patterns',
     sources: ['https://astro.build/'],
+    image: '',
     body:
       'A lean publishing stack wins by reducing moving parts. Markdown with frontmatter, a clear review loop, and a stable rendering layer will beat a bloated workflow almost every time.\n\nThe complexity should live in editorial judgment, not in ten different systems pretending to help.',
   },
@@ -70,6 +74,7 @@ const placeholderPosts: Array<PublicationPost> = [
     author: 'Publication Staff',
     type: 'profile',
     sources: ['https://hnrss.org/show'],
+    image: '',
     body:
       'The strongest builder stories right now do not look like giant product launches. They look like operators building systems that keep a client workflow moving without drama.\n\nThat is closer to managed infrastructure than app theater, and that is exactly why it matters.',
   },
@@ -84,6 +89,7 @@ const placeholderPosts: Array<PublicationPost> = [
     author: 'Publication Staff',
     type: 'breaking',
     sources: ['https://github.com/openclaw/openclaw/releases.atom'],
+    image: '',
     body:
       'The launch event gets attention. The changelog changes actual work.\n\nIf you are building on top of these systems, the details hiding in release notes matter more than the keynote energy does.',
   },
@@ -98,6 +104,7 @@ const placeholderPosts: Array<PublicationPost> = [
     author: 'Publication Staff',
     type: 'opinion',
     sources: ['https://github.com/openclaw/openclaw'],
+    image: '',
     body:
       'A local agent system becomes serious when it stops being a novelty and starts supporting work that survives handoffs, interruptions, and approvals.\n\nThat is where ecosystem questions become operational questions, and where architecture suddenly matters a lot more than demos.',
   },
@@ -160,6 +167,7 @@ export async function getPublicationPosts(): Promise<Array<PublicationPost>> {
         excerpt: post.data.excerpt,
         author: post.data.author,
         type: post.data.type,
+        image: post.data.image ?? '',
         sources: post.data.sources,
         body: post.body,
       } satisfies PublicationPost;

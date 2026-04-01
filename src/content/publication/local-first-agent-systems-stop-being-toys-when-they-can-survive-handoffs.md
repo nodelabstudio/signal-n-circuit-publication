@@ -8,7 +8,7 @@ tags:
   - 'handoffs'
 excerpt: 'The real line between a local agent demo and a usable operating system is not autonomy. It is whether work can survive interruptions, approvals, session switches, and human handoffs without falling apart.'
 author: 'Publication Staff'
-image: ''
+image: '/images/articles/art7-amber-server.jpg'
 sources:
   - 'https://github.com/openclaw/openclaw'
   - 'https://hnrss.org/show'

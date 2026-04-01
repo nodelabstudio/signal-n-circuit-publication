@@ -20,6 +20,11 @@ if (!post) {
 <PublicationLayout title={post.title} description={post.excerpt}>
   <article class='article'>
     <header class='article-head'>
+      {post.image && (
+        <div class='article-hero'>
+          <img src={post.image} alt={post.title} />
+        </div>
+      )}
       <div class='headline-band'>
         <div>
           <p class='kicker'><a class='category-link' href={`/category/${post.category}/`}>{post.category.replace(/-/g, ' ')}</a></p>
@@ -93,6 +98,20 @@ if (!post) {
   .article-head {
     display: grid;
     gap: 1rem;
+  }
+
+  .article-hero {
+    width: 100%;
+    max-height: 420px;
+    overflow: hidden;
+    border-radius: 16px;
+  }
+
+  .article-hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 
   .headline-band {

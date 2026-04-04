@@ -10,7 +10,7 @@ excerpt: 'The durable AI agent business is shifting from demo software to manage
 author: 'X Node Dev'
 authorImage: ''
 authorBio: ''
-image: '/images/articles/art1-robotic-relay.jpg'
+image: '/images/articles/lc-managed-ai-services-are-the-real-agent-business.png'
 sources:
   - 'https://www.glean.com/blog/glean-agents-launch-blog'
   - 'https://www.intercom.com/help/en/articles/7120684-fin-ai-agent-explained'

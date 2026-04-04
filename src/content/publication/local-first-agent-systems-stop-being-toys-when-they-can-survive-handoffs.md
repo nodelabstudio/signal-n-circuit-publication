@@ -12,7 +12,7 @@ excerpt: 'The line between an agent demo and a dependable system is handoff reli
 author: 'X Node Dev'
 authorImage: ''
 authorBio: ''
-image: '/images/articles/art7-amber-server.jpg'
+image: '/images/articles/lc-local-first-agent-systems-stop-being-toys-when-they-can-survive-handoffs.png'
 sources:
   - 'https://github.com/openclaw/openclaw'
   - 'https://docs.anthropic.com/en/release-notes/overview'

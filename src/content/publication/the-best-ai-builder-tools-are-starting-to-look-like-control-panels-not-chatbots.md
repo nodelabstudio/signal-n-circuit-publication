@@ -10,7 +10,7 @@ excerpt: 'For working builders, useful AI tooling is shifting from chat-only sur
 author: 'X Node Dev'
 authorImage: ''
 authorBio: ''
-image: '/images/articles/art6-dev-dashboard.jpg'
+image: '/images/articles/lc-the-best-ai-builder-tools-are-starting-to-look-like-control-panels-not-chatbots.png'
 sources:
   - 'https://github.com/openclaw/openclaw'
   - 'https://cursor.com/blog'

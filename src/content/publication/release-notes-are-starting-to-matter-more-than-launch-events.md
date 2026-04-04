@@ -10,7 +10,7 @@ excerpt: 'Release Watch: the highest-signal AI news often appears in changelog d
 author: 'X Node Dev'
 authorImage: ''
 authorBio: ''
-image: '/images/articles/art4-changelog.jpg'
+image: '/images/articles/lc-release-notes-are-starting-to-matter-more-than-launch-events.png'
 sources:
   - 'https://platform.openai.com/docs/changelog'
   - 'https://docs.anthropic.com/en/release-notes/overview'

@@ -158,15 +158,25 @@ if (!post) {
 
   .body-card p,
   .body-card li {
-    margin-bottom: 1.35rem;
+    margin: 0;
     max-width: 39em;
     font-size: 1.1rem;
     line-height: 1.82;
   }
 
+  .body-card p + p,
+  .body-card p + ul,
+  .body-card p + ol,
+  .body-card ul + p,
+  .body-card ol + p,
+  .body-card blockquote + p,
+  .body-card p + blockquote {
+    margin-top: 1.1rem;
+  }
+
   .body-card h2,
   .body-card h3 {
-    margin: 2.3rem 0 0;
+    margin: 2.5rem 0 0;
     line-height: 1.14;
   }
 
@@ -175,9 +185,11 @@ if (!post) {
   .body-card h2 + ul,
   .body-card h3 + ul,
   .body-card h2 + ol,
-  .body-card h3 + ol {
+  .body-card h3 + ol,
+  .body-card h2 + blockquote,
+  .body-card h3 + blockquote {
     margin-top: 0;
-    padding-top: 0.95rem;
+    padding-top: 1.05rem;
   }
 
   .body-card ul,
@@ -187,8 +199,8 @@ if (!post) {
   }
 
   .body-card blockquote {
-    margin: 1rem 0 1.2rem 1rem;
-    padding: 0.2rem 0 0.2rem 0.9rem;
+    margin: 1.45rem 0 1.55rem 1rem;
+    padding: 0.8rem 0.95rem;
     border-left: 3px solid rgba(var(--accent), 0.75);
     color: rgb(var(--muted));
     background: rgba(var(--surface-strong), 0.4);

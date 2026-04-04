@@ -1,6 +1,9 @@
 ---
+import ArticleCard from '../../../../src/components/ArticleCard.astro';
 import PublicationLayout from '../../../layouts/PublicationLayout.astro';
 import { getPublicationPosts, getPublicationTags } from '../../../lib/publication';
+
+export const prerender = true;
 
 export async function getStaticPaths() {
   const tags = await getPublicationTags();
@@ -19,63 +22,112 @@ if (!tag) {
 ---
 
 <PublicationLayout title={`Tag: ${tag}`} description={`Publication archive for tag ${tag}.`}>
-  <section class='page-head'>
+  <section class='archive-head'>
     <p class='kicker'>Tag archive</p>
     <h1>{tag}</h1>
     <p>Stories grouped by this tag across the publication.</p>
   </section>
 
-  <section class='list'>
-    {
-      filteredPosts.map((post) => (
-        <article class='row card'>
-          <div>
-            <p class='kicker'>{post.category.replace(/-/g, ' ')}</p>
-            <h2><a href={`/articles/${post.slug}/`}>{post.title}</a></h2>
-            <p>{post.excerpt}</p>
-          </div>
-          <div class='meta-block'>
-            <span>{post.type}</span>
-            <span>{post.author}</span>
-            <span>{post.date}</span>
-          </div>
-        </article>
-      ))
-    }
+  <section class='archive-summary card'>
+    <div>
+      <p class='kicker'>Story count</p>
+      <strong>{filteredPosts.length}</strong>
+    </div>
+    <div>
+      <p class='kicker'>Usage</p>
+      <strong>{filteredPosts.length > 0 ? 'Live archive' : 'No stories yet'}</strong>
+    </div>
   </section>
+
+  {
+    filteredPosts.length > 0 ? (
+      <section class='archive-grid'>
+        {filteredPosts.map((post) => <ArticleCard post={post} />)}
+      </section>
+    ) : (
+      <section class='empty card'>
+        <div class='empty-copy'>
+          <h2>No tagged stories yet</h2>
+          <p>
+            This tag exists in the publication system, but no articles are using it yet.
+          </p>
+          <p>
+            Browse the <a href='/articles/'>main archive</a> or return to the <a href='/'>front page</a>.
+          </p>
+        </div>
+      </section>
+    )
+  }
 </PublicationLayout>
 
 <style>
-  .page-head {
+  .archive-head {
     display: grid;
     gap: 0.8rem;
     margin-bottom: 1.5rem;
     max-width: 70ch;
   }
 
-  .list {
-    display: grid;
-    gap: 1rem;
+  .archive-head h1 {
+    font-size: clamp(3rem, 6vw, 5.4rem);
+    max-width: 11ch;
   }
 
-  .row {
-    padding: 1.2rem;
-    display: grid;
-    gap: 1rem;
-  }
-
-  .row a {
-    color: rgb(var(--ink));
-    text-decoration: none;
-  }
-
-  .meta-block {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.8rem;
+  .archive-head p:last-child {
     color: rgb(var(--muted));
-    text-transform: uppercase;
-    font-size: 0.8rem;
-    letter-spacing: 0.08em;
+    font-size: 1.08rem;
+    line-height: 1.65;
+    max-width: 55ch;
+  }
+
+  .archive-summary {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    padding: 1rem 1.15rem;
+    margin-bottom: 1rem;
+  }
+
+  .archive-summary div {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .archive-summary strong {
+    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    font-size: 1.35rem;
+    line-height: 1.1;
+  }
+
+  .archive-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .empty {
+    padding: 1.5rem;
+  }
+
+  .empty-copy {
+    display: grid;
+    gap: 0.9rem;
+    max-width: 52ch;
+  }
+
+  .empty-copy h2 {
+    font-size: clamp(2rem, 3vw, 3rem);
+  }
+
+  .empty-copy p {
+    color: rgb(var(--muted));
+    line-height: 1.65;
+  }
+
+  @media (max-width: 900px) {
+    .archive-summary,
+    .archive-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

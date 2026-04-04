@@ -1,0 +1,108 @@
+{
+  "generated_at": "2026-04-03T00:48:42.874066Z",
+  "provider": "cloudflare",
+  "model": "flux-2-dev",
+  "api_endpoint": "https://cloudfire.one/api/generate-image",
+  "authors": [
+    {
+      "name": "Nora Vale",
+      "slug": "nora-vale",
+      "image_path": "/images/authors/nora-vale.jpg",
+      "ok": true,
+      "saved_to": "/home/administrator/site/public/images/authors/nora-vale.jpg",
+      "image_url": "https://res.cloudinary.com/angelrodriguez/image/upload/v1775177649/cloudfire/7f7164ee055444d285719fa4031038f8.png",
+      "content_type": "image/png",
+      "provider": "gemini",
+      "model": "gemini-2.5-flash",
+      "prompt_override_used": true
+    },
+    {
+      "name": "Eli Mercer",
+      "slug": "eli-mercer",
+      "image_path": "/images/authors/eli-mercer.jpg",
+      "ok": true,
+      "saved_to": "/home/administrator/site/public/images/authors/eli-mercer.jpg",
+      "image_url": "https://res.cloudinary.com/angelrodriguez/image/upload/v1775177614/cloudfire/fd2e14724c154de89ca5621467d86783.png",
+      "content_type": "image/png",
+      "provider": "gemini",
+      "model": "gemini-2.5-flash"
+    },
+    {
+      "name": "Sana Brooks",
+      "slug": "sana-brooks",
+      "image_path": "/images/authors/sana-brooks.jpg",
+      "ok": true,
+      "saved_to": "/home/administrator/site/public/images/authors/sana-brooks.jpg",
+      "image_url": "https://res.cloudinary.com/angelrodriguez/image/upload/v1775177619/cloudfire/d72f1ce3952744aaad613d46d455fdde.png",
+      "content_type": "image/png",
+      "provider": "gemini",
+      "model": "gemini-2.5-flash"
+    },
+    {
+      "name": "Rowan Pike",
+      "slug": "rowan-pike",
+      "image_path": "/images/authors/rowan-pike.jpg",
+      "ok": true,
+      "saved_to": "/home/administrator/site/public/images/authors/rowan-pike.jpg",
+      "image_url": "https://res.cloudinary.com/angelrodriguez/image/upload/v1775177415/cloudfire/1726ac5607c3469da5710cd9237251fd.jpg",
+      "content_type": "image/png"
+    },
+    {
+      "name": "Iris Calder",
+      "slug": "iris-calder",
+      "image_path": "/images/authors/iris-calder.jpg",
+      "ok": true,
+      "saved_to": "/home/administrator/site/public/images/authors/iris-calder.jpg",
+      "image_url": "https://res.cloudinary.com/angelrodriguez/image/upload/v1775177447/cloudfire/de409067dd974dd383d7de6a51dce96c.jpg",
+      "content_type": "image/png"
+    },
+    {
+      "name": "Micah Sloan",
+      "slug": "micah-sloan",
+      "image_path": "/images/authors/micah-sloan.jpg",
+      "ok": true,
+      "saved_to": "/home/administrator/site/public/images/authors/micah-sloan.jpg",
+      "image_url": "https://res.cloudinary.com/angelrodriguez/image/upload/v1775177479/cloudfire/1973b740d70f4d5f93bf0c92f6e426a1.jpg",
+      "content_type": "image/png"
+    },
+    {
+      "name": "Leah Kade",
+      "slug": "leah-kade",
+      "image_path": "/images/authors/leah-kade.jpg",
+      "ok": true,
+      "saved_to": "/home/administrator/site/public/images/authors/leah-kade.jpg",
+      "image_url": "https://res.cloudinary.com/angelrodriguez/image/upload/v1775177511/cloudfire/1e0ce26589da46c5947401bca3c46960.jpg",
+      "content_type": "image/png"
+    },
+    {
+      "name": "Jonah Keene",
+      "slug": "jonah-keene",
+      "image_path": "/images/authors/jonah-keene.jpg",
+      "ok": true,
+      "saved_to": "/home/administrator/site/public/images/authors/jonah-keene.jpg",
+      "image_url": "https://res.cloudinary.com/angelrodriguez/image/upload/v1775177542/cloudfire/9bdfd035c74f48c188dbaf4d715dbff7.jpg",
+      "content_type": "image/png"
+    },
+    {
+      "name": "Priya Noland",
+      "slug": "priya-noland",
+      "image_path": "/images/authors/priya-noland.jpg",
+      "ok": true,
+      "saved_to": "/home/administrator/site/public/images/authors/priya-noland.jpg",
+      "image_url": "https://res.cloudinary.com/angelrodriguez/image/upload/v1775177574/cloudfire/991691543a654251b854802ccd8b3ad9.jpg",
+      "content_type": "image/png"
+    },
+    {
+      "name": "Gabe Holloway",
+      "slug": "gabe-holloway",
+      "image_path": "/images/authors/gabe-holloway.jpg",
+      "ok": true,
+      "saved_to": "/home/administrator/site/public/images/authors/gabe-holloway.jpg",
+      "image_url": "https://res.cloudinary.com/angelrodriguez/image/upload/v1775177625/cloudfire/7f0b02ff967445b2915c3c3e0f15ec2b.png",
+      "content_type": "image/png",
+      "provider": "gemini",
+      "model": "gemini-2.5-flash"
+    }
+  ],
+  "retry_at": "2026-04-03T00:53:46.183365Z"
+}

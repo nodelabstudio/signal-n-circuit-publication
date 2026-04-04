@@ -1,0 +1,153 @@
+---
+import AuthorBlock from './AuthorBlock.astro';
+import type { PublicationPost } from '../lib/publication';
+
+interface Props {
+  post: PublicationPost;
+}
+
+const { post } = Astro.props;
+---
+
+<article class='article-card card'>
+  <a class='media-link' href={`/articles/${post.slug}/`} aria-label={post.title}>
+    <div class='media-frame'>
+      <img src={post.image} alt={post.title} loading='lazy' />
+    </div>
+  </a>
+
+  <div class='copy'>
+    <a class='category-pill' href={`/category/${post.category}/`}>
+      {post.category.replace(/-/g, ' ')}
+    </a>
+
+    <h3 class='headline'>
+      <a href={`/articles/${post.slug}/`}>{post.title}</a>
+    </h3>
+
+    <p class='excerpt'>{post.excerpt}</p>
+
+    <div class='meta-row'>
+      <AuthorBlock name={post.author} image={post.authorImage} bio={post.authorBio} size='sm' />
+      <span class='date'>{post.date}</span>
+    </div>
+  </div>
+</article>
+
+<style>
+  .article-card {
+    overflow: hidden;
+    display: grid;
+    gap: 0;
+    height: 100%;
+    border-radius: 0;
+    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+  }
+
+  .article-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(var(--accent), 0.18);
+    box-shadow: 0 28px 70px rgba(var(--shadow), 0.12);
+  }
+
+  .media-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .media-frame {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 0;
+    background: linear-gradient(135deg, rgba(var(--surface-strong), 0.96), rgba(var(--border), 0.9));
+  }
+
+  .media-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 260ms ease;
+  }
+
+  .article-card:hover .media-frame img {
+    transform: scale(1.04);
+  }
+
+  .copy {
+    display: grid;
+    gap: 0.85rem;
+    padding: 1rem 1rem 1.1rem;
+  }
+
+  .category-pill {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    color: rgb(var(--accent));
+    font-weight: 700;
+  }
+
+  .category-pill:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .headline {
+    font-size: clamp(1.4rem, 2vw, 1.8rem);
+    line-height: 1.05;
+  }
+
+  .headline a {
+    color: rgb(var(--ink));
+    text-decoration: none;
+    transition: color 180ms ease;
+  }
+
+  .article-card:hover .headline a {
+    color: rgb(var(--accent));
+  }
+
+  .excerpt {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    color: rgb(var(--muted));
+    font-size: 0.96rem;
+    line-height: 1.55;
+    min-height: 3.1em;
+  }
+
+  .meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.15rem;
+    margin-top: 0.15rem;
+  }
+
+  .date {
+    flex-shrink: 0;
+    color: rgb(var(--muted));
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 520px) {
+    .copy {
+      padding: 0.9rem;
+    }
+
+    .meta-row {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

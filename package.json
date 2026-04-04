@@ -10,7 +10,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "start": "node ./dist/server/entry.mjs"
+    "start": "node ./dist/server/entry.mjs",
+    "validate:authors": "node ./scripts/validate-author-bank.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^5.0.3",

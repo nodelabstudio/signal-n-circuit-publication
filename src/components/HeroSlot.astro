@@ -1,0 +1,157 @@
+---
+import AuthorBlock from './AuthorBlock.astro';
+import type { PublicationPost } from '../lib/publication';
+
+interface Props {
+  post: PublicationPost;
+}
+
+const { post } = Astro.props;
+---
+
+<section class='hero-slot card'>
+  <a class='hero-media' href={`/articles/${post.slug}/`} aria-label={post.title}>
+    <img src={post.image} alt={post.title} loading='eager' />
+  </a>
+
+  <div class='overlay'>
+    <div class='topline'>
+      <a class='category' href={`/category/${post.category}/`}>{post.category.replace(/-/g, ' ')}</a>
+      <span class='label'>Featured story</span>
+    </div>
+
+    <h2 class='title'>
+      <a href={`/articles/${post.slug}/`}>{post.title}</a>
+    </h2>
+
+    <p class='excerpt'>{post.excerpt}</p>
+
+    <div class='meta-row'>
+      <div class='author-wrap' style='--author-ink: 255, 255, 255; --author-muted: 234, 229, 224; --author-border: 255, 255, 255; --author-avatar-bg: 255, 255, 255;'>
+        <AuthorBlock name={post.author} image={post.authorImage} bio={post.authorBio} size='md' />
+      </div>
+      <span class='date'>{post.date}</span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-slot {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0;
+    min-height: clamp(540px, 70vh, 760px);
+  }
+
+  .hero-media {
+    position: absolute;
+    inset: 0;
+    display: block;
+    text-decoration: none;
+  }
+
+  .hero-media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(26, 26, 26, 0.05) 0%, rgba(26, 26, 26, 0.22) 28%, rgba(26, 26, 26, 0.9) 100%);
+  }
+
+  .hero-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 360ms ease;
+  }
+
+  .hero-slot:hover .hero-media img {
+    transform: scale(1.03);
+  }
+
+  .overlay {
+    position: relative;
+    z-index: 1;
+    align-self: end;
+    padding: clamp(1.4rem, 4vw, 3.2rem);
+    display: grid;
+    gap: 1rem;
+    color: rgb(255, 255, 255);
+    max-width: 46rem;
+  }
+
+  .topline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.9rem;
+  }
+
+  .label,
+  .category {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+
+  .label {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .category {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    opacity: 0.9;
+  }
+
+  .category:hover {
+    color: rgb(var(--accent));
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+
+  .title {
+    max-width: 12ch;
+    font-size: clamp(3.1rem, 5.8vw, 5.8rem);
+    line-height: 0.96;
+    letter-spacing: -0.045em;
+  }
+
+  .title a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+  }
+
+  .title a:hover {
+    color: rgb(var(--accent));
+  }
+
+  .excerpt {
+    max-width: 60ch;
+    color: rgba(255, 255, 255, 0.84);
+    font-size: 1.08rem;
+    line-height: 1.65;
+  }
+
+  .meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    padding-top: 0.6rem;
+  }
+
+  .author-wrap {
+    max-width: 38rem;
+  }
+
+  .date {
+    color: rgba(255, 255, 255, 0.78);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+</style>

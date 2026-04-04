@@ -14,6 +14,8 @@ const publication = defineCollection({
     tags: z.array(z.string()).default([]),
     excerpt: z.string(),
     author: z.string().default('Publication Staff'),
+    authorImage: z.string().default(''),
+    authorBio: z.string().default(''),
     image: z.string().optional(),
     sources: z.array(z.string()).default([]),
     type: z.string(),

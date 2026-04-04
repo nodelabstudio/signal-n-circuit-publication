@@ -11,6 +11,22 @@ export default defineConfig({
 	output: 'server',
 	adapter: node({ mode: 'standalone' }),
 	integrations: [mdx(), sitemap()],
+	vite: {
+		build: {
+			rollupOptions: {
+				onwarn(warning, warn) {
+					if (
+						warning.code === 'UNUSED_EXTERNAL_IMPORT' &&
+						String(warning.message).includes('@astrojs/internal-helpers/remote')
+					) {
+						return;
+					}
+
+					warn(warning);
+				},
+			},
+		},
+	},
 	security: {
 		checkOrigin: false,
 	},

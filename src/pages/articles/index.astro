@@ -1,163 +1,109 @@
 ---
+import ArticleCard from '../../components/ArticleCard.astro';
 import PublicationLayout from '../../layouts/PublicationLayout.astro';
 import { getPublicationPosts } from '../../lib/publication';
 
 const posts = await getPublicationPosts();
 ---
 
-<PublicationLayout title='Articles' description='Browse the latest publication coverage.'>
-  <section class='page-head'>
+<PublicationLayout title='Articles' description='Browse the latest Signal & Circuit coverage.'>
+  <section class='archive-head'>
     <p class='kicker'>Archive</p>
     <h1>All articles</h1>
-    <p>Reporting on AI agents, LLM tooling, and the service businesses growing around practical automation.</p>
+    <p>
+      Reporting on AI agents, LLM tooling, and the service businesses growing around practical automation.
+    </p>
+    <div class='archive-meta'>
+      <p class='archive-count'>{posts.length} stories available</p>
+      <a class='home-link' href='/'>Back to homepage</a>
+    </div>
   </section>
 
-  <section class='list'>
-    {
-      posts.map((post) => (
-        <article class='row card'>
-          <div class='row-media' aria-hidden='true'></div>
-          <div class='row-copy'>
-            <p class='kicker'><a class='category-link' href={`/category/${post.category}/`}>{post.category.replace(/-/g, ' ')}</a></p>
-            <h2><a href={`/articles/${post.slug}/`}>{post.title}</a></h2>
-            <p>{post.excerpt}</p>
-            <div class='meta-block'>
-              <span>{post.type}</span>
-              <span>{post.author}</span>
-              <span>{post.date}</span>
-            </div>
-          </div>
-        </article>
-      ))
-    }
-  </section>
+  {
+    posts.length > 0 ? (
+      <section class='archive-grid'>
+        {posts.map((post) => <ArticleCard post={post} />)}
+      </section>
+    ) : (
+      <p class='empty-copy'>The archive is currently empty. Check back soon for the first Signal & Circuit issue.</p>
+    )
+  }
 </PublicationLayout>
 
 <style>
-  .page-head {
+  .archive-head {
     display: grid;
     gap: 0.8rem;
     margin-bottom: 1.5rem;
     max-width: 70ch;
   }
 
-  .category-link {
-    text-decoration: none;
-    color: inherit;
+  .archive-head h1 {
+    font-size: clamp(3rem, 6vw, 5.4rem);
+    max-width: 11ch;
   }
 
-  .list {
+  .archive-head p:last-child {
+    color: rgb(var(--muted));
+    font-size: 1.08rem;
+    line-height: 1.65;
+    max-width: 55ch;
+  }
+
+  .archive-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.9rem;
+    margin-top: 0.35rem;
+  }
+
+  .archive-count {
+    margin: 0;
+    color: rgb(var(--muted));
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .home-link {
+    color: rgb(var(--accent));
+    text-decoration: none;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    font-weight: 700;
+  }
+
+  .home-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .empty-copy {
+    margin: 0;
+    padding: 1rem;
+    border: 1px dashed rgba(var(--border), 0.9);
+    border-radius: 0.7rem;
+    color: rgb(var(--muted));
+    line-height: 1.55;
+    background: rgba(var(--surface-strong), 0.5);
+  }
+
+  .archive-grid {
     display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1rem;
   }
 
-  .row {
-    overflow: hidden;
-    display: grid;
-    grid-template-columns: minmax(220px, 0.7fr) minmax(0, 1.4fr);
-  }
+  @media (max-width: 860px) {
+    .archive-meta {
+      justify-content: flex-start;
+    }
 
-  .row-media {
-    min-height: 220px;
-    background:
-      linear-gradient(135deg, rgba(var(--surface-strong), 0.95), rgba(var(--border), 0.88)),
-      radial-gradient(circle at top right, rgba(255,255,255,0.28), transparent 42%);
-    border-right: 1px solid rgba(var(--border), 0.82);
-    position: relative;
-  }
-
-  .row-media::before {
-    content: '';
-    position: absolute;
-    inset: 1.15rem;
-    border-radius: 16px;
-    background: linear-gradient(135deg, rgba(var(--bg), 0.95), rgba(255,255,255,0.7));
-    border: 1px solid rgba(var(--border), 0.72);
-  }
-
-  .row-media::after {
-    content: '';
-    position: absolute;
-    left: 2rem;
-    right: 2rem;
-    bottom: 1.8rem;
-    height: 0.7rem;
-    border-radius: 999px;
-    background: rgba(var(--accent), 0.18);
-    box-shadow: 0 -1.15rem 0 rgba(var(--accent), 0.12), 0 -2.3rem 0 rgba(var(--ink), 0.08);
-  }
-
-  .row-copy {
-    padding: 1.3rem;
-    display: grid;
-    gap: 0.9rem;
-  }
-
-  .row a {
-    color: rgb(var(--ink));
-    text-decoration: none;
-  }
-
-  .meta-block {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.8rem;
-    color: rgb(var(--muted));
-    text-transform: uppercase;
-    font-size: 0.8rem;
-    letter-spacing: 0.08em;
-  }
-
-  @media (max-width: 820px) {
-    .row {
+    .archive-grid {
       grid-template-columns: 1fr;
     }
-
-    .row-media {
-      min-height: 180px;
-      border-right: none;
-      border-bottom: 1px solid rgba(var(--border), 0.82);
-    }
-  }
-</style>
-</PublicationLayout>
-
-<style>
-  .page-head {
-    display: grid;
-    gap: 0.8rem;
-    margin-bottom: 1.5rem;
-    max-width: 70ch;
-  }
-
-  .category-link {
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .list {
-    display: grid;
-    gap: 1rem;
-  }
-
-  .row {
-    padding: 1.2rem;
-    display: grid;
-    gap: 1rem;
-  }
-
-  .row a {
-    color: rgb(var(--ink));
-    text-decoration: none;
-  }
-
-  .meta-block {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.8rem;
-    color: rgb(var(--muted));
-    text-transform: uppercase;
-    font-size: 0.8rem;
-    letter-spacing: 0.08em;
   }
 </style>

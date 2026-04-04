@@ -1,6 +1,10 @@
 ---
+import AuthorBlock from '../../components/AuthorBlock.astro';
+import HeroSlot from '../../components/HeroSlot.astro';
 import PublicationLayout from '../../layouts/PublicationLayout.astro';
 import { getPublicationPost, getPublicationPosts } from '../../lib/publication';
+
+export const prerender = true;
 
 export async function getStaticPaths() {
   const posts = await getPublicationPosts();
@@ -19,30 +23,21 @@ if (!post) {
 
 <PublicationLayout title={post.title} description={post.excerpt}>
   <article class='article'>
+    <HeroSlot post={post} />
+
     <header class='article-head'>
-      {post.image && (
-        <div class='article-hero'>
-          <img src={post.image} alt={post.title} />
-        </div>
-      )}
-      <div class='headline-band'>
-        <div>
-          <p class='kicker'><a class='category-link' href={`/category/${post.category}/`}>{post.category.replace(/-/g, ' ')}</a></p>
-          <h1>{post.title}</h1>
-          <p class='deck'>{post.excerpt}</p>
-        </div>
-        <div class='headline-meta card'>
-          <span>{post.type}</span>
-          <span>{post.author}</span>
-          <span>{post.date}</span>
-        </div>
+      <div class='article-meta card'>
+        <span class='meta-label'>{post.type}</span>
+        <AuthorBlock name={post.author} image={post.authorImage} bio={post.authorBio} size='md' />
+        <span class='date'>{post.date}</span>
       </div>
+
       <div class='tag-row'>
-        {
-          post.tags.map((tag) => (
-            <a class='pill' href={`/tag/${tag}/`}>{tag}</a>
-          ))
-        }
+        {post.tags.map((tag) => (
+          <a class='pill' href={`/tag/${tag}/`}>
+            {tag}
+          </a>
+        ))}
       </div>
     </header>
 
@@ -52,39 +47,11 @@ if (!post) {
           <span>Lead analysis</span>
           <strong>{post.category.replace(/-/g, ' ')}</strong>
         </div>
-        <p class='standfirst'>The commercial shape of AI agents is getting clearer: long-term value concentrates around installation, maintenance, oversight, and the human-readable systems that make automation survivable in the field.</p>
+        <p class='standfirst'>
+          The commercial shape of AI agents is getting clearer: long-term value concentrates around installation, maintenance, oversight, and the human-readable systems that make automation survivable in the field.
+        </p>
         {post.body?.split('\n\n').map((paragraph) => <p>{paragraph}</p>)}
       </div>
-
-      <aside class='sidebar'>
-        <div class='card side-block brief-block'>
-          <p class='kicker'>Article brief</p>
-          <p>Why it matters</p>
-          <strong>The interesting business is moving from demo appeal toward maintained systems customers can actually rely on.</strong>
-        </div>
-        <div class='card side-block'>
-          <p class='kicker'>Sources</p>
-          <ul>
-            {
-              post.sources.map((source) => (
-                <li><a href={source} target='_blank' rel='noreferrer'>{source}</a></li>
-              ))
-            }
-          </ul>
-        </div>
-        <div class='card side-block signal-block'>
-          <p class='kicker'>Signal points</p>
-          <ul>
-            <li>Services are becoming the moat, not the demo.</li>
-            <li>Reliability beats novelty when workflows reach production.</li>
-            <li>Operational visibility matters as much as model capability.</li>
-          </ul>
-        </div>
-        <div class='card side-block'>
-          <p class='kicker'>Disclosure</p>
-          <p>Signal &amp; Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.</p>
-        </div>
-      </aside>
     </section>
   </article>
 </PublicationLayout>
@@ -100,52 +67,23 @@ if (!post) {
     gap: 1rem;
   }
 
-  .article-hero {
-    width: 100%;
-    max-height: 420px;
-    overflow: hidden;
-    border-radius: 16px;
-  }
-
-  .article-hero img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .headline-band {
-    display: grid;
-    grid-template-columns: minmax(0, 1.4fr) minmax(220px, 0.55fr);
-    gap: 1rem;
-    align-items: start;
-  }
-
-  .headline-band h1 {
-    max-width: 12ch;
-    font-size: clamp(2.9rem, 5vw, 4.8rem);
-  }
-
-  .headline-meta {
-    padding: 1rem;
-    display: grid;
-    gap: 0.5rem;
-    align-content: start;
+  .article-meta {
+    padding: 1.15rem 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    border-radius: 0;
     color: rgb(var(--muted));
     text-transform: uppercase;
     letter-spacing: 0.08em;
     font-size: 0.78rem;
   }
 
-  .category-link {
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .deck {
-    font-size: 1.18rem;
-    color: rgb(var(--muted));
-    max-width: 58ch;
+  .meta-label,
+  .date {
+    display: block;
   }
 
   .tag-row {
@@ -156,14 +94,16 @@ if (!post) {
 
   .content-wrap {
     display: grid;
-    grid-template-columns: minmax(0, 1.7fr) minmax(260px, 0.8fr);
-    gap: 1.25rem;
-    align-items: start;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .body-card {
     position: relative;
     padding: 1.8rem 1.8rem 1.5rem;
+    max-width: 680px;
+    margin: 0 auto;
+    width: 100%;
+    border-radius: 0;
   }
 
   .article-rail {
@@ -180,7 +120,7 @@ if (!post) {
   }
 
   .standfirst {
-    font-size: 1.26rem;
+    font-size: 1.24rem;
     line-height: 1.72;
     color: rgb(var(--ink));
     max-width: 34em;
@@ -189,47 +129,14 @@ if (!post) {
   .body-card p {
     margin-bottom: 1.35rem;
     max-width: 39em;
-    font-size: 1.12rem;
+    font-size: 1.1rem;
     line-height: 1.82;
   }
 
-  .sidebar {
-    display: grid;
-    gap: 1rem;
-  }
-
-  .side-block {
-    padding: 1rem;
-  }
-
-  .brief-block {
-    display: grid;
-    gap: 0.5rem;
-    background: rgba(var(--surface-strong), 0.62);
-  }
-
-  .brief-block p {
-    color: rgb(var(--muted));
-  }
-
-  .brief-block strong {
-    line-height: 1.3;
-  }
-
-  .signal-block ul,
-  .side-block ul {
-    margin: 0.8rem 0 0;
-    padding-left: 1.1rem;
-  }
-
-  .side-block li + li {
-    margin-top: 0.5rem;
-  }
-
   @media (max-width: 980px) {
-    .headline-band,
-    .content-wrap {
-      grid-template-columns: 1fr;
+    .article-meta {
+      align-items: flex-start;
+      flex-direction: column;
     }
   }
 </style>

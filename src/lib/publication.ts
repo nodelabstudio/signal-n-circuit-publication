@@ -1,5 +1,6 @@
 import type { CollectionEntry } from 'astro:content';
 import { getCollection, render } from 'astro:content';
+import { AUTHOR_BANK } from './authors';
 
 export type PublicationEntry = CollectionEntry<'publication'>;
 
@@ -11,6 +12,8 @@ export type PublicationPost = {
   tags: Array<string>;
   excerpt: string;
   author: string;
+  authorImage: string;
+  authorBio: string;
   type: string;
   image: string;
   sources: Array<string>;
@@ -27,6 +30,8 @@ const placeholderPosts: Array<PublicationPost> = [
     excerpt:
       'The durable money is not in showing an agent once. It is in installing, monitoring, and maintaining a system someone depends on every week.',
     author: 'Publication Staff',
+    authorImage: '',
+    authorBio: '',
     type: 'analysis',
     sources: ['https://github.com/openclaw/openclaw'],
     image: '',
@@ -42,6 +47,8 @@ const placeholderPosts: Array<PublicationPost> = [
     excerpt:
       'If nobody is publicly complaining about the workflow, you probably have not found the right niche pain point yet.',
     author: 'Publication Staff',
+    authorImage: '',
+    authorBio: '',
     type: 'niche-teardown',
     sources: ['https://news.ycombinator.com/'],
     image: '',
@@ -57,6 +64,8 @@ const placeholderPosts: Array<PublicationPost> = [
     excerpt:
       'A small publication does not need a giant CMS. It needs reliable markdown, a review loop, and enough discipline to keep the pipeline clean.',
     author: 'Publication Staff',
+    authorImage: '',
+    authorBio: '',
     type: 'tutorials-patterns',
     sources: ['https://astro.build/'],
     image: '',
@@ -72,6 +81,8 @@ const placeholderPosts: Array<PublicationPost> = [
     excerpt:
       'The interesting pattern is not a flashy launch. It is small teams quietly wrapping automation with configuration, support, and accountability.',
     author: 'Publication Staff',
+    authorImage: '',
+    authorBio: '',
     type: 'profile',
     sources: ['https://hnrss.org/show'],
     image: '',
@@ -87,6 +98,8 @@ const placeholderPosts: Array<PublicationPost> = [
     excerpt:
       'For builders, the real signal lives in pricing changes, context shifts, API details, and what quietly got deprecated.',
     author: 'Publication Staff',
+    authorImage: '',
+    authorBio: '',
     type: 'breaking',
     sources: ['https://github.com/openclaw/openclaw/releases.atom'],
     image: '',
@@ -102,6 +115,8 @@ const placeholderPosts: Array<PublicationPost> = [
     excerpt:
       'The interesting story is not raw autonomy. It is whether the system can support durable workflows, approvals, and useful handoffs.',
     author: 'Publication Staff',
+    authorImage: '',
+    authorBio: '',
     type: 'opinion',
     sources: ['https://github.com/openclaw/openclaw'],
     image: '',
@@ -117,6 +132,85 @@ const homepageFeaturedOrder: Array<string> = [
   'release-notes-are-starting-to-matter-more-than-launch-events',
   'the-next-wave-of-ai-service-businesses-will-look-more-like-operators-than-agencies',
 ];
+
+const defaultAuthorAliases = new Set(['', 'Publication Staff']);
+
+const fallbackArticleImagePool: Array<string> = [
+  '/images/articles/art1-robotic-relay.jpg',
+  '/images/articles/art2-operations-center.jpg',
+  '/images/articles/art3-control-panel.jpg',
+  '/images/articles/art4-changelog.jpg',
+  '/images/articles/art5-service-tech.jpg',
+  '/images/articles/art6-dev-dashboard.jpg',
+  '/images/articles/art7-amber-server.jpg',
+];
+
+function slugHash(slug: string): number {
+  return Array.from(slug).reduce((acc, ch) => acc + ch.charCodeAt(0), 0);
+}
+
+function resolveAuthorProfileBySlug(slug: string) {
+  const index = slugHash(slug) % AUTHOR_BANK.length;
+  return AUTHOR_BANK[index];
+}
+
+function resolveAuthorProfileByName(name: string) {
+  const clean = name.trim().toLowerCase();
+  return AUTHOR_BANK.find((p) => p.name.toLowerCase() === clean);
+}
+
+function resolveAuthorName(slug: string, author?: string): string {
+  if (author && !defaultAuthorAliases.has(author.trim())) {
+    return author;
+  }
+
+  return resolveAuthorProfileBySlug(slug).name;
+}
+
+function resolveAuthorImage(slug: string, author?: string, authorImage = ''): string {
+  if (authorImage.trim()) {
+    return authorImage;
+  }
+
+  if (author && !defaultAuthorAliases.has(author.trim())) {
+    const matched = resolveAuthorProfileByName(author);
+    return matched?.imagePath ?? '';
+  }
+
+  return resolveAuthorProfileBySlug(slug).imagePath;
+}
+
+function resolveAuthorBio(slug: string, author?: string, authorBio = ''): string {
+  if (authorBio.trim()) {
+    return authorBio;
+  }
+
+  if (author && !defaultAuthorAliases.has(author.trim())) {
+    const matched = resolveAuthorProfileByName(author);
+    return matched?.bio ?? 'Signal & Circuit contributor covering practical AI systems and operator workflows.';
+  }
+
+  return resolveAuthorProfileBySlug(slug).bio;
+}
+
+function resolveArticleImage(slug: string, image?: string): string {
+  if (image && image.trim().length > 0) {
+    return image;
+  }
+
+  const index = slugHash(slug) % fallbackArticleImagePool.length;
+  return fallbackArticleImagePool[index];
+}
+
+function normalizePost(post: PublicationPost): PublicationPost {
+  return {
+    ...post,
+    author: resolveAuthorName(post.slug, post.author),
+    authorImage: resolveAuthorImage(post.slug, post.author, post.authorImage),
+    authorBio: resolveAuthorBio(post.slug, post.author, post.authorBio),
+    image: resolveArticleImage(post.slug, post.image),
+  };
+}
 
 function orderPostsBySlug(posts: Array<PublicationPost>, preferredOrder: Array<string>): Array<PublicationPost> {
   const rank = new Map(preferredOrder.map((slug, index) => [slug, index]));
@@ -147,14 +241,14 @@ export async function getPublicationPosts(): Promise<Array<PublicationPost>> {
   );
 
   if (livePosts.length === 0) {
-    return placeholderPosts;
+    return placeholderPosts.map(normalizePost);
   }
 
   const rendered = await Promise.all(
     livePosts.map(async (post) => {
       const { Content } = await render(post);
       void Content;
-      return {
+      return normalizePost({
         slug: post.id,
         title: post.data.title,
         date: post.data.date.toLocaleDateString('en-US', {
@@ -166,11 +260,13 @@ export async function getPublicationPosts(): Promise<Array<PublicationPost>> {
         tags: post.data.tags,
         excerpt: post.data.excerpt,
         author: post.data.author,
+        authorImage: post.data.authorImage,
+        authorBio: post.data.authorBio,
         type: post.data.type,
         image: post.data.image ?? '',
         sources: post.data.sources,
         body: post.body,
-      } satisfies PublicationPost;
+      } satisfies PublicationPost);
     }),
   );
 

@@ -75,7 +75,60 @@ const [hero, ...latestPosts] = posts;
         )
       }
     </section>
+
+    <section class='newsletter-panel card'>
+      <p class='kicker'>Newsletter</p>
+      <h2>Signal &amp; Circuit</h2>
+      <p class='newsletter-copy'>Practical dispatches on AI builders, operators, and the service economy. No fluff.</p>
+      <form id='newsletter-form' class='newsletter-form'>
+        <input id='newsletter-email' name='email' type='email' placeholder='you@example.com' required />
+        <button id='newsletter-submit' type='submit'>Subscribe</button>
+      </form>
+      <p id='newsletter-status' class='newsletter-status' aria-live='polite'></p>
+    </section>
   </section>
+
+  <script is:inline>
+    const form = document.getElementById('newsletter-form');
+    const emailInput = document.getElementById('newsletter-email');
+    const status = document.getElementById('newsletter-status');
+    const submitBtn = document.getElementById('newsletter-submit');
+
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!emailInput || !status || !submitBtn) return;
+
+      status.textContent = '';
+      status.className = 'newsletter-status';
+      submitBtn.setAttribute('disabled', 'true');
+      submitBtn.textContent = 'Subscribing...';
+
+      const body = new URLSearchParams({ email: emailInput.value.trim() });
+      try {
+        const res = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body,
+        });
+        const data = await res.json().catch(() => ({}));
+
+        if (res.ok) {
+          status.textContent = 'Subscribed. Check your inbox for confirmation.';
+          status.classList.add('ok');
+          form.reset();
+        } else {
+          status.textContent = data.error || 'Could not subscribe right now.';
+          status.classList.add('error');
+        }
+      } catch {
+        status.textContent = 'Network error. Please try again.';
+        status.classList.add('error');
+      } finally {
+        submitBtn.removeAttribute('disabled');
+        submitBtn.textContent = 'Subscribe';
+      }
+    });
+  </script>
 </PublicationLayout>
 
 <style>
@@ -278,6 +331,76 @@ const [hero, ...latestPosts] = posts;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1rem;
+  }
+
+  .newsletter-panel {
+    border-radius: 0;
+    padding: 1.1rem;
+    display: grid;
+    gap: 0.65rem;
+    max-width: 680px;
+  }
+
+  .newsletter-panel h2 {
+    font-size: clamp(1.6rem, 3.1vw, 2.15rem);
+    line-height: 1;
+  }
+
+  .newsletter-copy {
+    color: rgb(var(--muted));
+    line-height: 1.55;
+    max-width: 55ch;
+  }
+
+  .newsletter-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    align-items: center;
+  }
+
+  .newsletter-form input {
+    flex: 1 1 260px;
+    min-height: 42px;
+    border: 1px solid rgba(var(--border), 0.95);
+    border-radius: 0;
+    padding: 0.58rem 0.72rem;
+    background: rgba(var(--surface), 0.96);
+    color: rgb(var(--ink));
+    font: inherit;
+  }
+
+  .newsletter-form button {
+    min-height: 42px;
+    border: 1px solid rgba(var(--accent), 0.95);
+    border-radius: 0;
+    padding: 0.58rem 0.9rem;
+    font: inherit;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: rgb(var(--paper));
+    background: rgb(var(--accent));
+    cursor: pointer;
+  }
+
+  .newsletter-form button[disabled] {
+    opacity: 0.75;
+    cursor: wait;
+  }
+
+  .newsletter-status {
+    margin: 0;
+    min-height: 1.2em;
+    font-size: 0.9rem;
+    color: rgb(var(--muted));
+  }
+
+  .newsletter-status.ok {
+    color: #2c7b4b;
+  }
+
+  .newsletter-status.error {
+    color: #b5382f;
   }
 
   @media (max-width: 1040px) {

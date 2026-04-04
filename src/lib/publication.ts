@@ -18,6 +18,7 @@ export type PublicationPost = {
   image: string;
   sources: Array<string>;
   body?: string;
+  Content?: unknown;
 };
 
 const placeholderPosts: Array<PublicationPost> = [
@@ -247,7 +248,6 @@ export async function getPublicationPosts(): Promise<Array<PublicationPost>> {
   const rendered = await Promise.all(
     livePosts.map(async (post) => {
       const { Content } = await render(post);
-      void Content;
       return normalizePost({
         slug: post.id,
         title: post.data.title,
@@ -266,6 +266,7 @@ export async function getPublicationPosts(): Promise<Array<PublicationPost>> {
         image: post.data.image ?? '',
         sources: post.data.sources,
         body: post.body,
+        Content,
       } satisfies PublicationPost);
     }),
   );

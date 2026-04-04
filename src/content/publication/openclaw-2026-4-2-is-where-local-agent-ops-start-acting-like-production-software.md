@@ -25,8 +25,9 @@ Most local stacks break during upgrades, not first-run setup. Teams customize pa
 OpenClaw 2026.4.2 explicitly calls out migration boundaries for breaking path updates. That is what mature infrastructure does. It treats upgrade safety as a product feature.
 
 Canonical release sources:
-- https://github.com/openclaw/openclaw/releases
-- https://github.com/openclaw/openclaw/releases/tag/2026.4.2
+> https://github.com/openclaw/openclaw/releases
+>
+> https://github.com/openclaw/openclaw/releases/tag/2026.4.2
 
 ## Task-flow control is really accountability control
 
@@ -85,4 +86,4 @@ OpenClaw 2026.4.2 is not a headline release. It is a reliability release. That i
 
 Systems become production software when they survive upgrades, handoffs, and bad days. This version moves in that direction.
 
-Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.
+*Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.*

@@ -5,7 +5,7 @@ category: "pain-points"
 tags: ["home-healthcare", "scheduling", "operations", "workforce", "automation"]
 excerpt: "Home care agencies do not lose performance on strategy slides. They lose it in shift-fill and scheduling breakdowns. This is where practical automation can deliver measurable gains."
 author: "Publication Staff"
-image: "/images/articles/art4-green-grid.jpg"
+image: '/images/articles/art2-operations-center.jpg'
 sources:
   - "https://www.sagecare.ai/blog/home-care-business/how-the-caregiver-workforce-shortage-is-impacting-home-care-agency-operations"
   - "https://shiftcare.com/us/blog/improving-staffing-and-scheduling"
@@ -113,4 +113,4 @@ Home healthcare scheduling is one of the clearest complaint-first AI opportuniti
 
 The winners in this lane will not be the loudest model demos. They will be the teams that reduce shift-fill chaos, keep human control, and improve measurable service continuity every week.
 
-Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.
+*Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.*

@@ -50,7 +50,7 @@ if (!post) {
         <p class='standfirst'>
           The commercial shape of AI agents is getting clearer: long-term value concentrates around installation, maintenance, oversight, and the human-readable systems that make automation survivable in the field.
         </p>
-        {post.body?.split('\n\n').map((paragraph) => <p>{paragraph}</p>)}
+        {post.Content ? <post.Content /> : post.body?.split('\n\n').map((paragraph) => <p>{paragraph}</p>)}
       </div>
     </section>
   </article>
@@ -126,11 +126,36 @@ if (!post) {
     max-width: 34em;
   }
 
-  .body-card p {
+  .body-card p,
+  .body-card li {
     margin-bottom: 1.35rem;
     max-width: 39em;
     font-size: 1.1rem;
     line-height: 1.82;
+  }
+
+  .body-card h2,
+  .body-card h3 {
+    margin: 1.8rem 0 0.9rem;
+    line-height: 1.12;
+  }
+
+  .body-card ul,
+  .body-card ol {
+    margin: 0 0 1.2rem 1.3rem;
+    padding: 0;
+  }
+
+  .body-card blockquote {
+    margin: 1rem 0 1.2rem 1rem;
+    padding: 0.2rem 0 0.2rem 0.9rem;
+    border-left: 3px solid rgba(var(--accent), 0.75);
+    color: rgb(var(--muted));
+    background: rgba(var(--surface-strong), 0.4);
+  }
+
+  .body-card em {
+    font-style: italic;
   }
 
   @media (max-width: 980px) {

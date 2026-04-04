@@ -74,7 +74,7 @@ if (!post) {
 
   .article-head {
     display: grid;
-    gap: 1.35rem;
+    gap: 0;
   }
 
   .article-title {
@@ -82,6 +82,7 @@ if (!post) {
     line-height: 0.98;
     letter-spacing: -0.04em;
     max-width: 16ch;
+    margin: 0 0 0.9rem;
   }
 
   .article-excerpt {
@@ -89,10 +90,12 @@ if (!post) {
     color: rgb(var(--muted));
     font-size: 1.02rem;
     line-height: 1.64;
+    margin: 0 0 1.35rem;
   }
 
   .article-meta {
     padding: 1.15rem 1.1rem;
+    margin: 0 0 0.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -120,6 +123,7 @@ if (!post) {
   .content-wrap {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
+    margin-top: 0.8rem;
   }
 
   .body-card {

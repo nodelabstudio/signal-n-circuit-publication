@@ -12,8 +12,15 @@
   --shadow: 26, 26, 26;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html {
   background: rgb(var(--bg));
+  overflow-x: clip;
 }
 
 body {
@@ -24,6 +31,7 @@ body {
   line-height: 1.6;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
 }
 
 main {

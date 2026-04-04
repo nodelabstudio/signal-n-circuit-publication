@@ -1,6 +1,4 @@
 ---
-import AuthorBlock from '../../components/AuthorBlock.astro';
-import HeroSlot from '../../components/HeroSlot.astro';
 import PublicationLayout from '../../layouts/PublicationLayout.astro';
 import { getPublicationPost, getPublicationPosts } from '../../lib/publication';
 
@@ -15,6 +13,8 @@ export async function getStaticPaths() {
 
 const { slug } = Astro.params;
 const post = slug ? await getPublicationPost(slug) : undefined;
+const approvedAuthorBio =
+  'X Node Dev is a Senior Application Developer focused on local-first AI systems and workflow automation. He loves tinkering with new technology.';
 
 if (!post) {
   return Astro.redirect('/articles');
@@ -23,12 +23,12 @@ if (!post) {
 
 <PublicationLayout title={post.title} description={post.excerpt}>
   <article class='article'>
-    <HeroSlot post={post} />
-
     <header class='article-head'>
+      <h1 class='article-title'>{post.title}</h1>
+      <p class='article-excerpt'>{post.excerpt}</p>
       <div class='article-meta card'>
         <span class='meta-label'>{post.type}</span>
-        <AuthorBlock name={post.author} image={post.authorImage} bio={post.authorBio} size='md' />
+        <span class='byline'>By X Node Dev</span>
         <span class='date'>{post.date}</span>
       </div>
 
@@ -53,6 +53,16 @@ if (!post) {
         {post.Content ? <post.Content /> : post.body?.split('\n\n').map((paragraph) => <p>{paragraph}</p>)}
       </div>
     </section>
+
+    <section class='author-endcap card'>
+      <img src='/images/authors/xnodedev.jpg' alt='X Node Dev' loading='lazy' />
+      <div class='author-endcap-copy'>
+        <p class='kicker'>About the author</p>
+        <p class='author-name'>X Node Dev</p>
+        <p>{approvedAuthorBio}</p>
+        <a class='author-link' href='https://x.com/x_node_dev' target='_blank' rel='noopener noreferrer'>@x_node_dev on X</a>
+      </div>
+    </section>
   </article>
 </PublicationLayout>
 
@@ -64,7 +74,21 @@ if (!post) {
 
   .article-head {
     display: grid;
-    gap: 1rem;
+    gap: 1.35rem;
+  }
+
+  .article-title {
+    font-size: clamp(2.15rem, 5.8vw, 4.2rem);
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+    max-width: 16ch;
+  }
+
+  .article-excerpt {
+    max-width: 62ch;
+    color: rgb(var(--muted));
+    font-size: 1.02rem;
+    line-height: 1.64;
   }
 
   .article-meta {
@@ -82,7 +106,8 @@ if (!post) {
   }
 
   .meta-label,
-  .date {
+  .date,
+  .byline {
     display: block;
   }
 
@@ -124,6 +149,7 @@ if (!post) {
     line-height: 1.72;
     color: rgb(var(--ink));
     max-width: 34em;
+    margin-bottom: 1.6rem;
   }
 
   .body-card p,
@@ -136,8 +162,13 @@ if (!post) {
 
   .body-card h2,
   .body-card h3 {
-    margin: 1.8rem 0 0.9rem;
-    line-height: 1.12;
+    margin: 2.1rem 0 1.25rem;
+    line-height: 1.14;
+  }
+
+  .body-card h2 + p,
+  .body-card h3 + p {
+    margin-top: 0.4rem;
   }
 
   .body-card ul,
@@ -158,10 +189,60 @@ if (!post) {
     font-style: italic;
   }
 
+  .author-endcap {
+    max-width: 680px;
+    margin: 0 auto;
+    width: 100%;
+    border-radius: 0;
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.9rem;
+    align-items: center;
+  }
+
+  .author-endcap img {
+    width: 64px;
+    height: 64px;
+    border-radius: 999px;
+    object-fit: cover;
+    border: 1px solid rgba(var(--border), 0.92);
+  }
+
+  .author-endcap-copy {
+    display: grid;
+    gap: 0.2rem;
+    color: rgb(var(--muted));
+  }
+
+  .author-name {
+    color: rgb(var(--ink));
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .author-link {
+    font-size: 0.88rem;
+    text-decoration: none;
+    color: rgb(var(--accent));
+    font-weight: 600;
+    width: fit-content;
+  }
+
+  .author-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
   @media (max-width: 980px) {
     .article-meta {
       align-items: flex-start;
       flex-direction: column;
+    }
+
+    .author-endcap {
+      grid-template-columns: 1fr;
+      align-items: flex-start;
     }
   }
 </style>

@@ -4,7 +4,9 @@ date: 2026-04-03
 category: "pain-points"
 tags: ["home-healthcare", "scheduling", "operations", "workforce", "automation"]
 excerpt: "Home care agencies do not lose performance on strategy slides. They lose it in shift-fill and scheduling breakdowns. This is where practical automation can deliver measurable gains."
-author: "Publication Staff"
+author: 'X Node Dev'
+authorImage: ''
+authorBio: ''
 image: '/images/articles/art2-operations-center.jpg'
 sources:
   - "https://www.sagecare.ai/blog/home-care-business/how-the-caregiver-workforce-shortage-is-impacting-home-care-agency-operations"

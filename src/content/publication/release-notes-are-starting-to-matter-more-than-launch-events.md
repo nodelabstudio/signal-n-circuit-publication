@@ -7,9 +7,9 @@ tags:
   - 'changelog'
   - 'models'
 excerpt: 'Release Watch: the highest-signal AI news often appears in changelog details that change limits, pricing, deprecations, and reliability for builders.'
-author: 'Eli Mercer'
-authorImage: '/images/authors/eli-mercer.jpg'
-authorBio: 'Eli reports on model releases, API shifts, and product decisions that materially change builder workflows.'
+author: 'X Node Dev'
+authorImage: ''
+authorBio: ''
 image: '/images/articles/art4-changelog.jpg'
 sources:
   - 'https://platform.openai.com/docs/changelog'

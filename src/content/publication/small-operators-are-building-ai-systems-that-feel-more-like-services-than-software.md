@@ -7,9 +7,9 @@ tags:
   - 'ops'
   - 'spotlight'
 excerpt: 'The most interesting AI builders are not shipping one-off tools. They are combining automation with setup, oversight, and accountability that behaves like a managed service.'
-author: 'Micah Sloan'
-authorImage: '/images/authors/micah-sloan.jpg'
-authorBio: 'Micah tracks implementation reliability, monitoring patterns, and what breaks first when agent systems hit production.'
+author: 'X Node Dev'
+authorImage: ''
+authorBio: ''
 image: '/images/articles/art2-operations-center.jpg'
 sources:
   - 'https://www.intercom.com/'

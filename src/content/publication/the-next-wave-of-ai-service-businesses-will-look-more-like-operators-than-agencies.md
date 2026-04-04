@@ -7,9 +7,9 @@ tags:
   - 'operators'
   - 'service-model'
 excerpt: 'The firms with the strongest edge in AI services are behaving less like campaign agencies and more like operators who own setup, monitoring, exception handling, and continuity.'
-author: 'Gabe Holloway'
-authorImage: '/images/authors/gabe-holloway.jpg'
-authorBio: 'Gabe analyzes market structure and competitive dynamics in the AI tooling ecosystem with an operator lens.'
+author: 'X Node Dev'
+authorImage: ''
+authorBio: ''
 image: '/images/articles/art5-service-tech.jpg'
 sources:
   - 'https://www.glean.com/blog/glean-agents-launch-blog'

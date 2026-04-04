@@ -7,9 +7,9 @@ tags:
   - 'small-business'
   - 'operations'
 excerpt: 'The strongest vertical AI opportunities begin with recurring operator complaints in one workflow, not with a generic model demo looking for a use case.'
-author: 'Sana Brooks'
-authorImage: '/images/authors/sana-brooks.jpg'
-authorBio: 'Sana focuses on niche operator pain points and translates messy field problems into viable product opportunities.'
+author: 'X Node Dev'
+authorImage: ''
+authorBio: ''
 image: '/images/articles/art3-control-panel.jpg'
 sources:
   - 'https://www.curvedental.com/blog/dental-insurance-verification-guide'

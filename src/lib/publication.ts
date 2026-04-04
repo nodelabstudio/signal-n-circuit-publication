@@ -1,6 +1,6 @@
 import type { CollectionEntry } from 'astro:content';
 import { getCollection, render } from 'astro:content';
-import { AUTHOR_BANK } from './authors';
+
 
 export type PublicationEntry = CollectionEntry<'publication'>;
 
@@ -134,82 +134,33 @@ const homepageFeaturedOrder: Array<string> = [
   'the-next-wave-of-ai-service-businesses-will-look-more-like-operators-than-agencies',
 ];
 
-const defaultAuthorAliases = new Set(['', 'Publication Staff']);
-
-const fallbackArticleImagePool: Array<string> = [
-  '/images/articles/art1-robotic-relay.jpg',
-  '/images/articles/art2-operations-center.jpg',
-  '/images/articles/art3-control-panel.jpg',
-  '/images/articles/art4-changelog.jpg',
-  '/images/articles/art5-service-tech.jpg',
-  '/images/articles/art6-dev-dashboard.jpg',
-  '/images/articles/art7-amber-server.jpg',
-];
-
-function slugHash(slug: string): number {
-  return Array.from(slug).reduce((acc, ch) => acc + ch.charCodeAt(0), 0);
+function resolveAuthorName(author?: string): string {
+  const value = author?.trim();
+  return value && value.length > 0 ? value : 'Angel Rodriguez';
 }
 
-function resolveAuthorProfileBySlug(slug: string) {
-  const index = slugHash(slug) % AUTHOR_BANK.length;
-  return AUTHOR_BANK[index];
+function resolveAuthorImage(authorImage?: string): string {
+  const value = authorImage?.trim();
+  return value && value.length > 0 ? value : '';
 }
 
-function resolveAuthorProfileByName(name: string) {
-  const clean = name.trim().toLowerCase();
-  return AUTHOR_BANK.find((p) => p.name.toLowerCase() === clean);
+function resolveAuthorBio(authorBio?: string): string {
+  const value = authorBio?.trim();
+  return value && value.length > 0 ? value : '';
 }
 
-function resolveAuthorName(slug: string, author?: string): string {
-  if (author && !defaultAuthorAliases.has(author.trim())) {
-    return author;
-  }
-
-  return resolveAuthorProfileBySlug(slug).name;
-}
-
-function resolveAuthorImage(slug: string, author?: string, authorImage = ''): string {
-  if (authorImage.trim()) {
-    return authorImage;
-  }
-
-  if (author && !defaultAuthorAliases.has(author.trim())) {
-    const matched = resolveAuthorProfileByName(author);
-    return matched?.imagePath ?? '';
-  }
-
-  return resolveAuthorProfileBySlug(slug).imagePath;
-}
-
-function resolveAuthorBio(slug: string, author?: string, authorBio = ''): string {
-  if (authorBio.trim()) {
-    return authorBio;
-  }
-
-  if (author && !defaultAuthorAliases.has(author.trim())) {
-    const matched = resolveAuthorProfileByName(author);
-    return matched?.bio ?? 'Signal & Circuit contributor covering practical AI systems and operator workflows.';
-  }
-
-  return resolveAuthorProfileBySlug(slug).bio;
-}
-
-function resolveArticleImage(slug: string, image?: string): string {
-  if (image && image.trim().length > 0) {
-    return image;
-  }
-
-  const index = slugHash(slug) % fallbackArticleImagePool.length;
-  return fallbackArticleImagePool[index];
+function resolveArticleImage(image?: string): string {
+  const value = image?.trim();
+  return value && value.length > 0 ? value : '';
 }
 
 function normalizePost(post: PublicationPost): PublicationPost {
   return {
     ...post,
-    author: resolveAuthorName(post.slug, post.author),
-    authorImage: resolveAuthorImage(post.slug, post.author, post.authorImage),
-    authorBio: resolveAuthorBio(post.slug, post.author, post.authorBio),
-    image: resolveArticleImage(post.slug, post.image),
+    author: resolveAuthorName(post.author),
+    authorImage: resolveAuthorImage(post.authorImage),
+    authorBio: resolveAuthorBio(post.authorBio),
+    image: resolveArticleImage(post.image),
   };
 }
 

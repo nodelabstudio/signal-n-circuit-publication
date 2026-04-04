@@ -9,9 +9,9 @@ tags:
   - 'operations'
   - 'reliability'
 excerpt: 'The line between an agent demo and a dependable system is handoff reliability: can work survive session changes, model churn, and human review without losing state?'
-author: 'Leah Kade'
-authorImage: '/images/authors/leah-kade.jpg'
-authorBio: 'Leah writes practitioner-first explainers on agent architecture, approvals, and local-first operational design.'
+author: 'X Node Dev'
+authorImage: ''
+authorBio: ''
 image: '/images/articles/art7-amber-server.jpg'
 sources:
   - 'https://github.com/openclaw/openclaw'

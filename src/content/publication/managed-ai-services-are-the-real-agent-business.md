@@ -7,9 +7,9 @@ tags:
   - 'services'
   - 'operators'
 excerpt: 'The durable AI agent business is shifting from demo software to managed operations: setup, governance, monitoring, exception handling, and measurable outcome ownership.'
-author: 'Nora Vale'
-authorImage: '/images/authors/nora-vale.jpg'
-authorBio: 'Nora covers AI service operations, delivery playbooks, and what makes automation survive real client handoffs.'
+author: 'X Node Dev'
+authorImage: ''
+authorBio: ''
 image: '/images/articles/art1-robotic-relay.jpg'
 sources:
   - 'https://www.glean.com/blog/glean-agents-launch-blog'

@@ -7,9 +7,9 @@ tags:
   - 'dx'
   - 'operators'
 excerpt: 'For working builders, useful AI tooling is shifting from chat-only surfaces to control panels with state, logs, approvals, retries, and recovery visibility.'
-author: 'Iris Calder'
-authorImage: '/images/authors/iris-calder.jpg'
-authorBio: 'Iris covers developer tooling and evaluates whether new AI interfaces reduce friction or just move it around.'
+author: 'X Node Dev'
+authorImage: ''
+authorBio: ''
 image: '/images/articles/art6-dev-dashboard.jpg'
 sources:
   - 'https://github.com/openclaw/openclaw'

@@ -22,9 +22,13 @@ const [hero, ...latestPosts] = posts;
 
     {hero && (
       <article class='hero-slot card'>
-        <a class='hero-media' href={`/articles/${hero.slug}/`} aria-label={hero.title}>
-          <img src={hero.image} alt={hero.title} loading='eager' />
-        </a>
+        {hero.image ? (
+          <a class='hero-media' href={`/articles/${hero.slug}/`} aria-label={hero.title}>
+            <img src={hero.image} alt={hero.title} loading='eager' />
+          </a>
+        ) : (
+          <div class='hero-media hero-media-placeholder' aria-hidden='true'></div>
+        )}
 
         <div class='hero-copy'>
           <div class='hero-topline'>
@@ -170,6 +174,10 @@ const [hero, ...latestPosts] = posts;
     inset: 0;
     display: block;
     text-decoration: none;
+  }
+
+  .hero-media-placeholder {
+    background: linear-gradient(135deg, rgba(var(--surface-strong), 0.96), rgba(var(--border), 0.9));
   }
 
   .hero-media::after {

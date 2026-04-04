@@ -4,7 +4,9 @@ date: 2026-04-03
 category: "openclaw-ecosystem"
 tags: ["OpenClaw", "agents", "operations", "task-flow", "reliability"]
 excerpt: "OpenClaw 2026.4.2 is an operations release: migration safety, task-flow control, and runtime recovery all moved closer to production-grade behavior."
-author: "Publication Staff"
+author: 'X Node Dev'
+authorImage: ''
+authorBio: ''
 image: "/images/articles/art7-amber-server.jpg"
 sources:
   - "https://github.com/openclaw/openclaw/releases"

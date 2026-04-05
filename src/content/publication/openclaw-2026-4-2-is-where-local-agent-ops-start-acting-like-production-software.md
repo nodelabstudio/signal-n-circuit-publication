@@ -88,4 +88,4 @@ OpenClaw 2026.4.2 is not a headline release. It is a reliability release. That i
 
 Systems become production software when they survive upgrades, handoffs, and bad days. This version moves in that direction.
 
-*Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.*
+<span style="color:#e5e4e2">Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.</span>

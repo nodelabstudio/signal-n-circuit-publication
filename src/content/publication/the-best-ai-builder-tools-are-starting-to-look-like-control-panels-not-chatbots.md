@@ -86,4 +86,4 @@ Chat remains a great interface layer. It is no longer enough as the whole operat
 
 Builder tooling is maturing into control panels because builders need systems they can supervise, repair, and trust under pressure.
 
-*Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.*
+<span style="color:#e5e4e2">Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.</span>

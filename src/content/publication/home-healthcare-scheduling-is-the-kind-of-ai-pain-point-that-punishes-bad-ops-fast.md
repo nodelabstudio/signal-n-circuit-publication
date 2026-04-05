@@ -115,4 +115,4 @@ Home healthcare scheduling is one of the clearest complaint-first AI opportuniti
 
 The winners in this lane will not be the loudest model demos. They will be the teams that reduce shift-fill chaos, keep human control, and improve measurable service continuity every week.
 
-*Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.*
+<span style="color:#e5e4e2">Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.</span>

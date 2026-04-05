@@ -81,4 +81,4 @@ The best vertical AI products start where operators are already frustrated, not 
 
 Complaint-first does not just produce better product ideas. It produces better economics.
 
-*Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.*
+<span style="color:#e5e4e2">Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.</span>

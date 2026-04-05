@@ -7,7 +7,7 @@ excerpt: "OpenClaw 2026.4.2 is an operations release: migration safety, task-flo
 author: 'X Node Dev'
 authorImage: ''
 authorBio: ''
-image: "/images/articles/art7-amber-server.jpg"
+image: '/images/articles/lc-openclaw-2026-4-2-ops-migration.png'
 sources:
   - "https://github.com/openclaw/openclaw/releases"
   - "https://github.com/openclaw/openclaw/releases/tag/2026.4.2"

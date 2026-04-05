@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 # post-x-daily.sh — Reads x-post JSON packs from the pre-migration workspace,
-# picks the next unposted article, and schedules 3 posts via Postiz Cloud API:
-#   hook (now) → takeaway (+6h) → question (+12h)
+# picks the next unposted article, and posts a single combined post via Postiz.
+#
+# Single-post format: hook insight + takeaway angle + question CTA
+# URL is included once at the end.
 #
 # Env vars required (loaded from /home/administrator/site/.env):
 #   POSTIZ_API_KEY, POSTIZ_X_ID
@@ -20,7 +22,7 @@ if [[ "${1:-}" == "--dry-run" ]]; then
   echo "=== DRY RUN — no posts will be sent ==="
 fi
 
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 XPOSTS_DIR="/home/administrator/.openclaw.pre-migration/workspace/content/publication/x-posts"
 ENV_FILE="/home/administrator/site/.env"
 LOG_FILE="$SCRIPT_DIR/posted-log.json"
@@ -43,40 +45,37 @@ if [[ ! -f "$LOG_FILE" ]]; then
   echo '{"posted":[]}' > "$LOG_FILE"
 fi
 
-# --- Helper: remove any existing URLs from post text (Python for multiline) ---
-# Also strips {{PUBLICATION_URL}} template vars so they don't get resolved twice
-strip_urls() {
+# --- Helper: strip template vars, embedded URLs, collapse whitespace ---
+# Input: raw text that may contain {{PUBLICATION_URL}}/articles/slug or https://...
+# Output: clean text without URLs, without template vars, no trailing junk
+clean_text() {
   python3 -c "
 import re, sys
 text = sys.stdin.read()
-# Remove {{PUBLICATION_URL}} and any trailing path (e.g. /articles/slug)
+# Remove {{PUBLICATION_URL}} and everything after it up to a space/newline
 text = re.sub(r'\{\{PUBLICATION_URL\}\}[^\s]*', '', text)
 # Remove all http/https URLs
 text = re.sub(r'https?://\S+', '', text)
-# Collapse multiple spaces
-clean = re.sub(r' +', ' ', text)
-# Collapse multiple newlines to a single newline
-clean = re.sub(r'\n+', '\n', clean)
-print(clean.strip())
+# Remove /articles/slug paths that may be left over
+text = re.sub(r'/articles/[a-z0-9-]+', '', text, flags=re.IGNORECASE)
+# Collapse 3+ newlines to double newline
+text = re.sub(r'\n{3,}', '\n\n', text)
+# Collapse multiple spaces to one
+text = re.sub(r' +', ' ', text)
+print(text.strip())
 "
-}
-
-# --- Helper: resolve {{PUBLICATION_URL}} template var ---
-resolve_url_vars() {
-  sed "s|{{PUBLICATION_URL}}|$PUBLICATION_URL|g"
 }
 
 # --- Helper: schedule a single post via Postiz ---
 schedule_post() {
   local content="$1"
-  local iso_date="$2"
-  local post_type="$3"  # "now" or "schedule"
+  local post_type="$2"  # "now" or "scheduled"
 
   local payload
   payload=$(cat <<ENDJSON
 {
   "type": "$post_type",
-  "date": "$iso_date",
+  "date": "$(date -u +"%Y-%m-%dT%H:%M:%S.000Z")",
   "shortLink": false,
   "tags": [],
   "posts": [
@@ -91,7 +90,7 @@ ENDJSON
 )
 
   if [[ "$DRY_RUN" == true ]]; then
-    echo "[DRY RUN] Would $post_type at $iso_date:"
+    echo "[DRY RUN] Would $post_type:"
     echo "$payload" | python3 -m json.tool 2>/dev/null || echo "$payload"
     return 0
   fi
@@ -140,57 +139,50 @@ echo "Posting pack: $next_slug"
 # --- Derive article URL from slug ---
 article_url="${PUBLICATION_URL}/articles/${next_slug}/"
 
-# --- Read raw JSON fields (Python to handle multiline values cleanly) ---
-read_json_field() {
-  local file="$1"
-  local field="$2"
-  python3 -c "
+# --- Read raw JSON fields ---
+raw_hook=$(python3 -c "
 import json, sys
-d = json.load(open('$file'))
+d = json.load(open('$next_file'))
 posts = d.get('posts', d)
-val = posts.get('$field', '')
-if isinstance(val, str):
-    print(val, end='')
-elif isinstance(val, dict):
-    print(val.get('text', ''), end='')
-"
-}
+print(posts.get('hook', ''), end='')
+")
+raw_takeaway=$(python3 -c "
+import json, sys
+d = json.load(open('$next_file'))
+posts = d.get('posts', d)
+print(posts.get('takeaway', ''), end='')
+")
+raw_question=$(python3 -c "
+import json, sys
+d = json.load(open('$next_file'))
+posts = d.get('posts', d)
+print(posts.get('question', ''), end='')
+")
 
-raw_hook=$(read_json_field "$next_file" hook)
-raw_takeaway=$(read_json_field "$next_file" takeaway)
-raw_question=$(read_json_field "$next_file" question)
+# --- Clean each field ---
+clean_hook=$(echo "$raw_hook" | clean_text)
+clean_takeaway=$(echo "$raw_takeaway" | clean_text)
+clean_question=$(echo "$raw_question" | clean_text)
 
-# Strip existing URLs and resolve template vars
-clean_hook=$(echo "$raw_hook" | resolve_url_vars)
-clean_takeaway=$(echo "$raw_takeaway" | strip_urls | resolve_url_vars)
-clean_question=$(echo "$raw_question" | strip_urls | resolve_url_vars)
+# --- Build single combined post ---
+# Format: hook insight, blank line, takeaway angle, blank line, question CTA
+# Article URL appears once at the very end
+combined_post="${clean_hook}
 
-# Build final post text — all three posts get the article URL once
-final_hook="${clean_hook} ${article_url}"
-final_takeaway="${clean_takeaway} ${article_url}"
-final_question="${clean_question} ${article_url}"
+${clean_takeaway}
 
-# Collapse any double spaces
-final_takeaway=$(echo "$final_takeaway" | sed 's/  */ /g')
-final_question=$(echo "$final_question" | sed 's/  */ /g')
+${clean_question} ${article_url}"
 
-# --- Compute schedule times ---
-now_iso=$(date -u +"%Y-%m-%dT%H:%M:%S.000Z")
-plus6h_iso=$(date -u -d "+6 hours" +"%Y-%m-%dT%H:%M:%S.000Z")
-plus12h_iso=$(date -u -d "+12 hours" +"%Y-%m-%dT%H:%M:%S.000Z")
+# Final pass: collapse any triple+ newlines
+combined_post=$(echo "$combined_post" | python3 -c "import re, sys; print(re.sub(r'\n{3,}', '\n\n', sys.stdin.read()).strip())")
 
-# --- Post the 3-part sequence ---
-echo "  → hook (now)..."
-schedule_post "$final_hook" "$now_iso" "now"
-
-echo "  → takeaway (+6h: $plus6h_iso)..."
-schedule_post "$final_takeaway" "$plus6h_iso" "schedule"
-
-echo "  → question (+12h: $plus12h_iso)..."
-schedule_post "$final_question" "$plus12h_iso" "schedule"
+# --- Post immediately ---
+echo "  → Posting single combined post now..."
+schedule_post "$combined_post" "now"
 
 # --- Log as posted ---
 if [[ "$DRY_RUN" == true ]]; then
+  echo ""
   echo "=== DRY RUN complete. $next_slug was NOT logged as posted. ==="
 else
   python3 -c "

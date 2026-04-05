@@ -4,7 +4,19 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(grep -rl subscribe /home/administrator/site/src --include=*.astro --include=*.ts --include=*.tsx --include=*.js)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Read(//mnt/wsl/Ubuntu/home/administrator/.openclaw.pre-migration/workspace/content/publication/**)",
+      "Read(//wsl.localhost/Ubuntu/home/administrator/.openclaw.pre-migration/workspace/content/publication/**)",
+      "Read(//home/administrator/.openclaw.pre-migration/workspace/content/publication/x-posts/**)",
+      "Bash(ls -la /home/administrator/.openclaw.pre-migration/workspace/content/publication/x-posts/*.json)",
+      "Bash(curl -s https://docs.postiz.com/introduction)",
+      "Bash(curl -s https://docs.postiz.com/api-reference)",
+      "WebFetch(domain:docs.postiz.com)",
+      "Bash(systemctl list-units:*)",
+      "Bash(npm list:*)",
+      "Read(//home/administrator/**)",
+      "Bash(chmod +x:*)",
+      "Bash(bash scripts/post-x-daily.sh --dry-run)"
     ]
   }
 }

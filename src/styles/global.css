@@ -60,6 +60,11 @@ h1 {
 
 h2 {
   font-size: clamp(2rem, 4vw, 3.25rem);
+  margin: 10px 0;
+}
+
+article h2 {
+  margin: 10px 0;
 }
 
 h3 {

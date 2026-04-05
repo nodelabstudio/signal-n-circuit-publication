@@ -2,6 +2,7 @@
 import ArticleCard from '../components/ArticleCard.astro';
 import AuthorBlock from '../components/AuthorBlock.astro';
 import PublicationLayout from '../layouts/PublicationLayout.astro';
+import ReleaseWatch from '../components/ReleaseWatch.astro';
 import { SITE_DESCRIPTION, SITE_TAGLINE, SITE_TITLE } from '../consts';
 import { getHomepagePublicationPosts, getPublicationPosts } from '../lib/publication';
 
@@ -89,6 +90,28 @@ const [hero, ...latestPosts] = posts;
         <button id='newsletter-submit' type='submit'>Subscribe</button>
       </form>
       <p id='newsletter-status' class='newsletter-status' aria-live='polite'></p>
+    </section>
+
+    <ReleaseWatch />
+
+    <section class='ad-panel'>
+      <div class='ad-media'>
+        <img src='/images/articles/harbor-and-cross-ad.png' alt='Harbor and Cross devotional card' loading='lazy' />
+      </div>
+      <div class='ad-copy'>
+        <p class='ad-kicker'>From the archive</p>
+        <h2 class='ad-heading'>Harbor &amp; Cross</h2>
+        <p class='ad-tagline'>Daily devotionals for Christian fathers. 1,095 cards. Six seasons of fatherhood. One daily practice that changes everything.</p>
+        <div class='ad-features'>
+          <span>Daily wisdom anchored in scripture</span>
+          <span>Personalized action steps by season</span>
+          <span>Fully offline and private</span>
+        </div>
+        <a class='ad-cta' href='https://harborandcross.com' target='_blank' rel='noopener noreferrer'>
+          Visit harborandcross.com
+          <svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6'/><polyline points='15,3 21,3 21,9'/><line x1='10' y1='14' x2='21' y2='3'/></svg>
+        </a>
+      </div>
     </section>
   </section>
 
@@ -436,6 +459,108 @@ const [hero, ...latestPosts] = posts;
 
     .latest-grid {
       grid-template-columns: 1fr;
+    }
+  }
+
+  /* Harbor & Cross Ad Panel */
+  .ad-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: rgb(10, 22, 40);
+    border-radius: 0;
+    overflow: hidden;
+    min-height: 340px;
+  }
+
+  .ad-media {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ad-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ad-copy {
+    display: grid;
+    align-content: center;
+    gap: 1rem;
+    padding: clamp(1.8rem, 4vw, 3rem) clamp(1.4rem, 3.5vw, 2.8rem);
+    color: rgb(250, 248, 245);
+  }
+
+  .ad-kicker {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: rgb(200, 168, 76);
+  }
+
+  .ad-heading {
+    margin: 0;
+    font-size: clamp(2.2rem, 3.5vw, 3.4rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: rgb(250, 248, 245);
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+
+  .ad-tagline {
+    margin: 0;
+    font-size: 1.02rem;
+    line-height: 1.65;
+    color: rgba(250, 248, 245, 0.8);
+    max-width: 38ch;
+  }
+
+  .ad-features {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .ad-features span {
+    font-size: 0.88rem;
+    color: rgba(250, 248, 245, 0.65);
+    line-height: 1.5;
+    padding-left: 1rem;
+    border-left: 2px solid rgb(200, 168, 76);
+  }
+
+  .ad-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.4rem;
+    padding: 0.65rem 1.1rem;
+    background: rgb(200, 168, 76);
+    color: rgb(10, 22, 40);
+    font-weight: 700;
+    font-size: 0.88rem;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    border-radius: 0;
+    align-self: flex-start;
+    transition: background 160ms ease, color 160ms ease;
+  }
+
+  .ad-cta:hover {
+    background: rgb(220, 185, 90);
+    color: rgb(10, 22, 40);
+  }
+
+  @media (max-width: 720px) {
+    .ad-panel {
+      grid-template-columns: 1fr;
+    }
+
+    .ad-media {
+      height: 220px;
     }
   }
 </style>

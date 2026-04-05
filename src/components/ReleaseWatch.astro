@@ -1,0 +1,238 @@
+---
+interface ReleaseItem {
+  tool: string;
+  version?: string;
+  change: string;
+  verdict: '值得关注' | '观望' | '跳过';
+  verdictLabel: string;
+  verdictColor: 'green' | 'yellow' | 'red';
+  who: string;
+  why: string;
+}
+
+const items: ReleaseItem[] = [
+  {
+    tool: 'Claude Code',
+    version: 'CLI',
+    change: 'Cowork Projects now support shared context across sessions, meaning agents can hand off mid-task without losing state.',
+    verdict: '值得关注',
+    verdictLabel: 'Worth watching',
+    verdictColor: 'green',
+    who: 'Build-and-run agent teams',
+    why: 'Handoff reliability was the main failure mode in multi-step agent tasks. If shared context holds across restarts, production agent workflows become significantly more viable.',
+  },
+  {
+    tool: 'OpenClaw',
+    version: '2026.4.2',
+    change: 'Migration safety, task-flow control, and runtime recovery moved to production-grade behavior.',
+    verdict: '值得关注',
+    verdictLabel: 'Worth watching',
+    verdictColor: 'green',
+    who: 'Local-first ops builders',
+    why: 'This is the release where local agent ops starts acting like production software. If you are running OpenClaw in client work, this release changes the risk profile.',
+  },
+  {
+    tool: 'Gemini 2.0 Flash',
+    version: 'API',
+    change: 'Image generation via Imagen 4 API now supports 16:9 output and much lower latency on first token.',
+    verdict: '观望',
+    verdictLabel: 'Hold',
+    verdictColor: 'yellow',
+    who: 'Publication and content teams',
+    why: 'Better for article imagery, but the price/quality curve for workflow use has not been validated yet. Worth watching the next pricing update.',
+  },
+];
+---
+
+<section class='release-watch'>
+  <div class='section-head'>
+    <div>
+      <p class='kicker'>Signal watch</p>
+      <h2>Release Watch</h2>
+    </div>
+    <div class='section-meta'>
+      <p class='section-count'>Changes that matter for operators</p>
+    </div>
+  </div>
+
+  <div class='release-grid'>
+    {items.map((item) => (
+      <div class='release-card'>
+        <div class='release-header'>
+          <span class='release-tool'>{item.tool}</span>
+          {item.version && <span class='release-version'>{item.version}</span>}
+          <span class={`verdict verdict-${item.verdictColor}`}>
+            {item.verdictLabel}
+          </span>
+        </div>
+        <p class='release-change'>{item.change}</p>
+        <div class='release-footer'>
+          <div class='release-who'>
+            <span class='label'>Who cares</span>
+            <span class='value'>{item.who}</span>
+          </div>
+          <div class='release-why'>
+            <span class='label'>Why it matters</span>
+            <span class='value'>{item.why}</span>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .release-watch {
+    padding: 0;
+  }
+
+  .release-watch .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 1.8rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(250, 248, 245, 0.1);
+  }
+
+  .release-watch .kicker {
+    margin: 0 0 0.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: rgb(200, 168, 76);
+  }
+
+  .release-watch h2 {
+    margin: 0;
+    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+    font-family: 'Playfair Display', Georgia, serif;
+    color: rgb(250, 248, 245);
+    letter-spacing: -0.02em;
+  }
+
+  .release-watch .section-meta {
+    text-align: right;
+  }
+
+  .release-watch .section-count {
+    margin: 0;
+    font-size: 0.82rem;
+    color: rgba(250, 248, 245, 0.4);
+  }
+
+  .release-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1px;
+    background: rgba(250, 248, 245, 0.06);
+    border: 1px solid rgba(250, 248, 245, 0.06);
+  }
+
+  .release-card {
+    background: rgb(10, 14, 22);
+    padding: 1.4rem 1.5rem 1.3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition: background 150ms ease;
+  }
+
+  .release-card:hover {
+    background: rgb(15, 20, 32);
+  }
+
+  .release-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .release-tool {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: rgb(250, 248, 245);
+    letter-spacing: 0.01em;
+  }
+
+  .release-version {
+    font-size: 0.75rem;
+    color: rgba(250, 248, 245, 0.4);
+    font-family: 'Courier New', monospace;
+  }
+
+  .verdict {
+    margin-left: auto;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 0.2rem 0.5rem;
+    border-radius: 2px;
+  }
+
+  .verdict-green {
+    background: rgba(76, 175, 80, 0.15);
+    color: rgb(76, 175, 80);
+  }
+
+  .verdict-yellow {
+    background: rgba(200, 168, 76, 0.15);
+    color: rgb(200, 168, 76);
+  }
+
+  .verdict-red {
+    background: rgba(239, 83, 80, 0.15);
+    color: rgb(239, 83, 80);
+  }
+
+  .release-change {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: rgba(250, 248, 245, 0.8);
+    flex: 1;
+  }
+
+  .release-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(250, 248, 245, 0.07);
+  }
+
+  .release-who,
+  .release-why {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .release-footer .label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(200, 168, 76, 0.7);
+    font-weight: 700;
+  }
+
+  .release-footer .value {
+    font-size: 0.82rem;
+    color: rgba(250, 248, 245, 0.6);
+    line-height: 1.4;
+  }
+
+  @media (max-width: 640px) {
+    .release-watch .section-head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .release-watch .section-meta {
+      text-align: left;
+    }
+  }
+</style>

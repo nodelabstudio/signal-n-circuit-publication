@@ -160,8 +160,8 @@ if (!post) {
   .body-card li {
     margin: 0;
     max-width: 39em;
-    font-size: 1.1rem;
-    line-height: 1.82;
+    font-size: 1.08rem;
+    line-height: 1.88;
   }
 
   .body-card p + p,
@@ -171,13 +171,17 @@ if (!post) {
   .body-card ol + p,
   .body-card blockquote + p,
   .body-card p + blockquote {
-    margin-top: 1.1rem;
+    margin-top: 1.5rem;
   }
 
   .body-card h2,
   .body-card h3 {
-    margin: 2.5rem 0 0;
-    line-height: 1.14;
+    margin: 3rem 0 0.6rem;
+    line-height: 1.2;
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: rgb(var(--ink));
   }
 
   .body-card h2 + p,
@@ -188,8 +192,8 @@ if (!post) {
   .body-card h3 + ol,
   .body-card h2 + blockquote,
   .body-card h3 + blockquote {
-    margin-top: 0;
-    padding-top: 1.05rem;
+    margin-top: 0.75rem;
+    padding-top: 0;
   }
 
   .body-card ul,
@@ -208,6 +212,12 @@ if (!post) {
 
   .body-card em {
     font-style: italic;
+  }
+
+  .body-card p:last-child em {
+    font-style: italic;
+    font-size: 0.82rem;
+    color: rgba(250, 248, 245, 0.38);
   }
 
   .author-endcap {

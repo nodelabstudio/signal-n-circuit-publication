@@ -92,4 +92,4 @@ The jump from toy to tool is not autonomy. It is continuity.
 
 Agent systems become dependable when work survives interruptions, model churn, and human review without losing truth. That is handoff engineering. That is the real moat.
 
-<span style="color:#e5e4e2">Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.</span>
+<span style="color:#c0c0c0">Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.</span>

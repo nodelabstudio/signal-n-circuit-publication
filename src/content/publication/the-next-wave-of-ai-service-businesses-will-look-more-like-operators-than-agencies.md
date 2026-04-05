@@ -84,4 +84,4 @@ AI service economics are shifting from “deliverables” to “dependability.�
 
 Agencies can still win attention. Operators will keep winning retention.
 
-<span style="color:#e5e4e2">Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.</span>
+<span style="color:#c0c0c0">Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.</span>

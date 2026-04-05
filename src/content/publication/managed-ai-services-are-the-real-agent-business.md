@@ -78,4 +78,4 @@ Managed AI services are not a side category. They are becoming the core commerci
 
 Vendors can keep polishing demos. Operators who own outcomes will keep winning contracts.
 
-<span style="color:#e5e4e2">Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.</span>
+<span style="color:#c0c0c0">Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.</span>

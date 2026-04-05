@@ -70,4 +70,4 @@ Launch events tell you where vendors want attention. Release notes tell you what
 
 For working builders, reality wins.
 
-<span style="color:#e5e4e2">Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.</span>
+<span style="color:#c0c0c0">Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.</span>

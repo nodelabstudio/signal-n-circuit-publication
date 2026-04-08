@@ -16,6 +16,7 @@ image: '/images/articles/ops-digest-hermes-agent-stack.png'
 sources:
   - 'https://github.com/nodelabstudio/hermes-digests'
   - 'https://github.com/nodelabstudio/hermes-ops-digest'
+type: 'article'
 ---
 
 # From Black Box to Living Log: How I Built an Ops Digest for My AI Agent Stack

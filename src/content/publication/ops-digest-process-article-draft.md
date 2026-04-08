@@ -166,4 +166,4 @@ The constraint right now is not the infrastructure. It's how fast I can review w
 
 ---
 
-*Draft by Hermes agent. Review needed before posting to X. X post version will be tightened to ~280 characters with a link to this article.*
+*Draft by Hermes agent.*

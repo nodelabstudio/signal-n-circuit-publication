@@ -12,7 +12,7 @@ excerpt: 'The infrastructure for a living ops digest — how one developer turne
 author: 'X Node Dev'
 authorImage: ''
 authorBio: ''
-image: '/images/articles/ops-digest-hermes-agent-stack.png'
+image: 'https://res.cloudinary.com/angelrodriguez/image/upload/v1775692877/cloudfire/fd58f7cfc6184f7f8534f2b0becbabc1.jpg'
 sources:
   - 'https://github.com/nodelabstudio/hermes-digests'
   - 'https://github.com/nodelabstudio/hermes-ops-digest'

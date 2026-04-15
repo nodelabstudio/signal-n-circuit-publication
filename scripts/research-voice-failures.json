@@ -1,0 +1,20 @@
+{
+  "failures": [
+    {
+      "id": "RSP-20260407-S1",
+      "reason": "juxtaposition - \"OpenClaw's real pitch isn't privacy. It's control.\"",
+      "attempts": [
+        "OpenClaw's real pitch isn't privacy. It's control. Running agents on hardware you own means the API costs stop when you stop. That's the thing cloud-hosted AI can't match."
+      ],
+      "logged_at": "2026-04-07T11:29:13.873576Z"
+    },
+    {
+      "id": "RSP-20260407-S3",
+      "reason": "juxtaposition - \"The real operator tooling market isn't dashboards. It's the invisible stuff.\"",
+      "attempts": [
+        "The real operator tooling market isn't dashboards. It's the invisible stuff: trace visualization, latency attribution, and context injection when an agent veers off-script."
+      ],
+      "logged_at": "2026-04-07T11:29:13.873600Z"
+    }
+  ]
+}

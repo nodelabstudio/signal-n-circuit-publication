@@ -4,7 +4,7 @@
 # Topics rotate across: OpenClaw, Hermes Agent, AI tools, operator workflows, industry takes.
 #
 # Env vars required (loaded from /home/administrator/site/.env):
-#   POSTIZ_API_KEY, POSTIZ_X_ID
+#   POST_BRIDGE_API_KEY, POST_BRIDGE_X_ID
 #
 # Usage:
 #   ./post-x-research.sh           # post for real
@@ -21,16 +21,16 @@ fi
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ENV_FILE="/home/administrator/site/.env"
 LOG_FILE="$SCRIPT_DIR/research-posted-log.json"
-POSTIZ_BASE="https://api.postiz.com/public/v1"
+POST_BRIDGE_BASE="https://api.post-bridge.com"
 
 # --- Load env ---
 if [[ -f "$ENV_FILE" ]]; then
-  export "$(grep '^POSTIZ_API_KEY=' "$ENV_FILE" | xargs)"
-  export "$(grep '^POSTIZ_X_ID=' "$ENV_FILE" | xargs)"
+  export "$(grep '^POST_BRIDGE_API_KEY=' "$ENV_FILE" | xargs)"
+  export "$(grep '^POST_BRIDGE_X_ID=' "$ENV_FILE" | xargs)"
 fi
 
-if [[ -z "${POSTIZ_API_KEY:-}" || -z "${POSTIZ_X_ID:-}" ]]; then
-  echo "ERROR: POSTIZ_API_KEY and POSTIZ_X_ID must be set" >&2
+if [[ -z "${POST_BRIDGE_API_KEY:-}" || -z "${POST_BRIDGE_X_ID:-}" ]]; then
+  echo "ERROR: POST_BRIDGE_API_KEY and POST_BRIDGE_X_ID must be set" >&2
   exit 1
 fi
 
@@ -80,43 +80,59 @@ PROMPT_EOF
 # Replace placeholder with actual topic
 sed -i "s/TOPIC_PLACEHOLDER/$TOPIC/" "$PROMPT_FILE"
 
+# --- Generate content via LLM ---
+# Note: $GENERATED_POST is expected to be set by the calling context or an external LLM call.
+# If running standalone, content is set below (hardcoded fallback).
+if [[ -z "${GENERATED_POST:-}" ]]; then
+  # Fallback: read from a file written by an external LLM call
+  if [[ -f "$SCRIPT_DIR/research-post-generated.txt" ]]; then
+    GENERATED_POST=$(cat "$SCRIPT_DIR/research-post-generated.txt")
+  else
+    echo "ERROR: GENERATED_POST is not set and no generated file found." >&2
+    echo "This script requires an external LLM to set GENERATED_POST before calling." >&2
+    exit 1
+  fi
+fi
+
 CONTENT="$GENERATED_POST"
 
-# --- Schedule for now (or next slot) ---
 # --- Determine AM or PM slot ---
 # ET is UTC-4 in April. Check current UTC hour to determine slot.
 utc_hour=$(date -u +"%H")
 if [[ "$utc_hour" -ge 17 ]]; then
   # PM slot (2:30 PM ET = 18:30 UTC) — schedule for 2h out
-  sched_iso=$(date -u -d "+2 hours" +"%Y-%m-%dT%H:%M:%S.000Z")
+  sched_iso=$(date -u -d "+2 hours" +"%Y-%m-%dT%H:%M:%SZ")
   slot_label="PM"
 else
   # AM slot (9:30 AM ET = 13:30 UTC) — schedule for 30min out
-  sched_iso=$(date -u -d "+30 minutes" +"%Y-%m-%dT%H:%M:%S.000Z")
+  sched_iso=$(date -u -d "+30 minutes" +"%Y-%m-%dT%H:%M:%SZ")
   slot_label="AM"
 fi
-now_iso=$(date -u +"%Y-%m-%dT%H:%M:%S.000Z")
+now_iso=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
-# --- Helper: schedule via Postiz ---
+# --- Helper: schedule via post-bridge ---
 schedule_post() {
   local content="$1"
   local iso_date="$2"
-  local post_type="$3"
+  local post_type="$3"  # "now" or "scheduled"
+
+  # scheduled_at: null for "now", ISO string for "scheduled"
+  local scheduled_at
+  if [[ "$post_type" == "now" ]]; then
+    scheduled_at="null"
+  else
+    scheduled_at="\"$iso_date\""
+  fi
 
   local payload
   payload=$(cat <<ENDJSON
 {
-  "type": "$post_type",
-  "date": "$iso_date",
-  "shortLink": false,
-  "tags": [],
-  "posts": [
-    {
-      "integration": { "id": "$POSTIZ_X_ID" },
-      "value": [{ "content": $(echo "$content" | python3 -c 'import sys,json; print(json.dumps(sys.stdin.read()))'), "image": [] }],
-      "settings": { "__type": "x", "who_can_reply_post": "everyone" }
-    }
-  ]
+  "caption": $(echo "$content" | python3 -c 'import sys,json; print(json.dumps(sys.stdin.read()))'),
+  "scheduled_at": $scheduled_at,
+  "social_accounts": [$POST_BRIDGE_X_ID],
+  "platform_configurations": {
+    "twitter": {}
+  }
 }
 ENDJSON
 )
@@ -129,8 +145,8 @@ ENDJSON
   fi
 
   local response
-  response=$(curl -s -w "\n%{http_code}" -X POST "$POSTIZ_BASE/posts" \
-    -H "Authorization: $POSTIZ_API_KEY" \
+  response=$(curl -s -w "\n%{http_code}" -X POST "$POST_BRIDGE_BASE/v1/posts" \
+    -H "Authorization: Bearer $POST_BRIDGE_API_KEY" \
     -H "Content-Type: application/json" \
     -d "$payload")
 
@@ -152,10 +168,10 @@ if [[ "$DRY_RUN" == true ]]; then
   echo "Post content:"
   echo "$CONTENT"
   echo "---"
-  echo "[DRY RUN] Would post now as $slot_label slot"
+  echo "[DRY RUN] Would schedule for $slot_label slot at $sched_iso"
 else
   echo "Scheduling for $slot_label slot at $sched_iso..."
-  schedule_post "$CONTENT" "$sched_iso" "schedule"
+  schedule_post "$CONTENT" "$sched_iso" "scheduled"
 fi
 
 # --- Log topic as posted ---

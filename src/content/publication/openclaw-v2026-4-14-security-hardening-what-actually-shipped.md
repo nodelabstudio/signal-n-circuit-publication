@@ -11,7 +11,7 @@ excerpt: 'One release, five discrete security fixes across ReDoS, allowlist bypa
 author: 'X Node Dev'
 authorImage: ''
 authorBio: ''
-image: ''
+image: 'https://res.cloudinary.com/angelrodriguez/image/upload/v1776279482/cloudfire/531fb86e0d4549e395dd8bd9e236b876.jpg'
 sources:
   - 'https://github.com/nousresearch/openclaw/releases/tag/v2026.4.14'
   - 'https://github.com/nousresearch/openclaw/issues/46707'

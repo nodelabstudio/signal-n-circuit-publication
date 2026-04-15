@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 # post-x-daily.sh — Reads x-post JSON packs from the pre-migration workspace,
-# picks the next unposted article, and posts a single combined post via Postiz.
+# picks the next unposted article, and posts a single combined post via post-bridge.
 #
 # Single-post format: hook insight + takeaway angle + question CTA
 # URL is included once at the end.
 #
 # Env vars required (loaded from /home/administrator/site/.env):
-#   POSTIZ_API_KEY, POSTIZ_X_ID
+#   POST_BRIDGE_API_KEY, POST_BRIDGE_X_ID
 #
 # Tracks posted slugs in posted-log.json next to this script.
 #
@@ -27,16 +27,16 @@ XPOSTS_DIR="/home/administrator/.openclaw.pre-migration/workspace/content/public
 ENV_FILE="/home/administrator/site/.env"
 LOG_FILE="$SCRIPT_DIR/posted-log.json"
 PUBLICATION_URL="https://signalcircuit.cloud"
-POSTIZ_BASE="https://api.postiz.com/public/v1"
+POST_BRIDGE_BASE="https://api.post-bridge.com"
 
 # --- Load env ---
 if [[ -f "$ENV_FILE" ]]; then
-  export "$(grep '^POSTIZ_API_KEY=' "$ENV_FILE" | xargs)"
-  export "$(grep '^POSTIZ_X_ID=' "$ENV_FILE" | xargs)"
+  export "$(grep '^POST_BRIDGE_API_KEY=' "$ENV_FILE" | xargs)"
+  export "$(grep '^POST_BRIDGE_X_ID=' "$ENV_FILE" | xargs)"
 fi
 
-if [[ -z "${POSTIZ_API_KEY:-}" || -z "${POSTIZ_X_ID:-}" ]]; then
-  echo "ERROR: POSTIZ_API_KEY and POSTIZ_X_ID must be set" >&2
+if [[ -z "${POST_BRIDGE_API_KEY:-}" || -z "${POST_BRIDGE_X_ID:-}" ]]; then
+  echo "ERROR: POST_BRIDGE_API_KEY and POST_BRIDGE_X_ID must be set" >&2
   exit 1
 fi
 
@@ -66,38 +66,50 @@ print(text.strip())
 "
 }
 
-# --- Helper: schedule a single post via Postiz ---
-schedule_post() {
+# --- Helper: post a single X update via post-bridge ---
+# Args:
+#   $1 — content text
+#   $2 — "now" or "scheduled"
+#   $3 — ISO datetime string (used when $2="scheduled"; ignored for "now")
+post_to_x() {
   local content="$1"
   local post_type="$2"  # "now" or "scheduled"
+  local iso_date="${3:-}"
+
+  # Build scheduled_at: null for "now", ISO string for "scheduled"
+  local scheduled_at
+  if [[ "$post_type" == "now" ]]; then
+    scheduled_at="null"
+  else
+    scheduled_at="\"$iso_date\""
+  fi
+
+  # Escape content for JSON
+  local escaped_content
+  escaped_content=$(echo "$content" | python3 -c 'import sys,json; print(json.dumps(sys.stdin.read()))')
 
   local payload
   payload=$(cat <<ENDJSON
 {
-  "type": "$post_type",
-  "date": "$(date -u +"%Y-%m-%dT%H:%M:%S.000Z")",
-  "shortLink": false,
-  "tags": [],
-  "posts": [
-    {
-      "integration": { "id": "$POSTIZ_X_ID" },
-      "value": [{ "content": $(echo "$content" | python3 -c 'import sys,json; print(json.dumps(sys.stdin.read()))'), "image": [] }],
-      "settings": { "__type": "x", "who_can_reply_post": "everyone" }
-    }
-  ]
+  "caption": $escaped_content,
+  "scheduled_at": $scheduled_at,
+  "social_accounts": [$POST_BRIDGE_X_ID],
+  "platform_configurations": {
+    "twitter": {}
+  }
 }
 ENDJSON
 )
 
   if [[ "$DRY_RUN" == true ]]; then
-    echo "[DRY RUN] Would $post_type:"
+    echo "[DRY RUN] Would post ($post_type):"
     echo "$payload" | python3 -m json.tool 2>/dev/null || echo "$payload"
     return 0
   fi
 
   local response
-  response=$(curl -s -w "\n%{http_code}" -X POST "$POSTIZ_BASE/posts" \
-    -H "Authorization: $POSTIZ_API_KEY" \
+  response=$(curl -s -w "\n%{http_code}" -X POST "$POST_BRIDGE_BASE/v1/posts" \
+    -H "Authorization: Bearer $POST_BRIDGE_API_KEY" \
     -H "Content-Type: application/json" \
     -d "$payload")
 
@@ -107,7 +119,7 @@ ENDJSON
   body=$(echo "$response" | sed '$d')
 
   if [[ "$http_code" -ge 200 && "$http_code" -lt 300 ]]; then
-    echo "OK ($post_type): $body"
+    echo "OK: $body"
   else
     echo "FAIL (HTTP $http_code): $body" >&2
     return 1
@@ -178,7 +190,7 @@ combined_post=$(echo "$combined_post" | python3 -c "import re, sys; print(re.sub
 
 # --- Post immediately ---
 echo "  → Posting single combined post now..."
-schedule_post "$combined_post" "now"
+post_to_x "$combined_post" "now"
 
 # --- Log as posted ---
 if [[ "$DRY_RUN" == true ]]; then

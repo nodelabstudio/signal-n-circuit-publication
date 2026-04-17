@@ -48,6 +48,8 @@ No "nobody tells you," "what nobody talks about," or secret-knowledge openers.
 
 No generic openers like "AI agents are quietly..." Start with the problem or the number.
 
+For articles, use contracted voice ("don't," "it's") at times for a more conversational tone, but avoid overusing contractions in a way that feels informal or chatty. The voice should be approachable but still maintain a level of professionalism and authority.
+
 ### Longform additions (beyond X post rules)
 
 Articles can use section headers (### level) to break up longer pieces.
@@ -75,10 +77,15 @@ This syncs markdown to the site repo, pushes to GitHub, and polls the live site.
 
 Manual git workflow:
 cd /home/administrator/site && git add -A && git commit -m "<message>" && git push origin main
+
+## Article Images
+
+Read the `Image Generation` skill in the SKILL.md located at `home/administrator/.hermes/skills/publication/signal-circuit-publication-pipeline/SKILL.md` for image generation rules and API details. Always generate a hero image for each article before deploying.
+
 ## X Promotion
 
 X posting happens via post-bridge.
-Do NOT schedule X posts automatically.
+Posts for X can be scheduled automatically.
 Do NOT use Postiz or any third-party scheduler only post-bridge.
 If an article needs X promotion, draft the post and send to Discord channel 1477414797757907075 for Angel's approval.
 

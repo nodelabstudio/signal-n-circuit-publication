@@ -1,19 +1,14 @@
 {
   "last_used": [
-    "2026-04-11 AI task handoffs",
-    "2026-04-11 AI content pipeline",
-    "2026-04-11 Hermes Agent GitHub releases",
-    "2026-04-12 OpenClaw",
-    "2026-04-12 Hermes Agent",
-    "2026-04-12 local-first AI",
-    "2026-04-14 AI agent ops",
-    "2026-04-14 AI workflow automation",
-    "2026-04-14 OpenClaw GitHub releases",
-    "2026-04-14 operator tooling",
-    "2026-04-14 AI ops stack",
-    "2026-04-14 Claude Code"
+    "2026-04-14 Claude Code",
+    "2026-04-15 Hermes Agent tips and tricks",
+    "2026-04-15 Nous Research updates",
+    "2026-04-15 OpenClaw new findings",
+    "2026-04-16 AI task handoffs",
+    "2026-04-16 OpenClaw tips and tricks",
+    "2026-04-16 AI content pipeline"
   ],
-  "round_robin_index": 1,
+  "round_robin_index": 7,
   "topics": [
     "OpenClaw",
     "Hermes Agent",

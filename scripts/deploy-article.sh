@@ -1,18 +1,19 @@
 #!/usr/bin/env bash
-# deploy-article.sh — Deploys an article to Signal & Circuit and fires post-x-article.sh.
+# deploy-article.sh — Deploys an article to Signal & Circuit.
 #
 # This is the single command to run when an article is approved and ready to publish.
 # It replaces manual git add/commit/push steps.
 #
 # Usage:
-#   ./deploy-article.sh <slug>           # deploy and promote to X
+#   ./deploy-article.sh <slug>           # deploy article
 #   ./deploy-article.sh <slug> --dry-run  # show what would happen, no API calls
 #
 # What it does:
-#   1. Sync article markdown from workspace posts/ to site src/
+#   1. Verify article file exists in site repo
 #   2. git add, commit, push to GitHub
 #   3. Poll the live site (up to 120s) waiting for Railway to build
-#   4. Fire post-x-article.sh --slug <slug> to schedule X promotion
+#
+# X promotion is handled separately via the publication pipeline Discord approval flow.
 
 set -euo pipefail
 

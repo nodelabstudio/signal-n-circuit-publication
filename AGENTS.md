@@ -194,7 +194,7 @@ woven together:
 
 - hook: Problem-first opener. No tool name, no link. Ground it in a specific
   pain point, number, or finding that makes the reader stop scrolling. Must
-  follow all voice rules from POST_FORMAT_DIRECTIVE.md. No juxtaposition.
+  follow `x-writing-rules` as the single writing authority. No juxtaposition.
   No em dashes. No banned words.
 
 - takeaway: What it means for builders. One to two sentences connecting the

@@ -184,5 +184,53 @@
     "posted_at": "2026-04-17T20:00:58Z",
     "retry_of": null,
     "scheduled_at": "2026-04-17T20:00:58Z"
+  },
+  {
+    "id": "RSP-20260417-S1",
+    "date": "2026-04-17",
+    "slot": 1,
+    "topic": "OpenClaw GitHub releases",
+    "content": "Agent operators lose hours when a model auth token expires during a run.\n\nOpenClaw v2026.4.15 adds a model auth status card so you can see token health before jobs fail.\n\nThe same release hardens tool trust boundaries and tightens memory path access for safer automation.\n\nIf you run long chains with many tools, this cuts surprise failures and reduces security risk.\n\nhttps://github.com/openclaw/openclaw/releases/tag/v2026.4.15",
+    "source": "OpenClaw v2026.4.15 release notes",
+    "source_url": "https://github.com/openclaw/openclaw/releases/tag/v2026.4.15",
+    "status": "approved",
+    "voice_check_attempts": 1,
+    "feedback": null,
+    "approved_at": "2026-04-18T02:48:34.296011Z",
+    "posted_at": "2026-04-18T12:00:33Z",
+    "retry_of": null,
+    "scheduled_at": "2026-04-18T12:00:33Z"
+  },
+  {
+    "id": "RSP-20260417-S2",
+    "date": "2026-04-17",
+    "slot": 2,
+    "topic": "Hermes Agent GitHub releases",
+    "content": "Builders keep hitting tool setup friction when each integration needs its own API key.\n\nHermes Agent v0.10.0 adds Tool Gateway access for paid Nous Portal users across web search, image generation, text to speech, and browser automation.\n\nThat means teams can turn on core tools from one subscription path instead of managing separate keys.\n\nFor small operator teams, this shortens setup time and reduces key sprawl.\n\nhttps://github.com/NousResearch/hermes-agent/releases/tag/v2026.4.16",
+    "source": "Hermes Agent v0.10.0 release notes",
+    "source_url": "https://github.com/NousResearch/hermes-agent/releases/tag/v2026.4.16",
+    "status": "approved",
+    "voice_check_attempts": 1,
+    "feedback": null,
+    "approved_at": "2026-04-18T02:48:32.611690Z",
+    "posted_at": "2026-04-18T15:00:31Z",
+    "retry_of": null,
+    "scheduled_at": "2026-04-18T15:00:31Z"
+  },
+  {
+    "id": "RSP-20260417-S3",
+    "date": "2026-04-17",
+    "slot": 3,
+    "topic": "OpenClaw",
+    "content": "Self hosted agent workflows fail when inference endpoints and sandbox policy are not wired correctly.\n\nNVIDIA published a local OpenClaw deployment guide with NemoClaw and OpenShell that focuses on secure always on operation.\n\nIt documents concrete guardrails like systemd only model serving and strict loopback routing for remote UI access.\n\nIf you need local first automation with stronger security posture, this is a practical playbook.\n\nhttps://developer.nvidia.com/blog/build-a-secure-always-on-local-ai-agent-with-nvidia-nemoclaw-and-openclaw/",
+    "source": "NVIDIA NemoClaw and OpenClaw deployment guide",
+    "source_url": "https://developer.nvidia.com/blog/build-a-secure-always-on-local-ai-agent-with-nvidia-nemoclaw-and-openclaw/",
+    "status": "approved",
+    "voice_check_attempts": 1,
+    "feedback": null,
+    "approved_at": "2026-04-18T02:48:30.844383Z",
+    "posted_at": "2026-04-18T20:00:29Z",
+    "retry_of": null,
+    "scheduled_at": "2026-04-18T20:00:29Z"
   }
 ]

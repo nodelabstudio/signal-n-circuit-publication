@@ -10,7 +10,7 @@ excerpt: 'The strongest vertical AI opportunities begin with recurring operator 
 author: 'X Node Dev'
 authorImage: ''
 authorBio: ''
-image: '/images/articles/lc-the-best-vertical-ai-products-start-with-a-complaint-not-a-demo.png'
+image: '/images/articles/regenerated-the-best-vertical-ai-products-start-with-a-complaint-not-a-demo.jpg'
 sources:
   - 'https://www.curvedental.com/blog/dental-insurance-verification-guide'
   - 'https://www.fmcsa.dot.gov/sites/fmcsa.dot.gov/files/2021-06/Consolidated_eFOTM_Manuals7.02-Red.pdf'

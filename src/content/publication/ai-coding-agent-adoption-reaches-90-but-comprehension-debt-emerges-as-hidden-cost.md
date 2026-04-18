@@ -8,11 +8,11 @@ tags:
   - coding-assistants
   - productivity
   - comprehension-debt
-excerpt: 'JetBrains' January 2026 survey shows 90% of developers now use AI tools, but studies reveal a hidden cost: comprehension debt slows debugging and increases security risks.'
+excerpt: "JetBrains' January 2026 survey shows 90% of developers now use AI tools, but studies reveal a hidden cost: comprehension debt slows debugging and increases security risks."
 author: 'X Node Dev'
 authorImage: ''
 authorBio: ''
-image: 'https://res.cloudinary.com/angelrodriguez/image/upload/v1776435791/cloudfire/45c03f5ecb2f4c3e88ab005634655cdd.jpg'
+image: '/images/articles/regenerated-v5-ai-coding-agent-adoption-reaches-90-but-comprehension-debt-emerges-as-hidden-cost.jpg'
 sources:
   - 'https://www.jetbrains.com/lp/devecosystem-2026/ai/'
   - 'https://checkmarx.com/reports/top-12-ai-developer-tools-2026/'

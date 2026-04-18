@@ -126,14 +126,6 @@ const placeholderPosts: Array<PublicationPost> = [
   },
 ];
 
-const homepageFeaturedOrder: Array<string> = [
-  'local-first-agent-systems-stop-being-toys-when-they-can-survive-handoffs',
-  'the-best-ai-builder-tools-are-starting-to-look-like-control-panels-not-chatbots',
-  'the-best-vertical-ai-products-start-with-a-complaint-not-a-demo',
-  'release-notes-are-starting-to-matter-more-than-launch-events',
-  'the-next-wave-of-ai-service-businesses-will-look-more-like-operators-than-agencies',
-];
-
 function resolveAuthorName(author?: string): string {
   const value = author?.trim();
   return value && value.length > 0 ? value : 'Angel Rodriguez';
@@ -162,29 +154,6 @@ function normalizePost(post: PublicationPost): PublicationPost {
     authorBio: resolveAuthorBio(post.authorBio),
     image: resolveArticleImage(post.image),
   };
-}
-
-function orderPostsBySlug(posts: Array<PublicationPost>, preferredOrder: Array<string>): Array<PublicationPost> {
-  const rank = new Map(preferredOrder.map((slug, index) => [slug, index]));
-
-  return [...posts].sort((a, b) => {
-    const aRank = rank.get(a.slug);
-    const bRank = rank.get(b.slug);
-
-    if (aRank != null && bRank != null) {
-      return aRank - bRank;
-    }
-
-    if (aRank != null) {
-      return -1;
-    }
-
-    if (bRank != null) {
-      return 1;
-    }
-
-    return 0;
-  });
 }
 
 export async function getPublicationPosts(): Promise<Array<PublicationPost>> {
@@ -227,7 +196,7 @@ export async function getPublicationPosts(): Promise<Array<PublicationPost>> {
 
 export async function getHomepagePublicationPosts(): Promise<Array<PublicationPost>> {
   const posts = await getPublicationPosts();
-  return orderPostsBySlug(posts, homepageFeaturedOrder);
+  return posts;
 }
 
 export async function getPublicationPost(slug: string): Promise<PublicationPost | undefined> {

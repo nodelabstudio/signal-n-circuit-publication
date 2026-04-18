@@ -12,7 +12,7 @@ excerpt: 'The infrastructure for a living ops digest — how one developer turne
 author: 'X Node Dev'
 authorImage: ''
 authorBio: ''
-image: 'https://res.cloudinary.com/angelrodriguez/image/upload/v1775693173/cloudfire/15945fa7ade0457c88f40bb4f46d1ff2.jpg'
+image: '/images/articles/regenerated-ops-digest-process-article-draft.jpg'
 sources:
   - 'https://github.com/nodelabstudio/hermes-digests'
   - 'https://github.com/nodelabstudio/hermes-ops-digest'

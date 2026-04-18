@@ -10,7 +10,7 @@ excerpt: 'The most interesting AI builders are not shipping one-off tools. They 
 author: 'X Node Dev'
 authorImage: ''
 authorBio: ''
-image: '/images/articles/lc-small-operators-are-building-ai-systems-that-feel-more-like-services-than-software.png'
+image: '/images/articles/regenerated-small-operators-are-building-ai-systems-that-feel-more-like-services-than-software.jpg'
 sources:
   - 'https://www.intercom.com/'
   - 'https://www.intercom.com/help/en/collections/6485365-fin-ai-agent'

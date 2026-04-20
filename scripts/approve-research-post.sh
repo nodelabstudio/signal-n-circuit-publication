@@ -7,9 +7,9 @@
 #   ./approve-research-post.sh RSP-YYYYMMDD-XX --slot 1  # single with slot override
 #
 # Slot schedule:
-#   Slot 1 -> 8:00 AM ET
-#   Slot 2 -> 11:00 AM ET
-#   Slot 3 -> 4:00 PM ET
+#   Slot 1 -> 6:00 AM ET
+#   Slot 2 -> 8:00 AM ET
+#   Slot 3 -> 10:00 PM ET
 
 set -euo pipefail
 
@@ -46,9 +46,9 @@ get_sched_iso() {
   now_mins=$((10#$now_h * 60 + 10#$now_m))
 
   case "$slot" in
-    1) target_mins=$(( 8 * 60)) ;;
-    2) target_mins=$((11 * 60)) ;;
-    3) target_mins=$((16 * 60)) ;;
+    1) target_mins=$(( 6 * 60)) ;;  # 6:00 AM ET
+    2) target_mins=$(( 8 * 60)) ;;  # 8:00 AM ET
+    3) target_mins=$((22 * 60)) ;;  # 10:00 PM ET
     *) echo ""; return 1 ;;
   esac
 
@@ -61,9 +61,9 @@ get_sched_iso() {
 
 slot_time_et() {
   case "$1" in
-    1) echo "8:00 AM ET" ;;
-    2) echo "11:00 AM ET" ;;
-    3) echo "4:00 PM ET" ;;
+    1) echo "6:00 AM ET" ;;
+    2) echo "8:00 AM ET" ;;
+    3) echo "10:00 PM ET" ;;
   esac
 }
 

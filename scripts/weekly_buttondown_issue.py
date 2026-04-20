@@ -20,6 +20,8 @@ from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import List
 from urllib import error, request
+import urllib.parse
+import urllib.request
 
 SITE_ROOT = Path("/home/administrator/site")
 CONTENT_DIR = SITE_ROOT / "src/content/publication"
@@ -178,6 +180,79 @@ def write_outputs(result: dict) -> None:
     md_path.write_text("\n".join(md), encoding="utf-8")
 
 
+def send_discord_notification(result: dict) -> bool:
+    """Send a Discord notification about the new draft to the general channel.
+    
+    Channel ID: 1477414648348147765
+    Returns True if successful, False otherwise.
+    """
+    try:
+        # Read Discord bot token from .env
+        env_file = Path("/home/administrator/.hermes/.env")
+        discord_token = None
+        if env_file.exists():
+            for line in env_file.read_text(encoding="utf-8", errors="replace").splitlines():
+                if line.startswith("DISCORD_BOT_TOKEN="):
+                    value = line.split("=", 1)[1].strip().strip('"').strip("'")
+                    if value:
+                        discord_token = value
+                        break
+        
+        if not discord_token:
+            print("WARNING: DISCORD_BOT_TOKEN not found in .env, skipping Discord notification")
+            return False
+        
+        channel_id = "1477414648348147765"
+        draft_id = result.get("id", "(unknown)")
+        preview_url = result.get("absolute_url", "")
+        subject = result.get("subject", "Signal & Circuit Weekly")
+        article_count = result.get("article_count", 0)
+        
+        message = (
+            f"📬 **New Buttondown Weekly Draft Created**\n"
+            f"**Subject:** {subject}\n"
+            f"**Draft ID:** `{draft_id}`\n"
+            f"**Articles included:** {article_count}\n"
+            f"**Preview URL:** {preview_url}\n\n"
+            f"React with 👍 to approve sending this newsletter.\n"
+            f"Review the draft first at the preview URL above."
+        )
+        
+        # Discord API endpoint
+        url = f"https://discord.com/api/v10/channels/{channel_id}/messages"
+        
+        headers = {
+            "Authorization": f"Bot {discord_token}",
+            "Content-Type": "application/json",
+            "User-Agent": "SignalCircuitBot/1.0"
+        }
+        
+        payload = {
+            "content": message,
+            "allowed_mentions": {"parse": []}
+        }
+        
+        req = urllib.request.Request(
+            url,
+            data=json.dumps(payload).encode("utf-8"),
+            headers=headers,
+            method="POST"
+        )
+        
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            response_data = resp.read().decode("utf-8", errors="replace")
+            if resp.status == 200:
+                print(f"Discord notification sent to channel {channel_id}")
+                return True
+            else:
+                print(f"WARNING: Discord API returned status {resp.status}: {response_data[:200]}")
+                return False
+                
+    except Exception as e:
+        print(f"WARNING: Failed to send Discord notification: {e}")
+        return False
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--lookback-days", type=int, default=7)
@@ -220,6 +295,9 @@ def main() -> int:
     }
 
     write_outputs(result)
+    
+    # Send Discord notification
+    send_discord_notification(result)
 
     print("Buttondown weekly draft created.")
     print(f"Draft ID: {result['id']}")

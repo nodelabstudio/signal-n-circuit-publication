@@ -1,5 +1,8 @@
 {
   "last_used": [
+    "2026-04-22 OpenClaw CVEs",
+    "2026-04-22 OpenClaw v2026.4.20",
+    "2026-04-22 Hermes Step 3.5 Flash",
     "2026-04-17 OpenClaw",
     "2026-04-19 Claude Code",
     "2026-04-19 Claude Design",
@@ -11,7 +14,7 @@
     "2026-04-20 Claude Code doing taxes",
     "2026-04-20 Post-bridge.com downtime"
   ],
-  "round_robin_index": 8,
+  "round_robin_index": 11,
   "topics": [
     "OpenClaw",
     "Hermes Agent",

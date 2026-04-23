@@ -13,8 +13,9 @@ export async function getStaticPaths() {
 
 const { slug } = Astro.params;
 const post = slug ? await getPublicationPost(slug) : undefined;
+const authorName = 'jsnode';
 const approvedAuthorBio =
-  'X Node Dev is a Senior Application Developer focused on local-first AI systems and workflow automation. He loves tinkering with new technology.';
+  'jsnode is a developer focused on local-first AI systems and workflow automation. Building tools that actually work in the field.';
 
 if (!post) {
   return Astro.redirect('/articles');
@@ -28,7 +29,7 @@ if (!post) {
       <p class='article-excerpt'>{post.excerpt}</p>
       <div class='article-meta card'>
         <span class='meta-label'>{post.type}</span>
-        <span class='byline'>By X Node Dev</span>
+        <span class='byline'>By {authorName}</span>
         <span class='date'>{post.date}</span>
       </div>
 
@@ -55,10 +56,10 @@ if (!post) {
     </section>
 
     <section class='author-endcap card'>
-      <img src='/images/authors/xnodedev.jpg' alt='X Node Dev' loading='lazy' />
+      <img src='/images/authors/xnodedev.jpg' alt={authorName} loading='lazy' />
       <div class='author-endcap-copy'>
         <p class='kicker'>About the author</p>
-        <p class='author-name'>X Node Dev</p>
+        <p class='author-name'>{authorName}</p>
         <p>{approvedAuthorBio}</p>
         <a class='author-link' href='https://x.com/thejsnode' target='_blank' rel='noopener noreferrer'>@thejsnode on X</a>
       </div>

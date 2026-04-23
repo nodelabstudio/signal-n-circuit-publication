@@ -7,7 +7,7 @@ tags:
   - 'small-business'
   - 'operations'
 excerpt: 'The strongest vertical AI opportunities begin with recurring operator complaints in one workflow, not with a generic model demo looking for a use case.'
-author: 'X Node Dev'
+author: 'jsnode'
 authorImage: ''
 authorBio: ''
 image: '/images/articles/regenerated-the-best-vertical-ai-products-start-with-a-complaint-not-a-demo.jpg'

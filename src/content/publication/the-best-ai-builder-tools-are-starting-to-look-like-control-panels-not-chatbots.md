@@ -7,7 +7,7 @@ tags:
   - 'dx'
   - 'operators'
 excerpt: 'For working builders, useful AI tooling is shifting from chat-only surfaces to control panels with state, logs, approvals, retries, and recovery visibility.'
-author: 'X Node Dev'
+author: 'jsnode'
 authorImage: ''
 authorBio: ''
 image: '/images/articles/regenerated-v2-the-best-ai-builder-tools-are-starting-to-look-like-control-panels-not-chatbots.jpg'

@@ -9,7 +9,7 @@ tags:
   - browser-automation
   - google
 excerpt: 'Google shipped a public preview of Chrome DevTools as an MCP server. AI coding agents can now debug live pages, capture performance traces, and simulate user actions with full runtime awareness.'
-author: 'X Node Dev'
+author: 'jsnode'
 authorImage: ''
 authorBio: ''
 image: '/images/articles/art6-dev-dashboard.jpg'

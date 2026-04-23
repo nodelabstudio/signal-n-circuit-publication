@@ -9,7 +9,7 @@ tags:
   - 'agents'
   - 'operations'
 excerpt: 'A technical breakdown of how OpenClaw runs as a persistent local daemon, how skills are structured, and what production-grade local agent ops actually looks like in practice.'
-author: 'X Node Dev'
+author: 'jsnode'
 authorImage: ''
 authorBio: ''
 image: '/images/articles/regenerated-infrastructure-profile-openclaw-local-agent-architecture.jpg'

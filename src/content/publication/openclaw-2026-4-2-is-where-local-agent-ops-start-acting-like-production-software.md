@@ -4,7 +4,7 @@ date: 2026-04-03
 category: "openclaw-ecosystem"
 tags: ["OpenClaw", "agents", "operations", "task-flow", "reliability"]
 excerpt: "OpenClaw 2026.4.2 is an operations release: migration safety, task-flow control, and runtime recovery all moved closer to production-grade behavior."
-author: 'X Node Dev'
+author: 'jsnode'
 authorImage: ''
 authorBio: ''
 image: '/images/articles/regenerated-openclaw-2026-4-2-is-where-local-agent-ops-start-acting-like-production-software.jpg'

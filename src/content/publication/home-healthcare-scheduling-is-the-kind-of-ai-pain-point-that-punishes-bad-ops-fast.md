@@ -4,7 +4,7 @@ date: 2026-04-03
 category: "pain-points"
 tags: ["home-healthcare", "scheduling", "operations", "workforce", "automation"]
 excerpt: "Home care agencies do not lose performance on strategy slides. They lose it in shift-fill and scheduling breakdowns. This is where practical automation can deliver measurable gains."
-author: 'X Node Dev'
+author: 'jsnode'
 authorImage: ''
 authorBio: ''
 image: '/images/articles/regenerated-home-healthcare-scheduling-is-the-kind-of-ai-pain-point-that-punishes-bad-ops-fast.jpg'

@@ -9,7 +9,7 @@ tags:
   - 'operations'
   - 'reliability'
 excerpt: 'The line between an agent demo and a dependable system is handoff reliability: can work survive session changes, model churn, and human review without losing state?'
-author: 'X Node Dev'
+author: 'jsnode'
 authorImage: ''
 authorBio: ''
 image: '/images/articles/regenerated-local-first-agent-systems-stop-being-toys-when-they-can-survive-handoffs.jpg'

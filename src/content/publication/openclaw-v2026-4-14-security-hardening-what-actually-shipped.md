@@ -8,7 +8,7 @@ tags:
   - 'ai-agents'
   - 'release-watch'
 excerpt: 'One release, five discrete security fixes across ReDoS, allowlist bypasses, SSRF gaps, and command injection. This is what hardening looks like when it is not performative.'
-author: 'X Node Dev'
+author: 'jsnode'
 authorImage: ''
 authorBio: ''
 image: '/images/articles/regenerated-openclaw-v2026-4-14-security-hardening-what-actually-shipped.jpg'

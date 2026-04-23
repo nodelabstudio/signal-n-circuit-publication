@@ -7,7 +7,7 @@ tags:
   - 'services'
   - 'operators'
 excerpt: 'The durable AI agent business is shifting from demo software to managed operations: setup, governance, monitoring, exception handling, and measurable outcome ownership.'
-author: 'X Node Dev'
+author: 'jsnode'
 authorImage: ''
 authorBio: ''
 image: '/images/articles/regenerated-managed-ai-services-are-the-real-agent-business.jpg'

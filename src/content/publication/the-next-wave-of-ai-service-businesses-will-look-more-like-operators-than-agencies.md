@@ -7,7 +7,7 @@ tags:
   - 'operators'
   - 'service-model'
 excerpt: 'The firms with the strongest edge in AI services are behaving less like campaign agencies and more like operators who own setup, monitoring, exception handling, and continuity.'
-author: 'X Node Dev'
+author: 'jsnode'
 authorImage: ''
 authorBio: ''
 image: '/images/articles/regenerated-the-next-wave-of-ai-service-businesses-will-look-more-like-operators-than-agencies.jpg'

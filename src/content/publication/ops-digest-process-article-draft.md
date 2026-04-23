@@ -9,7 +9,7 @@ tags:
   - 'obsidian'
   - 'automation'
 excerpt: 'The infrastructure for a living ops digest — how one developer turned a black-box AI agent stack into a morning-scanned logbook with Git-synced Obsidian vaults.'
-author: 'X Node Dev'
+author: 'jsnode'
 authorImage: ''
 authorBio: ''
 image: '/images/articles/regenerated-ops-digest-process-article-draft.jpg'

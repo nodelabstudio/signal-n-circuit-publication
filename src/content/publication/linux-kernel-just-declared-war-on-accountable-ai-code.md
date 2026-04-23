@@ -9,7 +9,7 @@ tags:
   - accountability
   - security
 excerpt: 'After an AI-generated kernel patch nearly shipped unvetted, Linus Torvalds formalized a rule: a human bears full legal responsibility for any AI-generated code they submit. That line is now a policy.'
-author: 'X Node Dev'
+author: 'jsnode'
 authorImage: ''
 authorBio: ''
 image: '/images/articles/art7-amber-server.jpg'

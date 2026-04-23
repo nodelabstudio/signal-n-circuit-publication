@@ -9,7 +9,7 @@ tags:
   - 'astro'
   - 'pipeline'
 excerpt: 'A look at the actual automation stack behind Signal & Circuit. What holds together, what breaks, and what another operator can replicate without buying anything new.'
-author: 'X Node Dev'
+author: 'jsnode'
 authorImage: ''
 authorBio: ''
 image: '/images/articles/regenerated-operator-stack-reference-stack-openclaw-hermes-astro-pipeline.jpg'

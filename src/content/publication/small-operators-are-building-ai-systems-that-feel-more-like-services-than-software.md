@@ -7,7 +7,7 @@ tags:
   - 'ops'
   - 'spotlight'
 excerpt: 'The most interesting AI builders are not shipping one-off tools. They are combining automation with setup, oversight, and accountability that behaves like a managed service.'
-author: 'X Node Dev'
+author: 'jsnode'
 authorImage: ''
 authorBio: ''
 image: '/images/articles/regenerated-small-operators-are-building-ai-systems-that-feel-more-like-services-than-software.jpg'

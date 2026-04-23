@@ -7,7 +7,7 @@ tags:
   - 'changelog'
   - 'models'
 excerpt: 'Release Watch: the highest-signal AI news often appears in changelog details that change limits, pricing, deprecations, and reliability for builders.'
-author: 'X Node Dev'
+author: 'jsnode'
 authorImage: ''
 authorBio: ''
 image: '/images/articles/regenerated-release-notes-are-starting-to-matter-more-than-launch-events.jpg'

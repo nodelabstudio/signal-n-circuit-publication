@@ -160,7 +160,7 @@ for msg in messages:
         f"{reply_text}\n\n"
         f"---\n"
         f"Source: {source or 'edited reply'}\n"
-        f"Target: @x_node_dev\n\n"
+        f"Target: @thejsnode\n\n"
         f"React ✅ to approve this draft only.\n"
         f"React ❌ to reject this draft.\n"
         f"Reply with edited text to request revision."

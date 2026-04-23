@@ -1,24 +1,22 @@
 #!/usr/bin/env bash
-# approve-research-post.sh — Approves pending research posts from the review queue.
+# approve-hot-post.sh — Approves pending HOT posts from the review queue.
 #
 # Usage:
-#   ./approve-research-post.sh all           # approve ALL pending posts
-#   ./approve-research-post.sh RSP-YYYYMMDD-XX   # approve one post by ID
-#   ./approve-research-post.sh RSP-YYYYMMDD-XX --slot 1  # single with slot override
+#   ./approve-hot-post.sh all           # approve ALL pending posts
+#   ./approve-hot-post.sh HOT-YYYYMMDD-XX   # approve one post by ID
 #
-# Slot schedule:
-#   Slot 1 -> 8:00 AM ET
-#   Slot 2 -> 11:00 AM ET
+# Slot schedule for HOT posts:
+#   Slot 1 -> 2:00 PM ET
+#   Slot 2 -> 6:00 PM ET
 
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REVIEW_FILE="$SCRIPT_DIR/research-post-review.json"
+REVIEW_FILE="$SCRIPT_DIR/hot-post-review.json"
 DISCORD_CHANNEL_ID="1477414797757907075"
 POST_BRIDGE_BASE="https://api.post-bridge.com"
 
 # --- Load env ---
-# post-bridge credentials live in site/.env
 if [[ -f "/home/administrator/site/.env" ]]; then
   set -a
   source "/home/administrator/site/.env"
@@ -45,8 +43,8 @@ get_sched_iso() {
   now_mins=$((10#$now_h * 60 + 10#$now_m))
 
   case "$slot" in
-    1) target_mins=$(( 8 * 60)) ;;  # 8:00 AM ET
-    2) target_mins=$((11 * 60)) ;;  # 11:00 AM ET
+    1) target_mins=$((14 * 60)) ;;  # 2:00 PM ET
+    2) target_mins=$((18 * 60)) ;;  # 6:00 PM ET
     *) echo ""; return 1 ;;
   esac
 
@@ -59,8 +57,8 @@ get_sched_iso() {
 
 slot_time_et() {
   case "$1" in
-    1) echo "8:00 AM ET" ;;
-    2) echo "11:00 AM ET" ;;
+    1) echo "2:00 PM ET" ;;
+    2) echo "6:00 PM ET" ;;
   esac
 }
 
@@ -108,16 +106,12 @@ for post in posts:
             post['posted_at'] = '$sched_iso'
         break
 
-# Write back preserving original structure
 output = raw if isinstance(raw, list) else raw
 with open('$REVIEW_FILE', 'w') as f:
     json.dump(output, f, indent=2)
 PYEOF
 }
 
-# =============================================================================
-# Deduplication: check if this exact caption is already scheduled
-# Deduplication: check if this exact caption is already scheduled
 is_already_scheduled() {
   local content="$1"
   python3 << 'PYEOF'
@@ -145,7 +139,6 @@ schedule_post() {
   local sched_iso
   sched_iso=$(get_sched_iso "$slot") || return 1
 
-  # Schedule via Postiz API (Python)
   python3 - "$post_id" "$content" "$slot" "$sched_iso" << 'PYEOF'
 import sys, json, requests, os
 
@@ -161,10 +154,8 @@ if not key or not x_id:
     print(f"FAIL|missing_credentials")
     sys.exit(1)
 
-# Deduplication check
 auth_header = {'Authorization': f'Bearer {key}'}
-r = requests.get('https://api.post-bridge.com/v1/posts',
-    headers=auth_header)
+r = requests.get('https://api.post-bridge.com/v1/posts', headers=auth_header)
 if r.status_code == 200:
     payload = r.json()
     posts = payload if isinstance(payload, list) else payload.get('data', [])
@@ -173,7 +164,6 @@ if r.status_code == 200:
             print(f"SKIP|{sched_iso}|409|duplicate")
             sys.exit(0)
 
-# post-bridge payload format
 payload = {
     'caption': content.strip(),
     'scheduled_at': sched_iso,
@@ -237,13 +227,11 @@ PYEOF
   if [[ "$http_code" == "200" || "$http_code" == "201" ]]; then
     echo "OK: $post_id scheduled for $(slot_time_et $slot)"
     update_review_json "$post_id" "$sched_iso" "$http_code"
-    discord_send "✅ **$post_id** approved and scheduled for $(slot_time_et $slot).
-
-> $(echo "$content" | head -1)"
+    discord_send "🔥 **$post_id** approved and scheduled for $(slot_time_et $slot)."
   elif [[ "$http_code" == "409" ]]; then
     echo "SKIP: $post_id — duplicate content already scheduled"
     update_review_json "$post_id" "$sched_iso" "$http_code"
-    discord_send "⏭️ **$post_id** skipped — same content already scheduled for $(slot_time_et $slot)."
+    discord_send "⏭️ **$post_id** skipped — same content already scheduled."
   else
     echo "FAIL: HTTP $http_code — $(echo "$result" | cut -d'|' -f4)" >&2
     update_review_json "$post_id" "" "$http_code"
@@ -255,16 +243,15 @@ PYEOF
 # Approve all pending
 # =============================================================================
 approve_all() {
-  echo "=== approve all: scanning for pending posts ==="
+  echo "=== HOT approve all: scanning for pending posts ==="
 
   local pending_ids
   pending_ids=$(python3 << PYEOF
 import json
 raw = json.load(open('$REVIEW_FILE'))
-# Handle both list-at-root and dict-at-root formats
 posts = raw if isinstance(raw, list) else raw.get('posts', [])
 pending = [p for p in posts if p.get('status') == 'pending']
-print(f'Found {len(pending)} pending post(s):')
+print(f'Found {len(pending)} pending HOT post(s):')
 for p in pending:
     print(f"  {p['id']} slot={p.get('slot','?')} topic={p.get('topic','?')}")
     content = p.get('content', p.get('text', '')).replace('\n', ' ')
@@ -287,13 +274,11 @@ PYEOF
     if [[ "$http_code" == "200" || "$http_code" == "201" ]]; then
       echo "  OK: $pid -> $(slot_time_et $slot)"
       update_review_json "$pid" "$sched_iso" "$http_code"
-      discord_send "✅ **$pid** approved and scheduled for $(slot_time_et $slot).
-
-> $(echo "$content" | head -1)"
+      discord_send "🔥 **$pid** approved and scheduled for $(slot_time_et $slot)."
     elif [[ "$http_code" == "409" ]]; then
       echo "  SKIP: $pid — duplicate content already scheduled"
       update_review_json "$pid" "$sched_iso" "$http_code"
-      discord_send "⏭️ **$pid** skipped — same content already scheduled for $(slot_time_et $slot)."
+      discord_send "⏭️ **$pid** skipped — same content already scheduled."
     else
       echo "  FAIL: $pid HTTP $http_code" >&2
       update_review_json "$pid" "" "$http_code"
@@ -315,7 +300,7 @@ SLOT_OVERRIDE=""
 if [[ "$MODE" == "all" ]]; then
   approve_all
 elif [[ -z "$MODE" ]]; then
-  echo "Usage: $0 RSP-YYYYMMDD-XX  |  $0 all" >&2
+  echo "Usage: $0 HOT-YYYYMMDD-XX  |  $0 all" >&2
   exit 1
 else
   if [[ "${2:-}" == "--slot" && -n "${3:-}" ]]; then

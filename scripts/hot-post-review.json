@@ -1,0 +1,42 @@
+[
+  {
+    "id": "HOT-20260423-01",
+    "date": "2026-04-23",
+    "slot": 1,
+    "topic": "Anthropic subscription contradiction",
+    "content": "Anthropic, on 4/16: We're increasing limits for all subscribers because Opus 4.7 uses more tokens. Enjoy!\n\nAnthropic, on 4/21: No more Claude Code for some Pro subscribers.\n\nOur subscription plans weren't built for this.\n\nhttps://x.com/ClaudeDevs/status/2046999435239133246",
+    "source": "Anthropic / ClaudeDevs X posts (April 16 and April 21)",
+    "source_url": "https://x.com/ClaudeDevs/status/2046999435239133246",
+    "score_breakdown": {
+      "contradiction": 3,
+      "irony": 3,
+      "pain": 3,
+      "recency": 1
+    },
+    "status": "approved",
+    "created_at": "2026-04-23T18:47:50.542349Z",
+    "approved_at": "2026-04-23T18:50:43.252892Z",
+    "scheduled_at": "2026-04-24T18:00:41Z",
+    "posted_at": "2026-04-24T18:00:41Z"
+  },
+  {
+    "id": "HOT-20260423-02",
+    "date": "2026-04-23",
+    "slot": 2,
+    "topic": "Claude Code /ultrareview FOMO",
+    "content": "Claude Code's /ultrareview feature is in research preview.\n\nYou get 3 free reviews before 5/5.\n\nFree as in: here, try this thing we're definitely charging you for later.\n\nhttps://x.com/ClaudeDevs/status/2046999435239133246",
+    "source": "ClaudeDevs /ultrareview announcement",
+    "source_url": "https://x.com/ClaudeDevs/status/2046999435239133246",
+    "score_breakdown": {
+      "contradiction": 2,
+      "irony": 3,
+      "pain": 1,
+      "recency": 2
+    },
+    "status": "approved",
+    "created_at": "2026-04-23T18:47:50.542373Z",
+    "approved_at": "2026-04-23T18:50:44.995780Z",
+    "scheduled_at": "2026-04-23T22:00:43Z",
+    "posted_at": "2026-04-23T22:00:43Z"
+  }
+]

@@ -10,7 +10,7 @@ excerpt: 'Release Watch: the highest-signal AI news often appears in changelog d
 author: 'jsnode'
 authorImage: ''
 authorBio: ''
-image: '/images/articles/regenerated-release-notes-are-starting-to-matter-more-than-launch-events.jpg'
+image: '/images/articles/chatgpt-image-2-release-notes-are-starting-to-matter-more-than-launch-events.png'
 sources:
   - 'https://platform.openai.com/docs/changelog'
   - 'https://docs.anthropic.com/en/release-notes/overview'

@@ -10,7 +10,7 @@ excerpt: 'The durable AI agent business is shifting from demo software to manage
 author: 'jsnode'
 authorImage: ''
 authorBio: ''
-image: '/images/articles/regenerated-managed-ai-services-are-the-real-agent-business.jpg'
+image: '/images/articles/chatgpt-image-2-managed-ai-services-are-the-real-agent-business.png'
 sources:
   - 'https://www.glean.com/blog/glean-agents-launch-blog'
   - 'https://www.intercom.com/help/en/articles/7120684-fin-ai-agent-explained'

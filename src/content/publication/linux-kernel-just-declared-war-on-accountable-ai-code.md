@@ -12,7 +12,7 @@ excerpt: 'After an AI-generated kernel patch nearly shipped unvetted, Linus Torv
 author: 'jsnode'
 authorImage: ''
 authorBio: ''
-image: '/images/articles/art7-amber-server.jpg'
+image: '/images/articles/chatgpt-image-2-linux-kernel-just-declared-war-on-accountable-ai-code.png'
 sources:
   - 'https://hackaday.com/2026/04/14/new-linux-kernel-rules-put-the-onus-on-humans-for-ai-tool-usage/'
   - 'https://www.zdnet.com/article/linus-torvalds-and-maintainers-finalize-ai-policy-for-linux-kernel-developers/'

@@ -11,7 +11,7 @@ excerpt: 'One release, five discrete security fixes across ReDoS, allowlist bypa
 author: 'jsnode'
 authorImage: ''
 authorBio: ''
-image: '/images/articles/regenerated-openclaw-v2026-4-14-security-hardening-what-actually-shipped.jpg'
+image: '/images/articles/chatgpt-image-2-openclaw-v2026-4-14-security-hardening-what-actually-shipped.png'
 sources:
   - 'https://github.com/nousresearch/openclaw/releases/tag/v2026.4.14'
   - 'https://github.com/nousresearch/openclaw/issues/46707'

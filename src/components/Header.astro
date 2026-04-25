@@ -6,9 +6,10 @@ import HeaderLink from './HeaderLink.astro';
 <header class='site-header'>
   <div class='topbar'>
     <div class='masthead'>
-      <p class='eyebrow'>Independent publication</p>
+      <p class='eyebrow'>Field notes for AI operators</p>
       <div class='brand-row'>
         <a class='brand' href='/'>{SITE_TITLE}</a>
+        <span class='dateline'>What shipped. What broke. What matters.</span>
       </div>
     </div>
     <nav class='primary-nav'>
@@ -46,7 +47,7 @@ import HeaderLink from './HeaderLink.astro';
   }
 
   .topbar {
-    max-width: 1200px;
+    max-width: var(--page);
     margin: 0 auto;
     padding: 1rem 1.25rem 0.8rem;
     display: flex;
@@ -83,6 +84,14 @@ import HeaderLink from './HeaderLink.astro';
     text-decoration: none;
     font-weight: 700;
     letter-spacing: -0.04em;
+  }
+
+  .dateline {
+    color: rgb(var(--muted));
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
   }
 
   .primary-nav {
@@ -146,7 +155,7 @@ import HeaderLink from './HeaderLink.astro';
   }
 
   .category-nav {
-    max-width: 1200px;
+    max-width: var(--page);
     margin: 0 auto;
     padding: 0 1.25rem 0.9rem;
     display: flex;
@@ -172,6 +181,14 @@ import HeaderLink from './HeaderLink.astro';
   .primary-nav a:hover,
   .category-nav a:hover {
     color: rgb(var(--accent));
+  }
+
+  @media (min-width: 1600px) {
+    .topbar,
+    .category-nav {
+      margin-left: clamp(2rem, 4vw, 5.5rem);
+      margin-right: auto;
+    }
   }
 
   @media (max-width: 720px) {

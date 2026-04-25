@@ -12,7 +12,7 @@ excerpt: 'A look at the actual automation stack behind Signal & Circuit. What ho
 author: 'jsnode'
 authorImage: ''
 authorBio: ''
-image: '/images/articles/regenerated-operator-stack-reference-stack-openclaw-hermes-astro-pipeline.jpg'
+image: '/images/articles/chatgpt-image-2-operator-stack-reference-stack-openclaw-hermes-astro-pipeline.png'
 sources: []
 type: 'operator-stack'
 draft: false

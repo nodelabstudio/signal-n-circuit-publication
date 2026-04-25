@@ -12,7 +12,7 @@ excerpt: 'A technical breakdown of how OpenClaw runs as a persistent local daemo
 author: 'jsnode'
 authorImage: ''
 authorBio: ''
-image: '/images/articles/regenerated-infrastructure-profile-openclaw-local-agent-architecture.jpg'
+image: '/images/articles/chatgpt-image-2-infrastructure-profile-openclaw-local-agent-architecture.png'
 sources:
   - 'https://github.com/openclaw/openclaw'
 type: 'infrastructure-profile'

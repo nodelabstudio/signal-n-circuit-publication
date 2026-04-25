@@ -12,7 +12,7 @@ excerpt: 'The infrastructure for a living ops digest — how one developer turne
 author: 'jsnode'
 authorImage: ''
 authorBio: ''
-image: '/images/articles/regenerated-ops-digest-process-article-draft.jpg'
+image: '/images/articles/chatgpt-image-2-ops-digest-process-article-draft.png'
 sources:
   - 'https://github.com/nodelabstudio/hermes-digests'
   - 'https://github.com/nodelabstudio/hermes-ops-digest'

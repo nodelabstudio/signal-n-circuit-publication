@@ -13,6 +13,7 @@ export async function getStaticPaths() {
 
 const { slug } = Astro.params;
 const post = slug ? await getPublicationPost(slug) : undefined;
+const posts = await getPublicationPosts();
 const authorName = 'jsnode';
 const approvedAuthorBio =
   'jsnode is a developer focused on local-first AI systems and workflow automation. Building tools that actually work in the field.';
@@ -20,42 +21,72 @@ const approvedAuthorBio =
 if (!post) {
   return Astro.redirect('/articles');
 }
+
+const relatedPosts = posts
+  .filter((item) => item.slug !== post.slug)
+  .sort((a, b) => {
+    const categoryScore = Number(b.category === post.category) - Number(a.category === post.category);
+    if (categoryScore !== 0) return categoryScore;
+    return 0;
+  })
+  .slice(0, 3);
 ---
 
 <PublicationLayout title={post.title} description={post.excerpt}>
   <article class='article'>
-    <header class='article-head'>
-      <h1 class='article-title'>{post.title}</h1>
-      <p class='article-excerpt'>{post.excerpt}</p>
-      <div class='article-meta card'>
-        <span class='meta-label'>{post.type}</span>
-        <span class='byline'>By {authorName}</span>
-        <span class='date'>{post.date}</span>
+    <header class='article-hero'>
+      <div class='article-hero-copy'>
+        <a class='section-label' href={`/category/${post.category}/`}>{post.category.replace(/-/g, ' ')}</a>
+        <h1 class='article-title'>{post.title}</h1>
+        <p class='article-excerpt'>{post.excerpt}</p>
+        <div class='article-meta'>
+          <span>{post.type.replace(/-/g, ' ')}</span>
+          <span>By {authorName}</span>
+          <span>{post.date}</span>
+        </div>
       </div>
 
-      <div class='tag-row'>
-        {post.tags.map((tag) => (
-          <a class='pill' href={`/tag/${tag}/`}>
-            {tag}
-          </a>
-        ))}
-      </div>
+      {post.image && (
+        <figure class='article-image'>
+          <img src={post.image} alt={post.title} loading='eager' />
+        </figure>
+      )}
     </header>
 
+    <div class='tag-row'>
+      {post.tags.map((tag) => (
+        <a class='pill' href={`/tag/${tag}/`}>
+          {tag}
+        </a>
+      ))}
+    </div>
+
     <section class='content-wrap'>
-      <div class='prose card body-card'>
-        <div class='article-rail'>
-          <span>Lead analysis</span>
-          <strong>{post.category.replace(/-/g, ' ')}</strong>
+      <aside class='article-sidebar'>
+        <div class='sidebar-card'>
+          <p class='sidebar-label'>Editorial lens</p>
+          <p>Signal &amp; Circuit tracks what changes real operator work: reliability, cost, migration friction, support load, and delivery risk.</p>
         </div>
-        <p class='standfirst'>
-          The commercial shape of AI agents is getting clearer: long-term value concentrates around installation, maintenance, oversight, and the human-readable systems that make automation survivable in the field.
-        </p>
+        {post.sources.length > 0 && (
+          <div class='sidebar-card source-card'>
+            <p class='sidebar-label'>Source trail</p>
+            <p>Original docs, repos, release notes, and field testing come first.</p>
+            <ul>
+              {post.sources.slice(0, 4).map((source) => (
+                <li><a href={source} target='_blank' rel='noopener noreferrer'>Source</a></li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </aside>
+
+      <div class='prose body-card'>
+        <p class='standfirst'>{post.excerpt}</p>
         {post.Content ? <post.Content /> : post.body?.split('\n\n').map((paragraph) => <p>{paragraph}</p>)}
       </div>
     </section>
 
-    <section class='author-endcap card'>
+    <section class='author-endcap'>
       <img src='/images/authors/xnodedev.jpg' alt={authorName} loading='lazy' />
       <div class='author-endcap-copy'>
         <p class='kicker'>About the author</p>
@@ -64,55 +95,97 @@ if (!post) {
         <a class='author-link' href='https://x.com/thejsnode' target='_blank' rel='noopener noreferrer'>@thejsnode on X</a>
       </div>
     </section>
+
+    {relatedPosts.length > 0 && (
+      <section class='related-stories'>
+        <div class='related-head'>
+          <p class='kicker'>Read next</p>
+          <h2>More from this beat</h2>
+        </div>
+        <div class='related-grid'>
+          {relatedPosts.map((item) => (
+            <a class='related-card' href={`/articles/${item.slug}/`}>
+              <span>{item.category.replace(/-/g, ' ')}</span>
+              <strong>{item.title}</strong>
+              <em>{item.date}</em>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
   </article>
 </PublicationLayout>
 
 <style>
   .article {
     display: grid;
-    gap: 1.5rem;
+    gap: 1.75rem;
   }
 
-  .article-head {
+  .article-hero {
     display: grid;
-    gap: 0;
+    grid-template-columns: minmax(0, 1.18fr) minmax(260px, 0.58fr);
+    gap: clamp(1.4rem, 3vw, 2.4rem);
+    align-items: end;
+    padding: clamp(1rem, 2vw, 1.4rem) 0 1.5rem;
+    border-bottom: 1px solid rgba(var(--border), 0.95);
+  }
+
+  .article-hero-copy {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .section-label {
+    width: fit-content;
+    color: rgb(var(--accent));
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.13em;
+    text-decoration: none;
+    text-transform: uppercase;
   }
 
   .article-title {
-    font-size: clamp(2.15rem, 5.8vw, 4.2rem);
-    line-height: 0.98;
-    letter-spacing: -0.04em;
-    max-width: 16ch;
-    margin: 0 0 0.9rem;
+    max-width: 22ch;
+    font-size: clamp(3rem, 6.4vw, 6.4rem);
+    line-height: 0.97;
+    letter-spacing: -0.06em;
+    overflow-wrap: normal;
+    text-wrap: balance;
   }
 
   .article-excerpt {
-    max-width: 62ch;
+    max-width: 58ch;
     color: rgb(var(--muted));
-    font-size: 1.02rem;
-    line-height: 1.64;
-    margin: 0 0 1.35rem;
+    font-size: clamp(1.05rem, 1.5vw, 1.28rem);
+    line-height: 1.65;
   }
 
   .article-meta {
-    padding: 1.15rem 1.1rem;
-    margin: 0 0 0.5rem;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
     flex-wrap: wrap;
-    gap: 1.25rem;
-    border-radius: 0;
+    gap: 0.6rem 1rem;
     color: rgb(var(--muted));
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-size: 0.78rem;
   }
 
-  .meta-label,
-  .date,
-  .byline {
-    display: block;
+  .article-image {
+    margin: 0;
+    min-height: 320px;
+    border: 1px solid rgba(var(--border), 0.95);
+    background: rgb(var(--surface));
+    overflow: hidden;
+  }
+
+  .article-image img {
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
+    object-fit: cover;
   }
 
   .tag-row {
@@ -123,44 +196,79 @@ if (!post) {
 
   .content-wrap {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    margin-top: 0.8rem;
+    grid-template-columns: minmax(180px, 260px) minmax(0, 720px);
+    justify-content: center;
+    gap: clamp(1.25rem, 4vw, 3rem);
+    margin-top: 0.9rem;
+  }
+
+  .article-sidebar {
+    display: grid;
+    align-content: start;
+    gap: 1rem;
+    position: sticky;
+    top: 8rem;
+  }
+
+  .sidebar-card,
+  .body-card,
+  .author-endcap,
+  .related-card {
+    border: 1px solid rgba(var(--border), 0.95);
+    background: rgba(var(--surface), 0.82);
+  }
+
+  .sidebar-card {
+    padding: 1rem;
+    color: rgb(var(--muted));
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .sidebar-label {
+    margin: 0 0 0.45rem;
+    color: rgb(var(--ink));
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .source-card ul {
+    margin: 0.75rem 0 0;
+    padding-left: 1rem;
+  }
+
+  .source-card a {
+    color: rgb(var(--accent));
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-decoration: none;
   }
 
   .body-card {
-    position: relative;
-    padding: 1.8rem 1.8rem 1.5rem;
-    max-width: 680px;
-    margin: 0 auto;
+    padding: clamp(1.25rem, 3vw, 2.6rem);
     width: 100%;
-    border-radius: 0;
   }
 
-  .article-rail {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: 1.2rem;
-    padding-bottom: 0.9rem;
-    border-bottom: 1px solid rgba(var(--border), 0.7);
-    color: rgb(var(--muted));
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-size: 0.78rem;
-  }
-
-  .standfirst {
-    font-size: 1.24rem;
-    line-height: 1.72;
+  .body-card .standfirst {
+    margin: 0 0 2.15rem;
+    padding-bottom: 1.65rem;
+    max-width: 26ch;
+    border-bottom: 1px solid rgba(var(--border), 0.82);
     color: rgb(var(--ink));
-    max-width: 34em;
-    margin-bottom: 1.6rem;
+    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    font-size: clamp(2.15rem, 4.2vw, 3.35rem);
+    font-weight: 750;
+    line-height: 1.06;
+    letter-spacing: -0.055em;
+    text-wrap: balance;
   }
 
   .body-card p,
   .body-card li {
     margin: 0;
-    max-width: 39em;
+    max-width: 40em;
     font-size: 1.08rem;
     line-height: 1.88;
   }
@@ -172,109 +280,178 @@ if (!post) {
   .body-card ol + p,
   .body-card blockquote + p,
   .body-card p + blockquote {
-    margin-top: 1.5rem;
+    margin-top: 1.45rem;
   }
 
-  .body-card h2,
-  .body-card h3 {
-    margin: 10px 0 !important;
-    line-height: 1.2;
-    font-size: 1.35rem;
-    font-weight: 700;
-    letter-spacing: -0.01em;
+  :global(.body-card h2),
+  :global(.body-card h3) {
+    margin: 1.85rem 0 0.6rem !important;
+    line-height: 1.24 !important;
     color: rgb(var(--ink));
+    letter-spacing: -0.018em;
   }
 
-  .body-card h2 + p,
-  .body-card h3 + p,
-  .body-card h2 + ul,
-  .body-card h3 + ul,
-  .body-card h2 + ol,
-  .body-card h3 + ol,
-  .body-card h2 + blockquote,
-  .body-card h3 + blockquote {
-    margin-top: 0;
-    padding-top: 0;
+  :global(.body-card h2) {
+    font-size: clamp(1.22rem, 1.55vw, 1.5rem) !important;
+  }
+
+  :global(.body-card h3) {
+    font-size: clamp(1.05rem, 1.25vw, 1.2rem) !important;
   }
 
   .body-card ul,
   .body-card ol {
-    margin: 0 0 1.2rem 1.3rem;
+    margin: 1rem 0 1.25rem 1.3rem;
     padding: 0;
   }
 
   .body-card blockquote {
-    margin: 1.45rem 0 1.55rem 1rem;
-    padding: 0.8rem 0.95rem;
-    border-left: 3px solid rgba(var(--accent), 0.75);
+    margin: 1.75rem 0;
+    padding: 1rem 1.15rem;
+    border-left: 4px solid rgba(var(--accent), 0.8);
     color: rgb(var(--muted));
-    background: rgba(var(--surface-strong), 0.4);
+    background: rgba(var(--surface-strong), 0.55);
   }
 
-  .body-card em {
-    font-style: italic;
+  .body-card code {
+    background: rgba(var(--surface-strong), 0.85);
+    padding: 0.15rem 0.28rem;
+    font-size: 0.92em;
   }
 
-  .body-card p:last-child em {
-    font-style: italic;
-    font-size: 0.82rem;
-    color: rgba(250, 248, 245, 0.38);
+  .body-card pre {
+    overflow-x: auto;
+    padding: 1rem;
+    border: 1px solid rgba(var(--border), 0.85);
+    background: rgb(24, 27, 31);
+    color: rgb(244, 240, 232);
   }
 
   .author-endcap {
-    max-width: 680px;
+    max-width: 720px;
     margin: 0 auto;
-    width: 100%;
-    border-radius: 0;
-    padding: 1rem;
+    padding: 1.2rem;
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: 0.9rem;
+    gap: 1rem;
     align-items: center;
   }
 
   .author-endcap img {
-    width: 64px;
-    height: 64px;
+    width: 72px;
+    height: 72px;
     border-radius: 999px;
     object-fit: cover;
-    border: 1px solid rgba(var(--border), 0.92);
   }
 
   .author-endcap-copy {
     display: grid;
-    gap: 0.2rem;
+    gap: 0.3rem;
     color: rgb(var(--muted));
+    line-height: 1.55;
   }
 
   .author-name {
     color: rgb(var(--ink));
-    font-weight: 700;
-    margin: 0;
+    font-weight: 800;
   }
 
   .author-link {
-    font-size: 0.88rem;
-    text-decoration: none;
-    color: rgb(var(--accent));
-    font-weight: 600;
     width: fit-content;
+    color: rgb(var(--accent));
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-decoration: none;
   }
 
-  .author-link:hover {
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
+  .related-stories {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1rem;
   }
 
-  @media (max-width: 980px) {
-    .article-meta {
+  .related-head {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+    border-top: 1px solid rgba(var(--border), 0.95);
+    padding-top: 1.3rem;
+  }
+
+  .related-head h2 {
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+  }
+
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .related-card {
+    display: grid;
+    gap: 0.7rem;
+    padding: 1rem;
+    color: rgb(var(--ink));
+    text-decoration: none;
+    min-height: 180px;
+  }
+
+  .related-card span,
+  .related-card em {
+    color: rgb(var(--muted));
+    font-size: 0.72rem;
+    font-style: normal;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .related-card strong {
+    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    font-size: 1.45rem;
+    line-height: 1.05;
+  }
+
+  .related-card:hover strong {
+    color: rgb(var(--accent));
+  }
+
+  @media (max-width: 1040px) {
+    .article-hero {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .content-wrap,
+    .related-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .article-title {
+      max-width: 16ch;
+      font-size: clamp(3rem, 13vw, 5.2rem);
+      line-height: 0.94;
+    }
+
+    .article-sidebar {
+      position: static;
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .article-meta,
+    .related-head {
       align-items: flex-start;
       flex-direction: column;
     }
 
     .author-endcap {
       grid-template-columns: 1fr;
-      align-items: flex-start;
     }
   }
 </style>

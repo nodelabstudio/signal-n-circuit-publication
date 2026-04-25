@@ -10,7 +10,7 @@ excerpt: 'The firms with the strongest edge in AI services are behaving less lik
 author: 'jsnode'
 authorImage: ''
 authorBio: ''
-image: '/images/articles/regenerated-the-next-wave-of-ai-service-businesses-will-look-more-like-operators-than-agencies.jpg'
+image: '/images/articles/chatgpt-image-2-the-next-wave-of-ai-service-businesses-will-look-more-like-operators-than-agencies.png'
 sources:
   - 'https://www.glean.com/blog/glean-agents-launch-blog'
   - 'https://www.intercom.com/help/en/articles/7120684-fin-ai-agent-explained'

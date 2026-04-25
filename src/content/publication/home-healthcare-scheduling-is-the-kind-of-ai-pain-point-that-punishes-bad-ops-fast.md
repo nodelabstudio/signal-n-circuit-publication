@@ -7,7 +7,7 @@ excerpt: "Home care agencies do not lose performance on strategy slides. They lo
 author: 'jsnode'
 authorImage: ''
 authorBio: ''
-image: '/images/articles/regenerated-home-healthcare-scheduling-is-the-kind-of-ai-pain-point-that-punishes-bad-ops-fast.jpg'
+image: '/images/articles/chatgpt-image-2-home-healthcare-scheduling-is-the-kind-of-ai-pain-point-that-punishes-bad-ops-fast.png'
 sources:
   - "https://www.sagecare.ai/blog/home-care-business/how-the-caregiver-workforce-shortage-is-impacting-home-care-agency-operations"
   - "https://shiftcare.com/us/blog/improving-staffing-and-scheduling"

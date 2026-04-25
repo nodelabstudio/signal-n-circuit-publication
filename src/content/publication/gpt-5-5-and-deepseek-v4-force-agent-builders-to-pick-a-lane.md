@@ -11,7 +11,7 @@ excerpt: 'OpenAI shipped a stronger closed agent model while DeepSeek shipped an
 author: 'X Node Dev'
 authorImage: ''
 authorBio: ''
-image: '/images/articles/regenerated-local-first-agent-systems-stop-being-toys-when-they-can-survive-handoffs.jpg'
+image: '/images/articles/chatgpt-image-2-gpt-5-5-and-deepseek-v4-force-agent-builders-to-pick-a-lane.png'
 sources:
   - 'https://openai.com/index/introducing-gpt-5-5/'
   - 'https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro'

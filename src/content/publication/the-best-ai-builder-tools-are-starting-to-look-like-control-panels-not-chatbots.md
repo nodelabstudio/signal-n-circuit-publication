@@ -10,7 +10,7 @@ excerpt: 'For working builders, useful AI tooling is shifting from chat-only sur
 author: 'jsnode'
 authorImage: ''
 authorBio: ''
-image: '/images/articles/regenerated-v2-the-best-ai-builder-tools-are-starting-to-look-like-control-panels-not-chatbots.jpg'
+image: '/images/articles/chatgpt-image-2-the-best-ai-builder-tools-are-starting-to-look-like-control-panels-not-chatbots.png'
 sources:
   - 'https://github.com/openclaw/openclaw'
   - 'https://cursor.com/blog'

@@ -12,7 +12,7 @@ excerpt: 'Google shipped a public preview of Chrome DevTools as an MCP server. A
 author: 'jsnode'
 authorImage: ''
 authorBio: ''
-image: '/images/articles/art6-dev-dashboard.jpg'
+image: '/images/articles/chatgpt-image-2-chrome-devtools-mcp-gives-ai-agents-eyes-in-the-browser.png'
 sources:
   - 'https://developer.chrome.com/blog/chrome-devtools-mcp'
   - 'https://github.com/ChromeDevTools/chrome-devtools-mcp'

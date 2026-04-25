@@ -12,7 +12,7 @@ excerpt: 'The line between an agent demo and a dependable system is handoff reli
 author: 'jsnode'
 authorImage: ''
 authorBio: ''
-image: '/images/articles/regenerated-local-first-agent-systems-stop-being-toys-when-they-can-survive-handoffs.jpg'
+image: '/images/articles/chatgpt-image-2-local-first-agent-systems-stop-being-toys-when-they-can-survive-handoffs.png'
 sources:
   - 'https://github.com/openclaw/openclaw'
   - 'https://docs.anthropic.com/en/release-notes/overview'

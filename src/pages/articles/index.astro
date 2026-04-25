@@ -97,6 +97,12 @@ const posts = await getPublicationPosts();
     gap: 1rem;
   }
 
+  @media (min-width: 1400px) {
+    .archive-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
   @media (max-width: 860px) {
     .archive-meta {
       justify-content: flex-start;

@@ -7,7 +7,7 @@ excerpt: "OpenClaw 2026.4.2 is an operations release: migration safety, task-flo
 author: 'jsnode'
 authorImage: ''
 authorBio: ''
-image: '/images/articles/regenerated-openclaw-2026-4-2-is-where-local-agent-ops-start-acting-like-production-software.jpg'
+image: '/images/articles/chatgpt-image-2-openclaw-2026-4-2-is-where-local-agent-ops-start-acting-like-production-software.png'
 sources:
   - "https://github.com/openclaw/openclaw/releases"
   - "https://github.com/openclaw/openclaw/releases/tag/2026.4.2"

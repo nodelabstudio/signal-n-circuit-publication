@@ -1,6 +1,5 @@
 ---
 import ArticleCard from '../components/ArticleCard.astro';
-import AuthorBlock from '../components/AuthorBlock.astro';
 import PublicationLayout from '../layouts/PublicationLayout.astro';
 import ReleaseWatch from '../components/ReleaseWatch.astro';
 import { SITE_DESCRIPTION, SITE_TAGLINE, SITE_TITLE } from '../consts';
@@ -8,65 +7,149 @@ import { getHomepagePublicationPosts, getPublicationPosts } from '../lib/publica
 
 const posts = await getHomepagePublicationPosts();
 const allPosts = await getPublicationPosts();
-const [hero, ...latestPosts] = posts;
+const [lead, second, third, ...restPosts] = posts;
+const compactStories = restPosts.slice(0, 4);
+const latestPosts = restPosts.slice(4, 10);
+
+const beats = [
+  {
+    label: 'Agent Ops',
+    description: 'Approvals, handoffs, cron runs, and the reliability work behind useful agent systems.',
+    categories: ['operator-stack', 'openclaw-ecosystem', 'infrastructure-profile'],
+  },
+  {
+    label: 'Tooling DX',
+    description: 'Developer tools, browser agents, MCP surfaces, and the workflows builders touch every day.',
+    categories: ['tooling-dx', 'devtools'],
+  },
+  {
+    label: 'Release Watch',
+    description: 'Changelog lines that change pricing, limits, migration work, or production risk.',
+    categories: ['release-watch', 'releases-changelog'],
+  },
+  {
+    label: 'Service Models',
+    description: 'How small operators package, sell, and maintain practical AI systems.',
+    categories: ['ai-services', 'pain-points', 'analysis'],
+  },
+];
+
+const beatCards = beats.map((beat) => {
+  const stories = allPosts.filter((post) => beat.categories.includes(post.category));
+  return {
+    ...beat,
+    story: stories[0],
+    count: stories.length,
+  };
+});
 ---
 
 <PublicationLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-  <section class='homepage'>
+  <section class='front-page'>
     <header class='issue-head'>
-      <p class='kicker'>Signal &amp; Circuit</p>
-      <h1>Editorial coverage for the AI economy.</h1>
-      <p class='issue-copy'>
-        {SITE_TAGLINE} Warm, sharp reporting on builders, operators, and the systems that have to survive real operating conditions.
-      </p>
+      <div>
+        <p class='kicker'>Field notes for AI operators</p>
+        <h1>What shipped. What broke. What matters next.</h1>
+      </div>
+      <div class='issue-card'>
+        <p class='issue-label'>Today on Signal &amp; Circuit</p>
+        <p>{SITE_TAGLINE}</p>
+        <span>{allPosts.length} field reports in the archive</span>
+      </div>
     </header>
 
-    {hero && (
-      <article class='hero-slot card'>
-        {hero.image ? (
-          <a class='hero-media' href={`/articles/${hero.slug}/`} aria-label={hero.title}>
-            <img src={hero.image} alt={hero.title} loading='eager' />
+    {lead && (
+      <article class='lead-feature' aria-label='Lead story'>
+        {lead.image && (
+          <a class='lead-img-link' href={`/articles/${lead.slug}/`} aria-label={lead.title}>
+            <img src={lead.image} alt={lead.title} loading='eager' />
           </a>
-        ) : (
-          <div class='hero-media hero-media-placeholder' aria-hidden='true'></div>
         )}
-
-        <div class='hero-copy'>
-          <div class='hero-topline'>
-            <span class='hero-label'>Featured story</span>
-            <a class='hero-category' href={`/category/${hero.category}/`}>
-              {hero.category.replace(/-/g, ' ')}
-            </a>
-          </div>
-
-          <h2 class='hero-title'>
-            <a href={`/articles/${hero.slug}/`}>{hero.title}</a>
-          </h2>
-
-          <p class='hero-excerpt'>{hero.excerpt}</p>
-
-          <div class='hero-meta'>
-            <div
-              class='hero-author'
-              style='--author-ink: 255, 255, 255; --author-muted: 234, 229, 224; --author-border: 255, 255, 255; --author-avatar-bg: 255, 255, 255;'
-            >
-              <AuthorBlock name={hero.author} image={hero.authorImage} bio={hero.authorBio} size='md' />
-            </div>
-            <span class='hero-date'>{hero.date}</span>
+        <div class='lead-text'>
+          <a class='section-label' href={`/category/${lead.category}/`}>{lead.category.replace(/-/g, ' ')}</a>
+          <h2><a href={`/articles/${lead.slug}/`}>{lead.title}</a></h2>
+          <p>{lead.excerpt}</p>
+          <div class='impact-note'>
+            <span>Why it matters</span>
+            <p>Builders need the operational read: cost, reliability, migration work, and the parts that survive real users.</p>
           </div>
         </div>
       </article>
     )}
 
+    {[second, third].filter(Boolean).length > 0 && (
+      <section class='story-pair' aria-label='Top stories'>
+        {[second, third].filter(Boolean).map((story) => (
+          <article class='story-card'>
+            {story.image && <img src={story.image} alt={story.title} loading='lazy' />}
+            <div class='story-card-copy'>
+              <a class='section-label' href={`/category/${story.category}/`}>{story.category.replace(/-/g, ' ')}</a>
+              <h3><a href={`/articles/${story.slug}/`}>{story.title}</a></h3>
+              <p>{story.excerpt}</p>
+            </div>
+          </article>
+        ))}
+      </section>
+    )}
+
+    {compactStories.length > 0 && (
+      <section class='briefing-strip' aria-label='Latest briefing'>
+        <p class='briefing-label'>Operator briefing</p>
+        <div class='briefing-list'>
+          {compactStories.map((post) => (
+            <a href={`/articles/${post.slug}/`}>
+              <span>{post.category.replace(/-/g, ' ')}</span>
+              <strong>{post.title}</strong>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <section class='beat-rail' aria-label='Editorial beats'>
+      <div class='section-head compact'>
+        <div>
+          <p class='kicker'>Beats</p>
+          <h2>The map of the work</h2>
+        </div>
+        <p>Signal &amp; Circuit follows the systems layer behind AI adoption: tooling, releases, services, and operator scars.</p>
+      </div>
+      <div class='beat-grid'>
+        {beatCards.map((beat) => (
+          <article class='beat-card'>
+            <span>{beat.count} stories</span>
+            <h3>{beat.label}</h3>
+            <p>{beat.description}</p>
+            {beat.story ? <a href={`/articles/${beat.story.slug}/`}>Read latest</a> : <em>Building this beat</em>}
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <ReleaseWatch />
+
+    <section class='newsletter-panel'>
+      <div>
+        <p class='kicker'>Operator brief</p>
+        <h2>Get the signal when the tooling changes.</h2>
+        <p class='newsletter-copy'>Practical dispatches on agents, releases, AI services, and the messy systems work that decides whether automation survives contact with Monday.</p>
+      </div>
+      <form id='newsletter-form' class='newsletter-form'>
+        <input id='newsletter-email' name='email' type='email' placeholder='you@example.com' required />
+        <button id='newsletter-submit' type='submit'>Subscribe</button>
+      </form>
+      <p id='newsletter-status' class='newsletter-status' aria-live='polite'></p>
+    </section>
+
     <section class='latest-section'>
       <div class='section-head'>
         <div>
-          <p class='kicker'>Latest</p>
+          <p class='kicker'>Latest field reports</p>
           <h2>More from the archive</h2>
         </div>
         <div class='section-meta'>
-          <p class='section-count'>{allPosts.length} stories in the archive</p>
-          <a class='archive-link' href='/articles/'>Browse full archive</a>
+          <p class='section-count'>{allPosts.length} stories available</p>
+          <a class='archive-link' href='/articles/'>Open the archive</a>
         </div>
       </div>
 
@@ -76,41 +159,18 @@ const [hero, ...latestPosts] = posts;
             {latestPosts.map((post) => <ArticleCard post={post} />)}
           </div>
         ) : (
-          <p class='empty-copy'>No additional stories yet. New coverage lands here as soon as it is published.</p>
+          <p class='empty-copy'>New coverage lands here as soon as it is published.</p>
         )
       }
     </section>
 
-    <section class='newsletter-panel card'>
-      <p class='kicker'>Newsletter</p>
-      <h2>Signal &amp; Circuit</h2>
-      <p class='newsletter-copy'>Practical dispatches on AI builders, operators, and the service economy. No fluff.</p>
-      <form id='newsletter-form' class='newsletter-form'>
-        <input id='newsletter-email' name='email' type='email' placeholder='you@example.com' required />
-        <button id='newsletter-submit' type='submit'>Subscribe</button>
-      </form>
-      <p id='newsletter-status' class='newsletter-status' aria-live='polite'></p>
-    </section>
-
-    <ReleaseWatch />
-
-    <section class='ad-panel'>
-      <div class='ad-media'>
-        <img src='/images/articles/harbor-and-cross-ad.png' alt='Harbor and Cross devotional card' loading='lazy' />
-      </div>
-      <div class='ad-copy'>
-        <p class='ad-kicker'>From the archive</p>
-        <h2 class='ad-heading'>Harbor &amp; Cross</h2>
-        <p class='ad-tagline'>Daily devotionals for Christian fathers. 1,095 cards. Six seasons of fatherhood. One daily practice that changes everything.</p>
-        <div class='ad-features'>
-          <span>Daily wisdom anchored in scripture</span>
-          <span>Personalized action steps by season</span>
-          <span>Fully offline and private</span>
-        </div>
-        <a class='ad-cta' href='https://harborandcross.com' target='_blank' rel='noopener noreferrer'>
-          Visit harborandcross.com
-          <svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6'/><polyline points='15,3 21,3 21,9'/><line x1='10' y1='14' x2='21' y2='3'/></svg>
-        </a>
+    <section class='network-panel'>
+      <div class='network-rule'></div>
+      <div class='network-copy'>
+        <p class='network-kicker'>Related project</p>
+        <h2>Harbor &amp; Cross</h2>
+        <p>Daily devotionals for Christian fathers from the same builder network. Kept separate, labeled clearly, and linked for readers who want it.</p>
+        <a href='https://harborandcross.com' target='_blank' rel='noopener noreferrer'>Visit harborandcross.com</a>
       </div>
     </section>
   </section>
@@ -159,203 +219,383 @@ const [hero, ...latestPosts] = posts;
 </PublicationLayout>
 
 <style>
-  .homepage {
+  .front-page {
     display: grid;
-    gap: 2rem;
+    gap: clamp(1.7rem, 3vw, 3rem);
   }
 
   .issue-head {
     display: grid;
-    gap: 0.8rem;
-    max-width: 58rem;
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
+    gap: clamp(1.2rem, 4vw, 3rem);
+    align-items: end;
+    padding: 1.2rem 0 1.5rem;
+    border-bottom: 1px solid rgba(var(--border), 0.95);
   }
 
   .issue-head h1 {
-    max-width: 12ch;
-    font-size: clamp(3rem, 6vw, 5.7rem);
-    line-height: 0.96;
+    max-width: 13ch;
+    font-size: clamp(3.4rem, 8vw, 7.8rem);
+    line-height: 0.88;
+    letter-spacing: -0.07em;
   }
 
-  .issue-copy {
-    max-width: 44rem;
-    color: rgb(var(--muted));
-    font-size: 1.08rem;
-    line-height: 1.65;
-  }
-
-  .hero-slot {
-    position: relative;
-    overflow: hidden;
-    border-radius: 0;
-    min-height: clamp(540px, 70vh, 760px);
+  .issue-card {
     display: grid;
-    align-items: stretch;
+    gap: 0.7rem;
+    padding: 1rem;
+    border-left: 4px solid rgb(var(--accent));
+    background: rgba(var(--surface), 0.78);
+    color: rgb(var(--muted));
   }
 
-  .hero-media {
-    position: absolute;
-    inset: 0;
-    display: block;
+  .issue-label,
+  .section-label,
+  .briefing-label,
+  .network-kicker {
+    color: rgb(var(--accent));
+    font-size: 0.72rem;
+    font-weight: 850;
+    letter-spacing: 0.12em;
     text-decoration: none;
+    text-transform: uppercase;
   }
 
-  .hero-media-placeholder {
-    background: linear-gradient(135deg, rgba(var(--surface-strong), 0.96), rgba(var(--border), 0.9));
+  .issue-card span {
+    color: rgb(var(--ink));
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 
-  .hero-media::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(180deg, rgba(26, 26, 26, 0.06) 0%, rgba(26, 26, 26, 0.18) 30%, rgba(26, 26, 26, 0.86) 100%);
+  .lead-feature {
+    display: grid;
+    grid-template-columns: minmax(320px, 1.25fr) minmax(340px, 0.9fr);
+    min-height: 500px;
+    border: 1px solid rgba(var(--border), 0.95);
+    background: rgba(var(--surface), 0.84);
   }
 
-  .hero-media img {
+  .lead-img-link {
+    display: block;
+    overflow: hidden;
+    background: rgb(var(--surface-strong));
+  }
+
+  .lead-img-link img {
     width: 100%;
     height: 100%;
+    min-height: 500px;
     object-fit: cover;
-    transition: transform 360ms ease;
+    transition: transform 420ms ease;
   }
 
-  .hero-slot:hover .hero-media img {
-    transform: scale(1.03);
+  .lead-feature:hover .lead-img-link img {
+    transform: scale(1.035);
   }
 
-  .hero-copy {
-    position: relative;
-    z-index: 1;
-    align-self: end;
-    padding: clamp(1.4rem, 4vw, 3.2rem);
+  .lead-text {
     display: grid;
+    align-content: end;
     gap: 1rem;
-    color: rgb(255, 255, 255);
-    max-width: 46rem;
+    padding: clamp(1.2rem, 3vw, 2.2rem);
   }
 
-  .hero-topline {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.9rem;
+  .lead-text h2 {
+    margin: 0;
+    font-size: clamp(2.5rem, 5vw, 5.1rem);
+    line-height: 0.91;
+    letter-spacing: -0.06em;
   }
 
-  .hero-label {
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.8);
-  }
-
-  .hero-category {
-    color: rgb(255, 255, 255);
-    text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    font-size: 0.74rem;
-    font-weight: 700;
-    opacity: 0.9;
-  }
-
-  .hero-category:hover {
-    color: rgb(var(--accent));
-    text-decoration: underline;
-    text-underline-offset: 0.18em;
-  }
-
-  .hero-title {
-    max-width: 12ch;
-    font-size: clamp(3.1rem, 5.8vw, 5.8rem);
-    line-height: 0.96;
-    letter-spacing: -0.045em;
-  }
-
-  .hero-title a {
-    color: rgb(255, 255, 255);
+  .lead-text h2 a {
+    color: rgb(var(--ink));
     text-decoration: none;
   }
 
-  .hero-title a:hover {
+  .lead-text h2 a:hover {
     color: rgb(var(--accent));
   }
 
-  .hero-excerpt {
-    max-width: 60ch;
-    color: rgba(255, 255, 255, 0.84);
-    font-size: 1.08rem;
+  .lead-text > p {
+    color: rgb(var(--muted));
     line-height: 1.65;
   }
 
-  .hero-meta {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1rem;
-    padding-top: 0.35rem;
+  .impact-note {
+    display: grid;
+    gap: 0.4rem;
+    margin-top: 0.3rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(var(--border), 0.8);
   }
 
-  .hero-author {
-    max-width: 36rem;
-  }
-
-  .hero-date {
-    color: rgba(255, 255, 255, 0.78);
+  .impact-note span {
+    color: rgb(var(--ink));
+    font-size: 0.72rem;
+    font-weight: 850;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-size: 0.8rem;
-    white-space: nowrap;
   }
 
+  .story-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  .story-card {
+    display: grid;
+    border: 1px solid rgba(var(--border), 0.95);
+    background: rgba(var(--surface), 0.84);
+  }
+
+  .story-card img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-bottom: 1px solid rgba(var(--border), 0.85);
+  }
+
+  .story-card-copy {
+    display: grid;
+    gap: 0.75rem;
+    padding: 1rem 1.15rem 1.3rem;
+    align-content: start;
+  }
+
+  .story-card-copy h3 {
+    margin: 0;
+    font-size: clamp(1.5rem, 2.8vw, 2.4rem);
+    line-height: 1.02;
+  }
+
+  .story-card-copy h3 a {
+    color: rgb(var(--ink));
+    text-decoration: none;
+  }
+
+  .story-card-copy h3 a:hover {
+    color: rgb(var(--accent));
+  }
+
+  .story-card-copy p {
+    color: rgb(var(--muted));
+    font-size: 0.94rem;
+    line-height: 1.55;
+  }
+
+  .section-label,
+  .briefing-label,
+  .network-kicker {
+    color: rgb(var(--accent));
+    font-size: 0.72rem;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .beat-card,
+  .newsletter-panel,
+  .network-panel,
+  .briefing-strip {
+    border: 1px solid rgba(var(--border), 0.95);
+    background: rgba(var(--surface), 0.84);
+  }
+
+  .briefing-strip {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 1rem;
+    align-items: stretch;
+    padding: 1rem;
+  }
+
+  .briefing-list {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0;
+  }
+
+  .briefing-list a {
+    display: grid;
+    gap: 0.4rem;
+    padding: 0 1rem;
+    border-left: 1px solid rgba(var(--border), 0.9);
+    color: rgb(var(--ink));
+    text-decoration: none;
+  }
+
+  .briefing-list span {
+    color: rgb(var(--muted));
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .briefing-list strong {
+    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    font-size: 1.1rem;
+    line-height: 1.08;
+  }
+
+  .briefing-list a:hover strong {
+    color: rgb(var(--accent));
+  }
+
+  .section-head {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .section-head.compact {
+    align-items: start;
+    padding-top: 0.4rem;
+  }
+
+  .section-head h2 {
+    margin: 0;
+    max-width: 12ch;
+    font-size: clamp(2.4rem, 5vw, 4.6rem);
+    line-height: 0.94;
+  }
+
+  .section-meta {
+    display: grid;
+    justify-items: end;
+    gap: 0.35rem;
+  }
+
+  .section-count {
+    color: rgb(var(--muted));
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .archive-link {
+    color: rgb(var(--accent));
+    font-size: 0.78rem;
+    font-weight: 850;
+    letter-spacing: 0.09em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .beat-rail,
   .latest-section {
     display: grid;
     gap: 1rem;
   }
 
-  .section-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
+  .beat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 1rem;
   }
 
-  .section-meta {
-    display: flex;
-    align-items: center;
-    gap: 0.9rem;
-    flex-wrap: wrap;
-    justify-content: flex-end;
+  .beat-card {
+    display: grid;
+    gap: 0.7rem;
+    min-height: 250px;
+    padding: 1rem;
   }
 
-  .section-count {
+  .beat-card span,
+  .beat-card em {
     color: rgb(var(--muted));
-    font-size: 0.86rem;
-    letter-spacing: 0.04em;
+    font-size: 0.7rem;
+    font-style: normal;
+    font-weight: 850;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
   }
 
-  .archive-link {
+  .beat-card h3 {
+    font-size: clamp(1.6rem, 2.6vw, 2.4rem);
+  }
+
+  .beat-card p {
+    color: rgb(var(--muted));
+    font-size: 0.94rem;
+    line-height: 1.6;
+  }
+
+  .beat-card a {
+    align-self: end;
     color: rgb(var(--accent));
+    font-size: 0.78rem;
+    font-weight: 850;
+    letter-spacing: 0.09em;
     text-decoration: none;
     text-transform: uppercase;
-    font-size: 0.74rem;
-    letter-spacing: 0.09em;
-    font-weight: 700;
   }
 
-  .archive-link:hover {
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
+  .newsletter-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 430px);
+    gap: 1.2rem;
+    align-items: end;
+    padding: clamp(1.2rem, 3vw, 2rem);
+    background:
+      linear-gradient(135deg, rgba(var(--surface), 0.96), rgba(var(--surface-strong), 0.72)),
+      radial-gradient(circle at top left, rgba(var(--accent), 0.12), transparent 30%);
   }
 
-  .empty-copy {
-    margin: 0;
-    padding: 1rem;
-    border: 1px dashed rgba(var(--border), 0.9);
-    border-radius: 0.7rem;
+  .newsletter-panel h2 {
+    max-width: 14ch;
+    margin: 0.2rem 0 0.7rem;
+  }
+
+  .newsletter-form {
+    display: flex;
+    gap: 0.65rem;
+  }
+
+  .newsletter-form input {
+    width: 100%;
+    border: 1px solid rgba(var(--border), 0.95);
+    background: rgb(var(--surface));
+    color: rgb(var(--ink));
+    padding: 0.82rem 0.9rem;
+    font: inherit;
+  }
+
+  .newsletter-form button {
+    border: 0;
+    background: rgb(var(--accent));
+    color: white;
+    padding: 0.82rem 1rem;
+    font-weight: 850;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .newsletter-form button:disabled {
+    cursor: wait;
+    opacity: 0.75;
+  }
+
+  .newsletter-status {
+    grid-column: 2;
+    min-height: 1.2rem;
     color: rgb(var(--muted));
-    line-height: 1.55;
-    background: rgba(var(--surface-strong), 0.5);
+    font-size: 0.9rem;
+  }
+
+  .newsletter-status.ok {
+    color: rgb(34, 120, 76);
+  }
+
+  .newsletter-status.error {
+    color: rgb(var(--accent));
   }
 
   .latest-grid {
@@ -364,203 +604,102 @@ const [hero, ...latestPosts] = posts;
     gap: 1rem;
   }
 
-  .newsletter-panel {
-    border-radius: 0;
-    padding: 1.1rem;
+  .empty-copy {
+    padding: 1rem;
+    border: 1px dashed rgba(var(--border), 0.9);
+    color: rgb(var(--muted));
+  }
+
+  .network-panel {
     display: grid;
-    gap: 0.65rem;
-    max-width: 680px;
-  }
-
-  .newsletter-panel h2 {
-    font-size: clamp(1.6rem, 3.1vw, 2.15rem);
-    line-height: 1;
-  }
-
-  .newsletter-copy {
-    color: rgb(var(--muted));
-    line-height: 1.55;
-    max-width: 55ch;
-  }
-
-  .newsletter-form {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.55rem;
+    grid-template-columns: 1fr minmax(280px, 430px);
+    gap: 1.25rem;
     align-items: center;
+    padding: 1rem;
+    background: transparent;
   }
 
-  .newsletter-form input {
-    flex: 1 1 260px;
-    min-width: 0;
-    min-height: 42px;
-    border: 1px solid rgba(var(--border), 0.95);
-    border-radius: 0;
-    padding: 0.58rem 0.72rem;
-    background: rgba(var(--surface), 0.96);
-    color: rgb(var(--ink));
-    font: inherit;
+  .network-rule {
+    height: 1px;
+    background: rgba(var(--border), 0.95);
   }
 
-  .newsletter-form button {
-    min-height: 42px;
-    border: 1px solid rgba(var(--accent), 0.95);
-    border-radius: 0;
-    padding: 0.58rem 0.9rem;
-    font: inherit;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    color: rgb(var(--paper));
-    background: rgb(var(--accent));
-    cursor: pointer;
+  .network-copy {
+    display: grid;
+    gap: 0.55rem;
   }
 
-  .newsletter-form button[disabled] {
-    opacity: 0.75;
-    cursor: wait;
-  }
-
-  .newsletter-status {
+  .network-copy h2 {
     margin: 0;
-    min-height: 1.2em;
-    font-size: 0.9rem;
-    color: rgb(var(--muted));
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
   }
 
-  .newsletter-status.ok {
-    color: #2c7b4b;
+  .network-copy a {
+    width: fit-content;
+    color: rgb(var(--accent));
+    font-size: 0.78rem;
+    font-weight: 850;
+    letter-spacing: 0.09em;
+    text-decoration: none;
+    text-transform: uppercase;
   }
 
-  .newsletter-status.error {
-    color: #b5382f;
-  }
+  @media (max-width: 1080px) {
+    .lead-feature,
+    .issue-head,
+    .newsletter-panel,
+    .network-panel {
+      grid-template-columns: 1fr;
+    }
 
-  @media (max-width: 1040px) {
+    .story-pair,
+    .beat-grid,
+    .briefing-list,
     .latest-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+
+    .newsletter-status {
+      grid-column: 1;
+    }
   }
 
-  @media (max-width: 720px) {
-    .issue-head h1,
-    .hero-title {
-      max-width: none;
+  @media (max-width: 680px) {
+    .issue-head h1 {
+      font-size: clamp(3rem, 18vw, 4.5rem);
     }
 
-    .section-head,
-    .hero-meta {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    .section-meta {
-      justify-content: flex-start;
-    }
-
+    .lead-feature,
+    .story-pair,
+    .briefing-strip,
+    .beat-grid,
+    .briefing-list,
     .latest-grid {
       grid-template-columns: 1fr;
     }
-  }
 
-  /* Harbor & Cross Ad Panel */
-  .ad-panel {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    background: rgb(10, 22, 40);
-    border-radius: 0;
-    overflow: hidden;
-    min-height: 340px;
-  }
-
-  .ad-media {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .ad-media img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .ad-copy {
-    display: grid;
-    align-content: center;
-    gap: 1rem;
-    padding: clamp(1.8rem, 4vw, 3rem) clamp(1.4rem, 3.5vw, 2.8rem);
-    color: rgb(250, 248, 245);
-  }
-
-  .ad-kicker {
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    font-size: 0.7rem;
-    font-weight: 700;
-    color: rgb(200, 168, 76);
-  }
-
-  .ad-heading {
-    margin: 0;
-    font-size: clamp(2.2rem, 3.5vw, 3.4rem);
-    line-height: 1;
-    letter-spacing: -0.04em;
-    color: rgb(250, 248, 245);
-    font-family: 'Playfair Display', Georgia, serif;
-  }
-
-  .ad-tagline {
-    margin: 0;
-    font-size: 1.02rem;
-    line-height: 1.65;
-    color: rgba(250, 248, 245, 0.8);
-    max-width: 38ch;
-  }
-
-  .ad-features {
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-  }
-
-  .ad-features span {
-    font-size: 0.88rem;
-    color: rgba(250, 248, 245, 0.65);
-    line-height: 1.5;
-    padding-left: 1rem;
-    border-left: 2px solid rgb(200, 168, 76);
-  }
-
-  .ad-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-top: 0.4rem;
-    padding: 0.65rem 1.1rem;
-    background: rgb(200, 168, 76);
-    color: rgb(10, 22, 40);
-    font-weight: 700;
-    font-size: 0.88rem;
-    letter-spacing: 0.04em;
-    text-decoration: none;
-    border-radius: 0;
-    align-self: flex-start;
-    transition: background 160ms ease, color 160ms ease;
-  }
-
-  .ad-cta:hover {
-    background: rgb(220, 185, 90);
-    color: rgb(10, 22, 40);
-  }
-
-  @media (max-width: 720px) {
-    .ad-panel {
-      grid-template-columns: 1fr;
+    .lead-img-link img {
+      min-height: 320px;
     }
 
-    .ad-media {
-      height: 220px;
+    .story-card img {
+      max-height: 260px;
+    }
+
+    .briefing-list a {
+      padding: 0.85rem 0;
+      border-left: 0;
+      border-top: 1px solid rgba(var(--border), 0.9);
+    }
+
+    .section-head,
+    .newsletter-form {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .section-meta {
+      justify-items: start;
     }
   }
 </style>

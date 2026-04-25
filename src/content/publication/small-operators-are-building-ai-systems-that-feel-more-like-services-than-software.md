@@ -10,7 +10,7 @@ excerpt: 'The most interesting AI builders are not shipping one-off tools. They 
 author: 'jsnode'
 authorImage: ''
 authorBio: ''
-image: '/images/articles/regenerated-small-operators-are-building-ai-systems-that-feel-more-like-services-than-software.jpg'
+image: '/images/articles/chatgpt-image-2-small-operators-are-building-ai-systems-that-feel-more-like-services-than-software.png'
 sources:
   - 'https://www.intercom.com/'
   - 'https://www.intercom.com/help/en/collections/6485365-fin-ai-agent'

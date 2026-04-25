@@ -36,6 +36,7 @@ class Article:
     title: str
     excerpt: str
     published: date
+    image: str = ""
 
 
 def read_key() -> str:
@@ -62,6 +63,9 @@ def parse_article(md_path: Path) -> Article | None:
     excerpt_m = re.search(r"^excerpt:\s*(['\"])(.*?)\1\s*$", text, re.M)
     if not excerpt_m:
         excerpt_m = re.search(r"^excerpt:\s*(.+)$", text, re.M)
+    image_m = re.search(r"^image:\s*(['\"])(.*?)\1\s*$", text, re.M)
+    if not image_m:
+        image_m = re.search(r"^image:\s*(.+)$", text, re.M)
 
     if not (title_m and date_m):
         return None
@@ -72,11 +76,13 @@ def parse_article(md_path: Path) -> Article | None:
         return None
 
     excerpt = excerpt_m.group(2).strip() if excerpt_m and len(excerpt_m.groups()) >= 2 else (excerpt_m.group(1).strip() if excerpt_m else "")
+    image = image_m.group(2).strip() if image_m and len(image_m.groups()) >= 2 else (image_m.group(1).strip() if image_m else "")
     return Article(
         slug=md_path.stem,
         title=title_m.group(1).strip(),
         excerpt=excerpt,
         published=published,
+        image=image,
     )
 
 
@@ -106,30 +112,59 @@ def html_escape(s: str) -> str:
     )
 
 
+def absolute_site_url(path_or_url: str) -> str:
+    value = path_or_url.strip()
+    if not value:
+        return ""
+    if value.startswith("http://") or value.startswith("https://"):
+        return value
+    if value.startswith("/"):
+        return f"{SITE_BASE}{value}"
+    return f"{SITE_BASE}/{value}"
+
+
 def build_body(articles: List[Article]) -> str:
     intro = (
         "<p>Hey,</p>"
-        "<p>Here is your weekly Signal &amp; Circuit roundup with the latest operator-focused AI coverage.</p>"
+        "<p>I pulled together the pieces worth your time this week from Signal &amp; Circuit. "
+        "The theme I keep seeing: agent work is getting more practical, and the teams that win will care about the boring parts first. "
+        "Auth, handoffs, release notes, reliability, and workflow shape matter more than a shiny demo.</p>"
     )
 
     if not articles:
         return (
             "<!-- buttondown-editor-mode: fancy -->"
             + intro
-            + "<p>No new stories were published in the configured window.</p>"
-            + "<p>More soon.</p>"
+            + "<p>No new stories were published in the configured window, so I am leaving the inbox quiet instead of forcing filler.</p>"
+            + "<p>More soon,<br>jsnode</p>"
         )
 
-    parts = ["<!-- buttondown-editor-mode: fancy -->", intro, "<h2>This week in Signal &amp; Circuit</h2>", "<ul>"]
+    parts = [
+        "<!-- buttondown-editor-mode: fancy -->",
+        intro,
+        "<p>My read: start with the piece closest to whatever broke in your own stack this week. "
+        "That is usually where the useful lesson is hiding.</p>",
+        "<h2>This week in Signal &amp; Circuit</h2>",
+    ]
 
     for a in articles:
         url = f"{SITE_BASE}/articles/{a.slug}/"
         title = html_escape(a.title)
         excerpt = html_escape(a.excerpt)
-        line = f"<li><p><a href=\"{url}\"><strong>{title}</strong></a><br>{excerpt}</p></li>"
-        parts.append(line)
+        image_url = absolute_site_url(a.image)
+        parts.append("<article style=\"margin: 0 0 32px 0;\">")
+        if image_url:
+            parts.append(
+                f"<p><a href=\"{url}\"><img src=\"{html_escape(image_url)}\" "
+                f"alt=\"Hero image for {title}\" style=\"width: 100%; max-width: 640px; height: auto; border-radius: 14px; display: block;\"></a></p>"
+            )
+        parts.append(f"<h3><a href=\"{url}\">{title}</a></h3>")
+        parts.append(f"<p>{excerpt}</p>")
+        parts.append(f"<p><a href=\"{url}\">Read the piece</a></p>")
+        parts.append("</article>")
 
-    parts.append("</ul>")
+    parts.append("<p>If one of these saves you a few debugging cycles, hit reply and tell me what you are building. I read those.</p>")
+    parts.append("<p>Talk soon,<br>jsnode</p>")
     parts.append("<p>If this was forwarded to you, you can subscribe at <a href=\"https://signalcircuit.cloud\">signalcircuit.cloud</a>.</p>")
     return "".join(parts)
 

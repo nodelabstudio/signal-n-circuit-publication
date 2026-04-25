@@ -1,5 +1,10 @@
 {
   "last_used": [
+    "2026-04-24 OpenClaw v2026.4.23-beta.4",
+    "2026-04-24 Hermes Agent v0.11.0",
+    "2026-04-23 OpenClaw v2026.4.21 security fix",
+    "2026-04-23 crewAI 1.14.3a3 cold start improvement",
+    "2026-04-23 Nvidia 80 free hosted AI models",
     "2026-04-22 OpenClaw CVEs",
     "2026-04-22 OpenClaw v2026.4.20",
     "2026-04-22 Hermes Step 3.5 Flash",
@@ -14,7 +19,7 @@
     "2026-04-20 Claude Code doing taxes",
     "2026-04-20 Post-bridge.com downtime"
   ],
-  "round_robin_index": 11,
+  "round_robin_index": 0,
   "topics": [
     "OpenClaw",
     "Hermes Agent",

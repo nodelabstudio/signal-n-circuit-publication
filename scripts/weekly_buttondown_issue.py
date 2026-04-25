@@ -159,25 +159,56 @@ def create_draft(api_key: str, subject: str, body: str) -> dict:
 
 def write_outputs(result: dict) -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    now = datetime.now()
+    ts = now.strftime("%Y-%m-%d %H:%M:%S")
+    archive_tag = now.strftime("%Y%m%d-%H%M%S")
 
-    json_path = OUTPUT_DIR / "buttondown-weekly-last.json"
-    md_path = OUTPUT_DIR / "buttondown-weekly-last.md"
+    last_json = OUTPUT_DIR / "buttondown-weekly-last.json"
+    last_md = OUTPUT_DIR / "buttondown-weekly-last.md"
+    archive_json = OUTPUT_DIR / f"buttondown-weekly-{archive_tag}.json"
+    archive_md = OUTPUT_DIR / f"buttondown-weekly-{archive_tag}.md"
 
-    json_path.write_text(json.dumps(result, indent=2), encoding="utf-8")
-
-    md = [
+    json_body = json.dumps(result, indent=2)
+    md_body = "\n".join([
         f"# Buttondown Weekly Draft ({ts})",
         "",
         f"- Subject: {result.get('subject', '(unknown)')}",
         f"- Draft ID: {result.get('id', '(unknown)')}",
         f"- Preview URL: {result.get('absolute_url', '(unknown)')}",
         f"- Status: {result.get('status', '(unknown)')}",
+        f"- Articles: {result.get('article_count', 0)}",
         "",
         "## Next step",
         "Review and send from Buttondown dashboard after approval.",
-    ]
-    md_path.write_text("\n".join(md), encoding="utf-8")
+    ])
+
+    # Always preserve a timestamped archive of this run.
+    archive_json.write_text(json_body, encoding="utf-8")
+    archive_md.write_text(md_body, encoding="utf-8")
+
+    # Don't let an empty run clobber a recent non-empty -last.* pointer:
+    # an ad-hoc or misconfigured invocation shouldn't erase the record of
+    # a successful scheduled draft.
+    if result.get("article_count", 0) == 0 and last_json.exists():
+        try:
+            prev = json.loads(last_json.read_text(encoding="utf-8"))
+            prev_count = int(prev.get("article_count", 0))
+            prev_iso = prev.get("created_at", "")
+            prev_dt = datetime.fromisoformat(prev_iso) if prev_iso else None
+            if prev_count > 0 and prev_dt is not None:
+                age = datetime.now(timezone.utc) - prev_dt
+                if age < timedelta(days=7):
+                    print(
+                        f"NOTE: empty-run guard active. Existing {last_json.name} "
+                        f"has {prev_count} articles and is {age} old; keeping it. "
+                        f"This run archived to {archive_json.name}."
+                    )
+                    return
+        except Exception as e:
+            print(f"WARNING: could not inspect existing {last_json.name}: {e}")
+
+    last_json.write_text(json_body, encoding="utf-8")
+    last_md.write_text(md_body, encoding="utf-8")
 
 
 def send_discord_notification(result: dict) -> bool:

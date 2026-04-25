@@ -113,20 +113,45 @@ def has_thumbs_up_reaction(message: dict) -> bool:
     return False
 
 
+def get_buttondown_draft_status(draft_id: str, api_key: str) -> Optional[str]:
+    """Return a Buttondown draft's current status, or None if lookup fails."""
+    try:
+        url = "https://api.buttondown.email/v1/emails"
+        req = urllib.request.Request(
+            url,
+            headers={
+                "Authorization": f"Token {api_key}",
+                "Content-Type": "application/json",
+                "User-Agent": "SignalCircuitBot/1.0",
+            }
+        )
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            result = json.loads(resp.read().decode("utf-8", errors="replace"))
+        for email in result.get("results", []):
+            if email.get("id") == draft_id:
+                return email.get("status")
+    except Exception as e:
+        print(f"WARNING: Failed to check Buttondown status for {draft_id}: {e}")
+    return None
+
+
 def send_buttondown_draft(draft_id: str, api_key: str) -> bool:
-    """Send a Buttondown draft."""
+    """Queue a Buttondown draft for delivery.
+
+    Buttondown status machine: draft -> about_to_send -> in_flight -> sent.
+    PATCHing to "sent" directly just marks the record as sent-in-history
+    without dispatching to subscribers, so the only status that triggers
+    real delivery is "about_to_send".
+    """
+    current_status = get_buttondown_draft_status(draft_id, api_key)
+    if current_status in {"about_to_send", "in_flight", "sent"}:
+        print(f"✅ Draft {draft_id} is already {current_status}; no action needed")
+        return True
+
     try:
         url = f"https://api.buttondown.email/v1/emails/{draft_id}"
-        
-        # Set publish date to now
-        from datetime import datetime, timezone
-        publish_date = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
-        
-        payload = {
-            "status": "sent",
-            "publish_date": publish_date
-        }
-        
+        payload = {"status": "about_to_send"}
+
         req = urllib.request.Request(
             url,
             data=json.dumps(payload).encode("utf-8"),
@@ -134,17 +159,37 @@ def send_buttondown_draft(draft_id: str, api_key: str) -> bool:
             headers={
                 "Authorization": f"Token {api_key}",
                 "Content-Type": "application/json",
+                "User-Agent": "SignalCircuitBot/1.0",
             }
         )
-        
+
         with urllib.request.urlopen(req, timeout=30) as resp:
             result = json.loads(resp.read().decode("utf-8", errors="replace"))
-            print(f"✅ Draft {draft_id} sent successfully")
-            print(f"   Sent at: {result.get('publish_date', '(unknown)')}")
+            print(f"✅ Draft {draft_id} queued for delivery")
             print(f"   Status: {result.get('status', '(unknown)')}")
             return True
+    except urllib.error.HTTPError as e:
+        body = e.read().decode("utf-8", errors="replace") if e.fp else "No body"
+        try:
+            error_detail = json.loads(body)
+            # If draft is already sent, that's fine — don't treat as failure
+            if error_detail.get("code") == "status_invalid" and "sent" in error_detail.get("detail", ""):
+                print(f"✅ Draft {draft_id} was already sent (auto-sent by Buttondown)")
+                return True
+        except Exception:
+            pass
+        current_status = get_buttondown_draft_status(draft_id, api_key)
+        if current_status in {"about_to_send", "in_flight", "sent"}:
+            print(f"✅ Draft {draft_id} is already {current_status}; no action needed")
+            return True
+        print(f"❌ Failed to queue draft {draft_id}: HTTP {e.code}: {body}")
+        return False
     except Exception as e:
-        print(f"❌ Failed to send draft {draft_id}: {e}")
+        current_status = get_buttondown_draft_status(draft_id, api_key)
+        if current_status in {"about_to_send", "in_flight", "sent"}:
+            print(f"✅ Draft {draft_id} is already {current_status}; no action needed")
+            return True
+        print(f"❌ Failed to queue draft {draft_id}: {e}")
         return False
 
 

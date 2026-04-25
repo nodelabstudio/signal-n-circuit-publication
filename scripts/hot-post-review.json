@@ -38,5 +38,25 @@
     "approved_at": "2026-04-23T18:50:44.995780Z",
     "scheduled_at": "2026-04-23T22:00:43Z",
     "posted_at": "2026-04-23T22:00:43Z"
+  },
+  {
+    "id": "HOT-20260424-01",
+    "date": "2026-04-24",
+    "slot": 1,
+    "topic": "Claude Code quality postmortem",
+    "content": "Anthropic spent a month letting Claude Code feel worse, then shipped a postmortem explaining the three bugs that made paying users think the model got dumber.\n\nThe fix landed in v2.1.116+ and they reset subscriber limits, which is a very elegant way to say the product was doing involuntary chaos testing on customers.\n\nhttps://x.com/ClaudeDevs/status/2047371123185287223",
+    "source": "ClaudeDevs X post",
+    "source_url": "https://x.com/ClaudeDevs/status/2047371123185287223",
+    "score_breakdown": {
+      "contradiction": 2,
+      "irony": 3,
+      "pain": 3,
+      "recency": 3
+    },
+    "status": "approved",
+    "created_at": "2026-04-24T15:05:28.028034Z",
+    "approved_at": "2026-04-24T15:20:45.617715Z",
+    "scheduled_at": "2026-04-24T18:00:36Z",
+    "posted_at": "2026-04-24T18:00:36Z"
   }
 ]

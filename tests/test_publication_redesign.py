@@ -76,3 +76,12 @@ def test_article_title_visually_dominates_section_headings():
     assert "font-size: clamp(2.15rem, 4.2vw, 3.35rem);" in css
     assert "font-size: clamp(1.22rem, 1.55vw, 1.5rem) !important;" in css
     assert "font-size: clamp(1.8rem, 3vw, 2.45rem);" not in css
+
+
+def test_article_body_paragraphs_have_global_spacing():
+    article_page = read("src/pages/articles/[slug].astro")
+    css = article_page.split("<style>")[1] if "<style>" in article_page else ""
+
+    assert ":global(.body-card p)" in css
+    assert ":global(.body-card p + p)" in css
+    assert "margin-top: 1.55rem !important;" in css

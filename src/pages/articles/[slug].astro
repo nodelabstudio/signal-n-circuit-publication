@@ -265,22 +265,22 @@ const relatedPosts = posts
     text-wrap: balance;
   }
 
-  .body-card p,
-  .body-card li {
+  :global(.body-card p),
+  :global(.body-card li) {
     margin: 0;
     max-width: 40em;
     font-size: 1.08rem;
     line-height: 1.88;
   }
 
-  .body-card p + p,
-  .body-card p + ul,
-  .body-card p + ol,
-  .body-card ul + p,
-  .body-card ol + p,
-  .body-card blockquote + p,
-  .body-card p + blockquote {
-    margin-top: 1.45rem;
+  :global(.body-card p + p),
+  :global(.body-card p + ul),
+  :global(.body-card p + ol),
+  :global(.body-card ul + p),
+  :global(.body-card ol + p),
+  :global(.body-card blockquote + p),
+  :global(.body-card p + blockquote) {
+    margin-top: 1.55rem !important;
   }
 
   :global(.body-card h2),

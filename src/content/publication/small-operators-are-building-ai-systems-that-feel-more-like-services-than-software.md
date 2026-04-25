@@ -81,5 +81,3 @@ That is how you separate polished demos from operational businesses.
 The most interesting small AI builders are becoming hybrid operators: part product, part managed service, fully accountable for workflow outcomes.
 
 That model is harder to run. It is also harder to replace.
-
-<span style="color:#c0c0c0">Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.</span>

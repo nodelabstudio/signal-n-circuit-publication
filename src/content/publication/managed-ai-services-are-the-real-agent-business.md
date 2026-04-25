@@ -77,5 +77,3 @@ That is a services business with software leverage, not a software business hopi
 Managed AI services are not a side category. They are becoming the core commercial layer for agent adoption.
 
 Vendors can keep polishing demos. Operators who own outcomes will keep winning contracts.
-
-<span style="color:#c0c0c0">Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.</span>

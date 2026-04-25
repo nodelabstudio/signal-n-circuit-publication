@@ -85,3 +85,13 @@ def test_article_body_paragraphs_have_global_spacing():
     assert ":global(.body-card p)" in css
     assert ":global(.body-card p + p)" in css
     assert "margin-top: 1.55rem !important;" in css
+
+
+def test_article_markdown_omits_automation_disclosure():
+    disclosure = (
+        "Signal & Circuit uses automated research and drafting tools. "
+        "All articles are editorially reviewed before publication."
+    )
+
+    for article in (ROOT / "src/content/publication").glob("*.md"):
+        assert disclosure not in article.read_text(encoding="utf-8"), article.name

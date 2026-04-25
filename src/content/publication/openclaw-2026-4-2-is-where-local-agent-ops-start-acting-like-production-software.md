@@ -87,5 +87,3 @@ Releases like 2026.4.2 matter because they reduce this chain risk at the system 
 OpenClaw 2026.4.2 is not a headline release. It is a reliability release. That is exactly why it matters.
 
 Systems become production software when they survive upgrades, handoffs, and bad days. This version moves in that direction.
-
-<span style="color:#c0c0c0">Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.</span>

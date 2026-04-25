@@ -114,5 +114,3 @@ If two of those three do not improve in pilot, the system is still demo-grade.
 Home healthcare scheduling is one of the clearest complaint-first AI opportunities right now.
 
 The winners in this lane will not be the loudest model demos. They will be the teams that reduce shift-fill chaos, keep human control, and improve measurable service continuity every week.
-
-<span style="color:#c0c0c0">Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.</span>

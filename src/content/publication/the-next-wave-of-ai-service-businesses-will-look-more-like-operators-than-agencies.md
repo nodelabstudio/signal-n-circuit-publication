@@ -83,5 +83,3 @@ Their pitch is simple and credible: we do not just install the system, we keep i
 AI service economics are shifting from “deliverables” to “dependability.”
 
 Agencies can still win attention. Operators will keep winning retention.
-
-<span style="color:#c0c0c0">Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.</span>

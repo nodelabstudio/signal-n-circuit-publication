@@ -69,5 +69,3 @@ That routine is boring. It is also how teams avoid expensive surprises.
 Launch events tell you where vendors want attention. Release notes tell you what changed in reality.
 
 For working builders, reality wins.
-
-<span style="color:#c0c0c0">Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.</span>

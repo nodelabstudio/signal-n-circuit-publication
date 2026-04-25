@@ -85,5 +85,3 @@ None of that is glamorous. All of it is what makes workflows survivable.
 Chat remains a great interface layer. It is no longer enough as the whole operating layer.
 
 Builder tooling is maturing into control panels because builders need systems they can supervise, repair, and trust under pressure.
-
-<span style="color:#c0c0c0">Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.</span>

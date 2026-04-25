@@ -77,5 +77,3 @@ Do not treat either release as a one-model answer. The real work is routing. Som
 The week’s signal is simple. Agent builders can no longer judge models only by chat quality. They need to judge latency, output length, cache cost, API format, rollout status, and how well the model survives real tool use.
 
 OpenAI made the closed frontier agent stronger. DeepSeek made the open-weight path easier to operate. The next agent stack will likely use both lanes, but it should know why each call goes where.
-
-<span style="color:#c0c0c0">Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.</span>

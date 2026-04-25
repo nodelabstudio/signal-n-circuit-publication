@@ -80,5 +80,3 @@ Four yes answers is usually enough to justify a focused build.
 The best vertical AI products start where operators are already frustrated, not where demos are most impressive.
 
 Complaint-first does not just produce better product ideas. It produces better economics.
-
-<span style="color:#c0c0c0">Signal & Circuit uses automated research and drafting tools. All articles are editorially reviewed before publication.</span>

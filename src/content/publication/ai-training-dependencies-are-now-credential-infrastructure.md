@@ -12,7 +12,7 @@ excerpt: 'The PyTorch Lightning package compromise shows how fast AI tooling can
 author: 'X Node Dev'
 authorImage: ''
 authorBio: ''
-image: '/images/articles/regenerated-openclaw-v2026-4-14-security-hardening-what-actually-shipped.jpg'
+image: '/images/articles/tech-marketing-3d-ai-training-credential-infrastructure.png'
 sources:
   - 'https://semgrep.dev/blog/2026/malicious-dependency-in-pytorch-lightning-used-for-ai-training/'
   - 'https://news.ycombinator.com/item?id=47964617'

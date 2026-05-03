@@ -12,7 +12,7 @@ excerpt: 'Agent memory is becoming real infrastructure, but teams still need rul
 author: 'jsnode'
 authorImage: ''
 authorBio: ''
-image: '/images/articles/regenerated-local-first-agent-systems-stop-being-toys-when-they-can-survive-handoffs.jpg'
+image: '/images/articles/tech-marketing-3d-agent-memory-control-plane.png'
 sources:
   - 'https://github.com/nex-crm/wuphf'
   - 'https://news.ycombinator.com/item?id=47899844'

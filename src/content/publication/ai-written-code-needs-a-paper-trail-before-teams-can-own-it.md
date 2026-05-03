@@ -12,7 +12,7 @@ excerpt: 'AI coding tools raise a practical ownership problem: teams need eviden
 author: 'jsnode'
 authorImage: ''
 authorBio: ''
-image: '/images/articles/regenerated-v5-ai-coding-agent-adoption-reaches-90-but-comprehension-debt-emerges-as-hidden-cost.jpg'
+image: '/images/articles/tech-marketing-3d-ai-written-code-paper-trail.png'
 sources:
   - 'https://legallayer.substack.com/p/who-owns-the-claude-code-wrote'
   - 'https://news.ycombinator.com/item?id=47932937'

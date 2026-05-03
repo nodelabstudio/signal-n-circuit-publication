@@ -164,10 +164,16 @@ const beatCards = beats.map((beat) => {
       }
     </section>
 
-    <section class='network-panel'>
-      <div class='network-rule'></div>
+    <section class='network-panel' aria-label='Advertisement for Harbor & Cross'>
+      <a class='network-ad-media' href='https://harborandcross.com' target='_blank' rel='noopener noreferrer'>
+        <img
+          src='/images/articles/harbor-and-cross-publication-ad.png'
+          alt='Advertisement for Harbor & Cross, daily wisdom for fathers anchored in faith'
+          loading='lazy'
+        />
+      </a>
       <div class='network-copy'>
-        <p class='network-kicker'>Related project</p>
+        <p class='network-kicker'>Advertisement</p>
         <h2>Harbor &amp; Cross</h2>
         <p>Daily devotionals for Christian fathers from the same builder network. Kept separate, labeled clearly, and linked for readers who want it.</p>
         <a href='https://harborandcross.com' target='_blank' rel='noopener noreferrer'>Visit harborandcross.com</a>
@@ -614,21 +620,39 @@ const beatCards = beats.map((beat) => {
 
   .network-panel {
     display: grid;
-    grid-template-columns: 1fr minmax(280px, 430px);
-    gap: 1.25rem;
+    grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.75fr);
+    gap: clamp(1rem, 3vw, 2rem);
     align-items: center;
-    padding: 1rem;
-    background: transparent;
+    padding: clamp(0.8rem, 2vw, 1rem);
+    background:
+      linear-gradient(135deg, rgba(var(--surface), 0.86), rgba(var(--surface-strong), 0.62)),
+      radial-gradient(circle at 18% 12%, rgba(var(--accent), 0.09), transparent 32%);
   }
 
-  .network-rule {
-    height: 1px;
-    background: rgba(var(--border), 0.95);
+  .network-ad-media {
+    display: block;
+    overflow: hidden;
+    border: 1px solid rgba(var(--border), 0.95);
+    background: rgb(var(--surface-strong));
+    text-decoration: none;
+  }
+
+  .network-ad-media img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    transition: transform 420ms ease;
+  }
+
+  .network-ad-media:hover img {
+    transform: scale(1.025);
   }
 
   .network-copy {
     display: grid;
     gap: 0.55rem;
+    min-width: 0;
   }
 
   .network-copy h2 {

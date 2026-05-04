@@ -1,0 +1,123 @@
+{
+  "version": 1,
+  "updated_at": "2026-05-03",
+  "banned_words": [
+    "delve",
+    "leverage",
+    "unlock",
+    "groundbreaking",
+    "game-changer",
+    "revolutionary",
+    "revolutionize",
+    "empowering",
+    "comprehensive",
+    "in conclusion",
+    "it is important to note",
+    "hidden gem",
+    "secret knowledge",
+    "what nobody tells you",
+    "what nobody talks about"
+  ],
+  "ai_connective_phrases": [
+    "that gets risky when",
+    "that gets messy when",
+    "it also adds",
+    "the model can",
+    "starting to expose",
+    "the dirty secret of",
+    "the practical fix is",
+    "this matters because",
+    "this matters for",
+    "worth watching",
+    "useful for teams",
+    "improves workflows",
+    "helps developers"
+  ],
+  "recycled_framing": [
+    "operator",
+    "operators",
+    "handoff layer",
+    "pattern to watch",
+    "painful split",
+    "painful when",
+    "the practical fix"
+  ],
+  "banned_regex": [
+    {
+      "name": "not_x_its_y",
+      "pattern": "\\b[Ii]t'?s not\\b.+\\b[Ii]t'?s\\b"
+    },
+    {
+      "name": "real_x_isnt_y",
+      "pattern": "\\b[Tt]he real\\b.+\\bisn'?t\\b.+\\b[Ii]t'?s\\b"
+    },
+    {
+      "name": "the_change_question",
+      "pattern": "\\b[Tt]he change\\?\\s*\\w+"
+    },
+    {
+      "name": "the_result_question",
+      "pattern": "\\b[Tt]he result\\?\\s*\\w+"
+    },
+    {
+      "name": "difference_between",
+      "pattern": "\\b[Tt]hat'?s the difference between\\b"
+    },
+    {
+      "name": "from_x_to_y_double",
+      "pattern": "\\bfrom\\b.+\\bto\\b.+\\bfrom\\b.+\\bto\\b"
+    },
+    {
+      "name": "not_only_but",
+      "pattern": "\\bnot only\\b.+\\bbut also\\b"
+    },
+    {
+      "name": "as_ai_continues",
+      "pattern": "\\bas AI continues to\\b"
+    },
+    {
+      "name": "in_a_world_where",
+      "pattern": "\\bin a world where\\b"
+    },
+    {
+      "name": "whether_youre",
+      "pattern": "\\bwhether you'?re\\b"
+    }
+  ],
+  "abstract_nouns": [
+    "landscape",
+    "workflow",
+    "workflows",
+    "capabilities",
+    "innovation",
+    "solutions",
+    "ecosystem",
+    "paradigm",
+    "transformation",
+    "alignment",
+    "efficiency",
+    "productivity",
+    "infrastructure",
+    "platforms",
+    "data sources"
+  ],
+  "concrete_noun_examples": [
+    "Slack",
+    "calendar",
+    "docs",
+    "CRM",
+    "bookmarks",
+    "tweet archives",
+    "WhatsApp history",
+    "GitHub sync",
+    "daily jobs",
+    "shell access",
+    "file access",
+    "API scope",
+    "repo history",
+    "commit",
+    "release note",
+    "pricing limit",
+    "token cap"
+  ]
+}

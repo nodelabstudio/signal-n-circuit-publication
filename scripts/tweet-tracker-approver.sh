@@ -23,8 +23,12 @@ import re
 import sys
 from pathlib import Path
 from datetime import datetime, timezone, timedelta
+from zoneinfo import ZoneInfo
+
+sys.path.insert(0, "/home/administrator/site/scripts")
 
 import requests
+from voice_feedback import capture_discord_rejection
 
 channel_id = "1477414797757907075"
 state_path = Path("/home/administrator/site/scripts/tweet-tracker-approvals.json")
@@ -111,13 +115,14 @@ def slot_from_draft_id(draft_id: str) -> int:
 
 
 def schedule_tweet(content: str, slot: int, pb_key: str, pb_xid: str) -> dict:
-    now_et = datetime.now(timezone(timedelta(hours=-5)))
+    et = ZoneInfo("America/New_York")
+    now_et = datetime.now(et)
     slot_hours = {1: 8, 2: 11, 3: 16}
     target_hour = slot_hours.get(slot, 8)
-    target = now_et.replace(hour=target_hour, minute=0, second=0, microsecond=0)
-    if target <= now_et:
-        target += timedelta(days=1)
-    scheduled_at = target.strftime("%Y-%m-%dT%H:%M:%SZ")
+    target_et = now_et.replace(hour=target_hour, minute=0, second=0, microsecond=0)
+    if target_et <= now_et:
+        target_et += timedelta(days=1)
+    scheduled_at = target_et.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     payload = {
         "caption": content.strip(),
@@ -192,6 +197,15 @@ for msg in messages:
     if cross_count > 0 and msg_id not in rejected:
         rejected.add(msg_id)
         rejected_ids.append(draft_id)
+        capture_discord_rejection(
+            surface="x-research",
+            draft_id=draft_id,
+            content=content,
+            feedback="Tweet Tracker Discord ❌ rejection",
+            message_id=msg_id,
+            author_id=str((msg.get("author") or {}).get("id", "")),
+            source=extract_source(content),
+        )
         continue
 
     if check_count <= 0:

@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "surfaces": {
+    "x-research": {
+      "require_source": true,
+      "max_chars": 280,
+      "needs_reaction": true,
+      "allowed_tone": [
+        "annoyed",
+        "amused",
+        "impressed",
+        "suspicious",
+        "tired",
+        "skeptical",
+        "surprised"
+      ],
+      "drafting_order": [
+        "source fact",
+        "concrete weird detail",
+        "human reaction",
+        "angle",
+        "draft"
+      ]
+    },
+    "hot-take": {
+      "require_source": true,
+      "max_chars": 280,
+      "needs_reaction": true,
+      "target": "company, product, platform strategy, pricing move, safety theater, or hype cycle"
+    },
+    "article-promo": {
+      "require_source": true,
+      "max_chars": 280,
+      "needs_reaction": false,
+      "goal": "one concrete reason to click, not a summary of the article"
+    },
+    "article-body": {
+      "require_source": false,
+      "max_chars": null,
+      "needs_reaction": false,
+      "goal": "reported, specific, plain, sourced, and free of fake significance"
+    },
+    "homepage-copy": {
+      "require_source": false,
+      "max_chars": null,
+      "needs_reaction": false,
+      "goal": "editorial polish with no generic tech-magazine mush"
+    }
+  }
+}

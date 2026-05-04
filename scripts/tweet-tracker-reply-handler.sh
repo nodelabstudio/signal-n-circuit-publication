@@ -26,7 +26,10 @@ import sys
 from pathlib import Path
 from datetime import datetime, timezone
 
+sys.path.insert(0, "/home/administrator/site/scripts")
+
 import requests
+from voice_engine import lint_text
 
 channel_id = "1477414797757907075"
 discord_api = "https://discord.com/api/v10"
@@ -153,6 +156,22 @@ for msg in messages:
         continue
 
     source = extract_source(parent_content)
+    lint_input = reply_text
+    if source and source.startswith("http") and source not in lint_input:
+        lint_input = f"{reply_text}\n\n{source}"
+    findings = lint_text(lint_input, surface="x-research", require_source=bool(source and source.startswith("http")))
+    blocking = [f for f in findings if f.severity == "error"]
+    if blocking:
+        processed_now.append(msg_id)
+        vault_dir.mkdir(parents=True, exist_ok=True)
+        date_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        blocked_file = vault_dir / f"{date_str}-blocked-edits.md"
+        with open(blocked_file, "a", encoding="utf-8") as f:
+            f.write(f"\n## Blocked edit for {parent_draft_id}\n")
+            f.write(f"- Reply message: {msg_id}\n")
+            f.write(f"- Reasons: {', '.join(f'{item.code}: {item.message}' for item in blocking)}\n")
+            f.write(f"- Content: {reply_text}\n")
+        continue
     revision_id = f"{parent_draft_id}-r{datetime.now(timezone.utc).strftime('%H%M%S')}"
 
     revised_message = (
@@ -161,7 +180,7 @@ for msg in messages:
         f"---\n"
         f"Source: {source or 'edited reply'}\n"
         f"Target: @thejsnode\n\n"
-        f"React ✅ to approve this draft only.\n"
+        f"React 👍 to approve this draft only.\n"
         f"React ❌ to reject this draft.\n"
         f"Reply with edited text to request revision."
     )

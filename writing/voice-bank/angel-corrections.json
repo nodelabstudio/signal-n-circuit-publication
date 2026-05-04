@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "date": "2026-04-07",
+      "surface": "x-research",
+      "draft_id": "RSP-20260407-S1",
+      "status": "rejected",
+      "topic_tags": [
+        "openclaw",
+        "local-agents",
+        "api-costs"
+      ],
+      "draft_before": "OpenClaw's real pitch isn't privacy. It's control. Running agents on hardware you own means the API costs stop when you stop. That's the thing cloud-hosted AI can't match.",
+      "angel_feedback": "juxtaposition pivot",
+      "lesson": "Avoid 'real X isn't A. It's B.' structures. Start with the concrete operational detail instead.",
+      "replacement_pattern": "Running agents on hardware you own has one very boring advantage: the API costs stop when you stop.",
+      "status_active": true
+    },
+    {
+      "date": "2026-04-07",
+      "surface": "x-research",
+      "draft_id": "RSP-20260407-S3",
+      "status": "rejected",
+      "topic_tags": [
+        "operator-tooling",
+        "agents",
+        "observability"
+      ],
+      "draft_before": "The real operator tooling market isn't dashboards. It's the invisible stuff: trace visualization, latency attribution, and context injection when an agent veers off-script.",
+      "angel_feedback": "juxtaposition pivot",
+      "lesson": "Do not announce the insight with a tidy antithesis. Lead with the concrete mechanisms.",
+      "replacement_pattern": "Trace visualization, latency attribution, and context injection are the boring parts that decide whether an agent survives contact with production.",
+      "status_active": true
+    },
+    {
+      "date": "2026-05-03",
+      "surface": "x-research",
+      "draft_id": "voice-note-ai-connective",
+      "status": "rejected",
+      "topic_tags": [
+        "archives",
+        "platform-memory",
+        "ownership"
+      ],
+      "draft_before": "That gets messy when data is fragmented across platforms.",
+      "angel_feedback": "tell-tale AI voice",
+      "lesson": "Avoid 'That gets messy when...' and other generic connective phrases. Prefer concrete examples first, then the spoken-cadence turn.",
+      "replacement_pattern": "Things like WhatsApp history, tweet archives, or bookmarks you might need years from now, that's where it gets messy.",
+      "status_active": true
+    },
+    {
+      "date": "2026-05-03",
+      "surface": "x-research",
+      "draft_id": "voice-note-work-order",
+      "status": "rejected",
+      "topic_tags": [
+        "solo-builders",
+        "prompting",
+        "constraints"
+      ],
+      "draft_before": "Solo builders should treat the prompt as a work order, not a motivational speech.",
+      "angel_feedback": "avoid tidy antithesis except as a last resort; prefer direct colon framing",
+      "lesson": "Use colon framing when it names concrete parts of the work. Avoid polished antithesis that sounds copywritten.",
+      "replacement_pattern": "Solo builders should treat the prompt as a work order: Name the files, name the constraints, name the stop condition.",
+      "status_active": true
+    },
+    {
+      "date": "2026-05-03",
+      "surface": "hot-take",
+      "draft_id": "voice-note-i-helped",
+      "status": "approved-pattern",
+      "topic_tags": [
+        "product-theater",
+        "broken-settings",
+        "jokes"
+      ],
+      "draft_before": "The disable setting gets a polished coauthor badge.",
+      "angel_feedback": "Prefer concrete, plainspoken labels like 'I helped' over polished alternatives like 'I participated.'",
+      "lesson": "When mocking product theater, make the joke dumb-on-purpose and keep the target visible.",
+      "replacement_pattern": "The disable setting gets a little plastic badge that says 'I helped.'",
+      "status_active": true
+    }
+  ]
+}

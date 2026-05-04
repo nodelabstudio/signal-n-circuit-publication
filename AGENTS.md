@@ -50,6 +50,24 @@ No generic openers like "AI agents are quietly..." Start with the problem or the
 
 For articles, use contracted voice ("don't," "it's") at times for a more conversational tone, but avoid overusing contractions in a way that feels informal or chatty. The voice should be approachable but still maintain a level of professionalism and authority.
 
+### Voice engine
+
+The local voice engine lives at `scripts/voice_engine.py` and reads the voice bank in `writing/voice-bank/`. It mirrors review copies into the Obsidian vault at `agent-shared/signal-circuit-voice-bank/`.
+
+Before drafting X research posts, HOT takes, or article promos, pull context:
+
+```bash
+python3 scripts/voice_engine.py context --surface x-research --topic "<topic>"
+```
+
+Before sending any draft for approval, lint the exact text:
+
+```bash
+python3 scripts/voice_engine.py lint --surface x-research --file /tmp/draft.txt --require-source
+```
+
+Use `--surface hot-take` for HOT takes and `--surface article-promo` for article promos. Capture Angel feedback with `capture-feedback` so approvals, rejections, and rewrites become reusable taste memory. Discord ❌ rejections from RSP, HOT, PUB, and Tweet Tracker approval scripts automatically append to `angel-corrections.json` and mirror into the vault.
+
 ### Longform additions (beyond X post rules)
 
 Articles can use section headers (### level) to break up longer pieces.
@@ -208,9 +226,10 @@ Each sentence stands on its own line with a blank line between sentences.
 The post reads vertically, not horizontally.
 
 The combined post goes to Discord channel 1477414797757907075 as a single
-message for Angel's review. Angel approves or requests changes. Only after
-approval does Angel manually post via post-bridge. Hermes never posts to X
-directly. Hermes never schedules X posts. Hermes never uses Postiz.
+message for Angel's review with a `PUB-YYYYMMDD-XX` ID. Angel approves or
+requests changes. Only after 👍 approval does the approval watcher schedule
+that exact article promo through post-bridge. Hermes never posts to X directly
+without approval. Hermes never uses Postiz.
 
 ### Production URL
 https://signalcircuit.cloud

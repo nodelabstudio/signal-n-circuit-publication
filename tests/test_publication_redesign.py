@@ -70,7 +70,8 @@ def test_article_title_visually_dominates_section_headings():
     css = article_page.split("<style>")[1] if "<style>" in article_page else ""
 
     assert "font-size: clamp(3rem, 6.4vw, 6.4rem);" in css
-    assert "max-width: 22ch;" in css
+    assert "max-width: min(100%, 22ch);" in css
+    assert "overflow-wrap: break-word;" in css
     assert ":global(.body-card h2)" in css
     assert ".body-card .standfirst" in css
     assert "font-size: clamp(2.15rem, 4.2vw, 3.35rem);" in css
@@ -85,6 +86,18 @@ def test_article_body_paragraphs_have_global_spacing():
     assert ":global(.body-card p)" in css
     assert ":global(.body-card p + p)" in css
     assert "margin-top: 1.55rem !important;" in css
+
+
+def test_article_page_has_mobile_overflow_hardening():
+    article_page = read("src/pages/articles/[slug].astro")
+    css = article_page.split("<style>")[1] if "<style>" in article_page else ""
+
+    assert ".article > *" in css
+    assert "min-width: 0;" in css
+    assert "max-width: 100%;" in css
+    assert "max-width: min(100%, 16ch);" in css
+    assert "max-width: min(100%, 26ch);" in css
+    assert "overflow-wrap: anywhere;" in css
 
 
 def test_article_markdown_omits_automation_disclosure():

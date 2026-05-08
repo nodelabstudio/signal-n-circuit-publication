@@ -120,6 +120,12 @@ const relatedPosts = posts
   .article {
     display: grid;
     gap: 1.75rem;
+    min-width: 0;
+  }
+
+  .article > * {
+    min-width: 0;
+    max-width: 100%;
   }
 
   .article-hero {
@@ -134,6 +140,8 @@ const relatedPosts = posts
   .article-hero-copy {
     display: grid;
     gap: 1rem;
+    min-width: 0;
+    max-width: 100%;
   }
 
   .section-label {
@@ -147,16 +155,18 @@ const relatedPosts = posts
   }
 
   .article-title {
-    max-width: 22ch;
+    width: 100%;
+    max-width: min(100%, 22ch);
     font-size: clamp(3rem, 6.4vw, 6.4rem);
     line-height: 0.97;
     letter-spacing: -0.06em;
-    overflow-wrap: normal;
+    overflow-wrap: break-word;
     text-wrap: balance;
   }
 
   .article-excerpt {
-    max-width: 58ch;
+    width: 100%;
+    max-width: min(100%, 58ch);
     color: rgb(var(--muted));
     font-size: clamp(1.05rem, 1.5vw, 1.28rem);
     line-height: 1.65;
@@ -200,6 +210,7 @@ const relatedPosts = posts
     justify-content: center;
     gap: clamp(1.25rem, 4vw, 3rem);
     margin-top: 0.9rem;
+    min-width: 0;
   }
 
   .article-sidebar {
@@ -249,12 +260,14 @@ const relatedPosts = posts
   .body-card {
     padding: clamp(1.25rem, 3vw, 2.6rem);
     width: 100%;
+    min-width: 0;
+    max-width: 100%;
   }
 
   .body-card .standfirst {
     margin: 0 0 2.15rem;
     padding-bottom: 1.65rem;
-    max-width: 26ch;
+    max-width: min(100%, 26ch);
     border-bottom: 1px solid rgba(var(--border), 0.82);
     color: rgb(var(--ink));
     font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
@@ -271,6 +284,7 @@ const relatedPosts = posts
     max-width: 40em;
     font-size: 1.08rem;
     line-height: 1.88;
+    overflow-wrap: break-word;
   }
 
   :global(.body-card p + p),
@@ -317,6 +331,8 @@ const relatedPosts = posts
     background: rgba(var(--surface-strong), 0.85);
     padding: 0.15rem 0.28rem;
     font-size: 0.92em;
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 
   .body-card pre {
@@ -432,9 +448,9 @@ const relatedPosts = posts
     }
 
     .article-title {
-      max-width: 16ch;
-      font-size: clamp(3rem, 13vw, 5.2rem);
-      line-height: 0.94;
+      max-width: min(100%, 16ch);
+      font-size: clamp(2.65rem, 12vw, 4.65rem);
+      line-height: 0.96;
     }
 
     .article-sidebar {
